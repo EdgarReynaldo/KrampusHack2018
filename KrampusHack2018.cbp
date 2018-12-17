@@ -44,10 +44,17 @@
 			<Add directory="Allegro524/lib" />
 		</Linker>
 		<Unit filename="KrampusKart.cpp" />
+		<Unit filename="cbbuild/bin/data/Track1.txt" />
 		<Unit filename="include/BasicAllegro.hpp" />
+		<Unit filename="include/Move.hpp" />
+		<Unit filename="include/Orient.hpp" />
+		<Unit filename="include/Path.hpp" />
 		<Unit filename="include/Track.hpp" />
 		<Unit filename="include/Vec3.hpp" />
 		<Unit filename="src/BasicAllegro.cpp" />
+		<Unit filename="src/Move.cpp" />
+		<Unit filename="src/Orient.cpp" />
+		<Unit filename="src/Path.cpp" />
 		<Unit filename="src/Track.cpp" />
 		<Unit filename="src/Vec3.cpp" />
 		<Extensions>
