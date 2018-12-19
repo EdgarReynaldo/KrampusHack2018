@@ -47,6 +47,12 @@ int SetupAllegro(int screenw , int screenh) {
    if (!d || !buf || !q || !t || !f) {
       return 10;
    }
+   
+   al_register_event_source(q , al_get_display_event_source(d));
+   al_register_event_source(q , al_get_keyboard_event_source());
+   al_register_event_source(q , al_get_mouse_event_source());
+   al_register_event_source(q , al_get_timer_event_source(t));
+   
    return 0;
 }
 
