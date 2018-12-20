@@ -49,7 +49,6 @@ void OutlinePrism(const Prism& p , ALLEGRO_COLOR c) {
 
 
 void DrawTrackOutlines(const Track& track) {
-   al_clear_to_color(al_map_rgb(0,0,0));
    OutlinePrism(track.Bounds() , al_map_rgb(255,255,255));
    const std::vector<SpatialInfo>& path = track.Path();
    for (unsigned int i = 0 ; i < path.size() - 1 ; ++i) {

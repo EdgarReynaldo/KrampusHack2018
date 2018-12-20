@@ -32,7 +32,7 @@ public :
    void SetHFOV(double v) {hfov = v;}
    void SetAspect(double a) {aspect = a;}
    
-   void ResetCamera();
+   void ResetCamera(bool orthographic);
    
    static void Setup2D();
 };

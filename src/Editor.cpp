@@ -42,7 +42,7 @@ STATUS Editor::HandleEvent(ALLEGRO_EVENT ev) {
 
 
 void Editor::Display() {
-   cam.ResetCamera();
+   cam.ResetCamera(true);
    track.Draw();
    redraw = false;
 }

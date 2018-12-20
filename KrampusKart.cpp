@@ -48,6 +48,7 @@ int main(int argc , char** argv) {
    
    while (!quit) {
       if (scene->Redraw()) {
+         al_clear_to_color(al_map_rgb(0,0,0));
          scene->Display();
          Camera::Setup2D();
          al_draw_textf(f , al_map_rgb(255,255,255) , 10 , 10 , 0 , "%2.3lf" , al_get_time());

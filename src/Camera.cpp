@@ -8,7 +8,8 @@
 
 
 
-void Camera::ResetCamera() {
+void Camera::ResetCamera(bool orthographic) {
+   ortho  = orthographic;
    ALLEGRO_TRANSFORM proj;
    ALLEGRO_TRANSFORM cam;
    
@@ -20,8 +21,14 @@ void Camera::ResetCamera() {
    const double bot = -w/aspect;
    const double far = 2000.0;
 
+   
    al_identity_transform(&proj);
-   al_perspective_transform(&proj , l , top , near , r , bot , far);
+   if (!ortho) {
+      al_perspective_transform(&proj , l , top , near , r , bot , far);
+   }
+   else {
+      al_orthographic_transform(&proj , -500,500,0,500,-500,1000);
+   }
    al_use_projection_transform(&proj);
    
    Vec3 eye = info.pos;

@@ -24,9 +24,13 @@ public :
       SetCenter(Vec3(0,0,0));
    }
    
-   Prism(Vec3 center , double width , double height , double depth) : tlb() , w(width) , h(height) , d(depth) {
+   Prism(Vec3 center , double width , double height , double depth) : tlb() , w(abs(width)) , h(abs(height)) , d(abs(depth)) {
       SetCenter(center);
    }
+   
+   inline double Width()  {return w;}
+   inline double Height() {return h;}
+   inline double Depth()  {return d;}
    
    inline double LeftX()  const {return tlb.x;    }
    inline double RightX() const {return tlb.x + w;}
