@@ -3,7 +3,7 @@
 
 
 #include "Track.hpp"
-
+#include "Drawing.hpp"
 
 
 
@@ -50,7 +50,15 @@ void Track::AddSegment(TrackSegment seg) {
 
 
 bool Track::BuildTrack() {
-   return GeneratePath();
+   bool ret = GeneratePath(1.0);
+   bounds = GetBoundingPrism();
+   return ret;
+}
+
+
+
+void Track::Draw() {
+   DrawTrackOutlines(*this);
 }
 
 

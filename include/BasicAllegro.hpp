@@ -26,6 +26,7 @@ extern int sw;
 extern int sh;
 
 extern double FPS;
+extern double SPT;
 
 int SetupAllegro(int screenw , int screenh);
 void FreeAllegro();

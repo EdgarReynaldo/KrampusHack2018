@@ -17,11 +17,15 @@ enum STATUS {
 
 
 class Scene {
+   
+protected :
    bool redraw;
    
 public :
    
    Scene() : redraw(true) {}
+   virtual ~Scene() {}
+   
    
    virtual STATUS HandleEvent(ALLEGRO_EVENT ev)=0;
    virtual void Display()=0;

@@ -4,6 +4,8 @@
 
 #include "Camera.hpp"
 
+#include "allegro5/allegro.h"
+
 
 
 void Camera::ResetCamera() {
@@ -11,7 +13,7 @@ void Camera::ResetCamera() {
    ALLEGRO_TRANSFORM cam;
    
    const double near = 10.0;
-   const double w = near*tan(hfov/2.0)
+   const double w = near*tan(hfov/2.0);
    const double l = -w;
    const double r = w;
    const double top = w/aspect;
@@ -28,6 +30,6 @@ void Camera::ResetCamera() {
    
    al_identity_transform(&cam);
    al_build_camera_transform(&cam , eye.x , eye.y , eye.z , look.x , look.y , look.z , up.x , up.y , up.z);
-   al_use_transform(trans);
+   al_use_transform(&cam);
 }
 

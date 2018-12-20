@@ -23,4 +23,8 @@ public :
 };
 
 
+
+inline SpatialInfo START() {return SpatialInfo(ORIGIN() , Orient(Vec3(1,0,0) , Vec3(0,1,0) , Vec3(0,0,1)));}
+
+
 #endif // SpatialInfo_HPP

@@ -35,11 +35,11 @@ class TrackSegmentGenerator : public TrackSegmentBase {
    
 protected :
    SpatialInfo start;
-   double length;
    GENERATOR g;
+   double length;
 
 public :
-   TrackSegmentGenerator(SpatialInfo startpos , GENERATOR generator) : g(generator) , length(generator.Length()) {}
+   TrackSegmentGenerator(SpatialInfo startpos , GENERATOR generator) : start(startpos) , g(generator) , length(generator.Length()) {}
    
    SpatialInfo Eval(double dt);
    
@@ -81,26 +81,31 @@ class Track {
 protected :
    
    SpatialInfo start;
+   Prism bounds;
+   
    
    std::vector<TrackSegment> segments;
    std::vector<SpatialInfo> path;
 
    bool GeneratePath(double dz);
    
+   Prism GetBoundingPrism();
+
 public :
    
-   Track() : start() , segments() , path() {}
+   Track() : start() , bounds() , segments() , path() {}
    
    void AddSegment(TrackSegment seg);
    
    bool BuildTrack();
    
+   void Draw();
+   void DrawOutlines();
    
-   const std::vector<SpatialInfo>& Path() {return path;}
+   const std::vector<SpatialInfo>& Path() const {return path;}
    double Length();
    
-   Prism GetBoundingPrism();
-   
+   const Prism& Bounds() const {return bounds;}
 };
 
 

@@ -9,6 +9,7 @@
 #include "Scene.hpp"
 #include "Camera.hpp"
 #include "Track.hpp"
+#include "TrackGen.hpp"
 
 
 
@@ -20,9 +21,8 @@ protected :
    
 public :
    
-   Editor() : Scene() , cam() , track() {
-      track.AddSegment((TrackSegment(new TrackSegmentGenerator<Curve>()
-   }
+//   Editor();
+   Editor();
    
    virtual STATUS HandleEvent(ALLEGRO_EVENT ev);
    virtual void Display();

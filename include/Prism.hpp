@@ -7,6 +7,8 @@
 
 
 
+#include "Vec3.hpp"
+
 
 
 class Prism {
@@ -16,25 +18,31 @@ class Prism {
    double h;
    double d;
    
+public :
+   
+   Prism() : tlb() , w(1) , h(1) , d(1) {
+      SetCenter(Vec3(0,0,0));
+   }
+   
    Prism(Vec3 center , double width , double height , double depth) : tlb() , w(width) , h(height) , d(depth) {
       SetCenter(center);
    }
    
-   inline double LeftX() {return tlb.x;}
-   inline double RightX() {return tlb.x + w;}
-   inline double TopY() {return tlb.y;}
-   inline double BotY() {return tlb.y - h;}
-   inline double BackZ() {return tlb.z;}
-   inline double FrontZ() {return tlb.z - d;}
+   inline double LeftX()  const {return tlb.x;    }
+   inline double RightX() const {return tlb.x + w;}
+   inline double TopY()   const {return tlb.y;    }
+   inline double BotY()   const {return tlb.y - h;}
+   inline double BackZ()  const {return tlb.z;    }
+   inline double FrontZ() const {return tlb.z - d;}
    
-   inline Vec3 TopLeftBack()   {return Vec3(LeftX()  , TopY() , BackZ()  );}
-   inline Vec3 TopLeftFront()  {return Vec3(LeftX()  , TopY() , FrontZ() );}
-   inline Vec3 TopRightBack()  {return Vec3(RightX() , TopY() , BackZ()  );}
-   inline Vec3 TopRightFront() {return Vec3(RightX() , TopY() , FrontZ() );}
-   inline Vec3 BotLeftBack()   {return Vec3(LeftX()  , BotY() , BackZ()  );}
-   inline Vec3 BotLeftFront()  {return Vec3(LeftX()  , BotY() , FrontZ() );}
-   inline Vec3 BotRightBack()  {return Vec3(RightX() , BotY() , BackZ()  );}
-   inline Vec3 BotRightFront() {return Vec3(RightX() , BotY() , FrontZ() );}
+   inline Vec3 TopLeftBack()   const {return Vec3(LeftX()  , TopY() , BackZ()  );}
+   inline Vec3 TopLeftFront()  const {return Vec3(LeftX()  , TopY() , FrontZ() );}
+   inline Vec3 TopRightBack()  const {return Vec3(RightX() , TopY() , BackZ()  );}
+   inline Vec3 TopRightFront() const {return Vec3(RightX() , TopY() , FrontZ() );}
+   inline Vec3 BotLeftBack()   const {return Vec3(LeftX()  , BotY() , BackZ()  );}
+   inline Vec3 BotLeftFront()  const {return Vec3(LeftX()  , BotY() , FrontZ() );}
+   inline Vec3 BotRightBack()  const {return Vec3(RightX() , BotY() , BackZ()  );}
+   inline Vec3 BotRightFront() const {return Vec3(RightX() , BotY() , FrontZ() );}
    
    inline void SetCenter(Vec3 c) {tlb = Vec3(c.x - w/2.0 , c.y - h/2.0 , c.z - d/2.0);}
    

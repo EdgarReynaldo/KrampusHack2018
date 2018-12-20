@@ -7,6 +7,19 @@
 
 
 
+Editor::Editor() : 
+      Scene(),
+      cam(),
+      track()
+{
+   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(START() , Curve(2.0*M_PI , M_PI , 1000.0))));
+   if (!track.BuildTrack()) {
+      printf("Failed to build track.\n");
+   }
+}
+
+
+
 STATUS Editor::HandleEvent(ALLEGRO_EVENT ev) {
    if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE) {
       return STATUS_QUIT;
