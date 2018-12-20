@@ -70,7 +70,7 @@ public :
    friend double DotProduct(const Vec3& a , const Vec3& b);
 };
 
-Vec3 Rotate3D(const Vec3& axis , const double theta_radians);
+Vec3 Rotate3D(const Vec3& vec , const Vec3& axis , const double theta_radians);
 
 inline Vec3 operator*(const Vec3& lhs , double factor) {
    return Vec3(factor*lhs.x , factor*lhs.y , factor*lhs.z);

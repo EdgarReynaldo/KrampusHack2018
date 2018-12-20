@@ -6,6 +6,14 @@
 #include <cstdio>
 
 
+#include "allegro5/allegro_color.h"
+
+#include "SpatialInfo.hpp"
+
+#include "Intro.hpp"
+#include "Editor.hpp"
+
+
 
 int main(int argc , char** argv) {
    
@@ -21,15 +29,45 @@ int main(int argc , char** argv) {
    }
    
    
-   al_clear_to_color(al_map_rgb(0,0,0));
-   al_draw_textf(f , al_map_rgb(255,255,255) , sw/2 , sh/2 - al_get_font_ascent(f)/2 , ALLEGRO_ALIGN_CENTER , "KrampusHack 2018!");
-   al_flip_display();
+   al_start_timer(t);
+   
+   Intro();
    
    
+   do {
+      ALLEGRO_EVENT ev;
+      al_flush_event_queue(q);
+      al_wait_for_event(q , &ev);
+      if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE || ev.type == ALLEGRO_EVENT_KEY_DOWN) {break;}
+   } while (1);
    
-   al_rest(3.0);
    
+   Scene* scene = new Editor();
    
+   bool quit = false;
+   
+   while (!quit) {
+      if (scene->Redraw()) {
+         scene->Display();
+      }
+      int ticks = 0;
+      do {
+         ALLEGRO_EVENT ev;
+         al_wait_for_event(q , &ev);
+         if (ev.type == ALLEGRO_EVENT_TIMER) {
+            ++ticks;
+            /// Slow down gracefully
+            if (ticks == 1) {
+               if (scene->Update(SPT) == STATUS_QUIT) {
+                  quit = true;
+               }
+            }
+         }
+         scene->HandleEvent(ev);
+      } while (!al_is_event_queue_empty(q));
+   }
+   
+   delete scene;
    
    return 0;
 }
