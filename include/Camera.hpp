@@ -34,9 +34,8 @@ public :
    
    void ResetCamera();
    
-   
+   static void Setup2D();
 };
-
 
 
 

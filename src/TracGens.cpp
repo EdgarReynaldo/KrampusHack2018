@@ -6,12 +6,22 @@
 
 
 
-SpatialInfo Turn::Eval(const SpatialInfo& start , double dt) {
-   if (dt <= 0.0) {return start;}
-   if (dt > 1.0) {dt = 1.0;}
+
+
+SpatialInfo StraightAway::Eval(const SpatialInfo& start , double pct) {
+   SpatialInfo current = start;
+   current.pos += start.orient.fw*l*pct;
+   return current;
+}
+
+
+
+SpatialInfo Turn::Eval(const SpatialInfo& start , double pct) {
+   if (pct <= 0.0) {return start;}
+   if (pct > 1.0) {pct = 1.0;}
    
    SpatialInfo current = start;
-   const double yaw = dt;
+   const double yaw = pct;
    
    current.orient = AlterPath(current.orient , Vec3(yaw , 0 , 0));
    
@@ -20,7 +30,6 @@ SpatialInfo Turn::Eval(const SpatialInfo& start , double dt) {
    /// Y coord is forward movement
    /// X coord is lateral movement
    
-   Vec3 p = current.pos;
    Orient o = start.orient;
    
    current.pos += o.rt*w*sin(M_PI/2.0);
@@ -48,17 +57,17 @@ double Turn::Length() {
 
 
 
-SpatialInfo Curve::Eval(const SpatialInfo& start , double dt) {
-   if (dt <= 0.0) {return start;}
-   if (dt > 1.0) {dt = 1.0;}
+SpatialInfo Curve::Eval(const SpatialInfo& start , double pct) {
+   if (pct <= 0.0) {return start;}
+   if (pct > 1.0) {pct = 1.0;}
    
    /// First find the radius of the curve
    assert(t != 0.0);
    
    const double radius = l/t;
    
-   const double yaw = t*dt*cos(r);
-   const double pitch = t*dt*sin(r);
+   const double yaw = t*pct*cos(r);
+   const double pitch = t*pct*sin(r);
 
    SpatialInfo current = start;
    
@@ -78,7 +87,7 @@ SpatialInfo Curve::Eval(const SpatialInfo& start , double dt) {
    Vec3 rad = rt*radius*((t < 0.0)?-1.0:1.0);
    Vec3 c = pos + rad;
    
-   rad = Rotate3D(-rad , up , -t*dt);
+   rad = Rotate3D(-rad , up , -t*pct);
    
    Vec3 pos2 = c + rad;
    

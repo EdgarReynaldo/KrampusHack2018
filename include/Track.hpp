@@ -18,10 +18,14 @@
 
 class TrackSegmentBase {
    
+protected :
+   SpatialInfo start;
    
 public :
-   TrackSegmentBase() {}
+   TrackSegmentBase() : start(START()) {}
    
+   void SetStart(const SpatialInfo& st) {start = st;}
+
    virtual SpatialInfo Eval(double dt)=0;
    
    virtual double Length()=0;
@@ -34,12 +38,17 @@ template <class GENERATOR>
 class TrackSegmentGenerator : public TrackSegmentBase {
    
 protected :
-   SpatialInfo start;
    GENERATOR g;
    double length;
 
 public :
-   TrackSegmentGenerator(SpatialInfo startpos , GENERATOR generator) : start(startpos) , g(generator) , length(generator.Length()) {}
+//   TrackSegmentGenerator(GENERATOR generator);
+   
+   TrackSegmentGenerator(GENERATOR generator) : 
+         TrackSegmentBase(),
+         g(generator),
+         length(generator.Length())
+   {}
    
    SpatialInfo Eval(double dt);
    
@@ -68,6 +77,8 @@ protected :
 public :
    TrackSegment(TrackSegmentBase* tbase) : pgen(tbase) {}
    
+   void SetStart(const SpatialInfo& st) {pgen->SetStart(st);}
+
    SpatialInfo Eval(double dt) {return pgen->Eval(dt);}
    
    double Length() {return pgen->Length();}

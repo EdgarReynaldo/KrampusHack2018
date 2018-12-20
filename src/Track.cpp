@@ -13,7 +13,7 @@ bool Track::GeneratePath(double dz) {
    
    dz = fabs(dz);
    path.clear();
-   double l = Length();
+   const double l = Length();
    double nseg = l/dz;
    if (nseg < 2.0) {nseg = 2.0;}
    const int N = ceil(nseg);
@@ -23,8 +23,9 @@ bool Track::GeneratePath(double dz) {
       /// Which track segment we are on
       int ntrack = 0;
       double l3 = l2;
+      double l4 = 0.0;
       while (1) {
-         const double l4 = segments[ntrack].Length();
+         l4 = segments[ntrack].Length();
          if (l4 <= l3) {
             l3 -= l4;
             ++ntrack;
@@ -34,7 +35,7 @@ bool Track::GeneratePath(double dz) {
          }
       }
       /// How far along that track segment we are
-      double pct = l3/segments[ntrack].Length();
+      double pct = l3/l4;
       
       path.push_back(segments[ntrack].Eval(pct));
    }
@@ -44,6 +45,12 @@ bool Track::GeneratePath(double dz) {
 
 
 void Track::AddSegment(TrackSegment seg) {
+   unsigned int NSEGS = segments.size();
+   SpatialInfo S = START();
+   if (NSEGS > 0) {
+      S = segments[NSEGS - 1].Eval(1.0);
+   }
+   seg.SetStart(S);
    segments.push_back(seg);
 }
 

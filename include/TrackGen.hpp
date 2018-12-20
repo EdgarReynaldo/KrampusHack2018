@@ -10,6 +10,18 @@
 
 
 
+class StraightAway {
+protected :
+   double l;
+public :
+   StraightAway(double length) : l(fabs(length)) {}
+   
+   SpatialInfo Eval(const SpatialInfo& start , double pct);
+   
+   double Length() {return l;}
+};
+
+
 /**
    A turn is a change in yaw, relative to the local axis
 */
@@ -19,10 +31,10 @@ public :
    
 double w,h;
    
-   Turn(double width , double height) : w(width) , h(height) {}
+   Turn(double width , double height) : w(width) , h(fabs(height)) {}
    
    
-   SpatialInfo Eval(const SpatialInfo& start , double dt);
+   SpatialInfo Eval(const SpatialInfo& start , double pct);
    double Length();
 
 };
@@ -37,7 +49,7 @@ public :
    Curve(double turn , double roll , double length) : l(abs(length)) , t(turn) , r(roll) {}
    
    
-   SpatialInfo Eval(const SpatialInfo& start , double dt);
+   SpatialInfo Eval(const SpatialInfo& start , double pct);
    double Length() {return l;}
 };
 

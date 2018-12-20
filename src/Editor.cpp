@@ -12,7 +12,16 @@ Editor::Editor() :
       cam(),
       track()
 {
-   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(START() , Curve(2.0*M_PI , M_PI , 1000.0))));
+///   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(START() , Curve(2.0*M_PI , M_PI , 100.0))));
+///   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(START() , Curve(-2.0*M_PI , M_PI , 100.0))));
+   
+   track.AddSegment(TrackSegment(new TrackSegmentGenerator<StraightAway>(StraightAway(100.0))));
+   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Turn>(Turn(-50 , 150))));
+   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Turn>(Turn(150 , 50))));
+   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(Curve(-M_PI , 0.0 , 315))));
+   
+   
+   
    if (!track.BuildTrack()) {
       printf("Failed to build track.\n");
    }
