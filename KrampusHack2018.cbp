@@ -47,6 +47,7 @@
 		<Unit filename="cbbuild/bin/data/Track1.txt" />
 		<Unit filename="include/BasicAllegro.hpp" />
 		<Unit filename="include/Camera.hpp" />
+		<Unit filename="include/Drawing.hpp" />
 		<Unit filename="include/Editor.hpp" />
 		<Unit filename="include/Intro.hpp" />
 		<Unit filename="include/Move.hpp" />
@@ -61,6 +62,7 @@
 		<Unit filename="include/Vec3.hpp" />
 		<Unit filename="src/BasicAllegro.cpp" />
 		<Unit filename="src/Camera.cpp" />
+		<Unit filename="src/Drawing.cpp" />
 		<Unit filename="src/Editor.cpp" />
 		<Unit filename="src/Intro.cpp" />
 		<Unit filename="src/Move.cpp" />
