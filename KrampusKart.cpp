@@ -49,6 +49,7 @@ int main(int argc , char** argv) {
    while (!quit) {
       if (scene->Redraw()) {
          scene->Display();
+         al_flip_display();
       }
       int ticks = 0;
       do {
@@ -63,7 +64,9 @@ int main(int argc , char** argv) {
                }
             }
          }
-         scene->HandleEvent(ev);
+         if (STATUS_QUIT == scene->HandleEvent(ev)) {
+            quit = true;
+         }
       } while (!al_is_event_queue_empty(q));
    }
    
