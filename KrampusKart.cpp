@@ -31,16 +31,7 @@ int main(int argc , char** argv) {
    
    al_start_timer(t);
    
-   Intro();
-   
-   
-   do {
-      ALLEGRO_EVENT ev;
-      al_flush_event_queue(q);
-      al_wait_for_event(q , &ev);
-      if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE || ev.type == ALLEGRO_EVENT_KEY_DOWN) {break;}
-   } while (1);
-   
+//   Intro();
    
    Scene* scene = new Editor();
    

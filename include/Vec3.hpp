@@ -11,6 +11,8 @@
 
 
 
+
+
 class Vec3 {
 public :
    union {
@@ -86,6 +88,10 @@ inline double DotProduct(const Vec3& a , const Vec3& b) {
 
 inline Vec3 ORIGIN() {return Vec3(0,0,0);}
 
+
+extern const Vec3 UP;
+extern const Vec3 RIGHT;
+extern const Vec3 FORWARD;
 
 #endif // Vec3_HPP
 

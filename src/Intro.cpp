@@ -25,7 +25,7 @@ void Intro() {
 
    al_start_timer(t);
    
-   for (float f = 1.0 ; f > 0.0 ; f -= 0.01) {
+   for (float f = 0.01 ; f <= 1.0 ; f += 0.01) {
       if (!f2) {continue;}
       
       al_clear_to_color(al_map_rgb(0,0,0));

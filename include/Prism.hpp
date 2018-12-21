@@ -48,8 +48,8 @@ public :
    inline Vec3 BotRightBack()  const {return Vec3(RightX() , BotY() , BackZ()  );}
    inline Vec3 BotRightFront() const {return Vec3(RightX() , BotY() , FrontZ() );}
    
-   inline void SetCenter(Vec3 c) {tlb = Vec3(c.x - w/2.0 , c.y - h/2.0 , c.z - d/2.0);}
-   
+   inline void SetCenter(Vec3 c) {tlb = Vec3(c.x - w/2.0 , c.y + h/2.0 , c.z + d/2.0);}
+   inline Vec3 Center() const {return Vec3(tlb.x + w/2.0 , tlb.y - h/2.0 , tlb.z - d/2.0);}
 };
 
 #endif // Prism_HPP

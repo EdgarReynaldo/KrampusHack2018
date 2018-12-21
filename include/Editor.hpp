@@ -19,6 +19,10 @@ protected :
    Camera cam;
    Track track;
    
+   double cam_speed;
+   double cam_turn_rate;
+   
+   
 public :
    
 //   Editor();

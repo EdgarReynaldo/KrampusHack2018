@@ -11,10 +11,12 @@
 class Orient {
 public :
    
+   Vec3 theta;/// yaw,pitch,roll
+   
    Vec3 fw,rt,up;
    
-   Orient() : fw(0.0 , 0.0 , 1.0) , rt(0 , 0 , 0) , up(0 , 0 , 0) {}
-   Orient(Vec3 vfw , Vec3 vrt , Vec3 vup) : fw(vfw) , rt(vrt) , up(vup) {}
+   Orient() : theta(0,0,0) , fw(FORWARD) , rt(RIGHT) , up(UP) {}
+   
    
 };
 
