@@ -22,7 +22,7 @@ protected :
    SpatialInfo start;
    
 public :
-   TrackSegmentBase() : start(START()) {}
+   TrackSegmentBase() : start(START) {}
    
    void SetStart(const SpatialInfo& st) {start = st;}
 

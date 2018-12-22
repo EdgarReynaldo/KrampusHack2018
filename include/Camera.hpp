@@ -23,7 +23,7 @@ protected :
    
 public :
    
-   Camera() : info(START()) , hfov(90.0) , aspect(4.0/3.0) {}
+   Camera() : info(START) , hfov(90.0) , aspect(4.0/3.0) {}
    
    Camera(Vec3 pos , Orient o , double hview , double aspect_ratio) : info(pos,o) , hfov(hview) , aspect(aspect_ratio) {}
    

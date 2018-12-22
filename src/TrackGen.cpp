@@ -21,8 +21,12 @@ SpatialInfo Turn::Eval(const SpatialInfo& start , double pct) {
    if (pct > 1.0) {pct = 1.0;}
    
    SpatialInfo current = start;
+
    const double yaw = pct*M_PI/2.0;
    
+   current.pos += start.orient.Rt()*w*sin(pct*M_PI/2.0);
+   current.pos += start.orient.Fw()*h*sin(pct*M_PI/2.0);
+
    current.orient.Turn(Vec3(yaw , 0 , 0) , 1.0);
    
    /// X coord is w*sin(t*PI/2)
@@ -30,10 +34,6 @@ SpatialInfo Turn::Eval(const SpatialInfo& start , double pct) {
    /// Y coord is forward movement
    /// X coord is lateral movement
    
-   Orient o = start.orient;
-   
-   current.pos += o.Rt()*w*sin(M_PI/2.0);
-   current.pos += o.Fw()*h*sin(M_PI/2.0);
    return current;
 }
 

@@ -86,7 +86,8 @@ inline double DotProduct(const Vec3& a , const Vec3& b) {
    return a.x*b.x + a.y*b.y + a.z*b.z;
 }
 
-inline Vec3 ORIGIN() {return Vec3(0,0,0);}
+extern const Vec3 ORIGIN;
+
 
 
 extern const Vec3 UP;

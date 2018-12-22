@@ -56,7 +56,7 @@ void Camera::Setup2D() {
 
 
 void Camera::Move(Vec3 vel , double dt) {
-   vel*=dt;
+   info.pos += vel*dt;
 }
 
 

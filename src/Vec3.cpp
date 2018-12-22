@@ -8,7 +8,7 @@
 #include "allegro5/allegro.h"
 
 
-
+const Vec3 ORIGIN(0,0,0);
 
 const Vec3 UP(0,1,0);
 const Vec3 RIGHT(1,0,0);

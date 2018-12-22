@@ -24,7 +24,7 @@ public :
 
 
 
-inline SpatialInfo START() {return SpatialInfo(ORIGIN() , Orient(Vec3(0,0,0)));}
+extern const SpatialInfo START;
 
 
 #endif // SpatialInfo_HPP

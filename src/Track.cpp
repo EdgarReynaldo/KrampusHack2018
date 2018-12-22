@@ -46,7 +46,7 @@ bool Track::GeneratePath(double dz) {
 
 void Track::AddSegment(TrackSegment seg) {
    unsigned int NSEGS = segments.size();
-   SpatialInfo S = START();
+   SpatialInfo S = START;
    if (NSEGS > 0) {
       S = segments[NSEGS - 1].Eval(1.0);
    }
