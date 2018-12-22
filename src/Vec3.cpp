@@ -21,6 +21,7 @@ Vec3 Rotate3D(const Vec3& vec , const Vec3& axis , const double theta_radians) {
    /// TODO : This could be a source of rounding errors
    ALLEGRO_TRANSFORM t;
    
+   al_identity_transform(&t);
    al_rotate_transform_3d(&t , axis.x , axis.y , axis.z , theta_radians);
    
    /// Note the use of floats here
