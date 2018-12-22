@@ -18,10 +18,10 @@ Editor::Editor() :
 ///   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(START() , Curve(2.0*M_PI , M_PI , 100.0))));
 ///   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(START() , Curve(-2.0*M_PI , M_PI , 100.0))));
    
+   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(Curve(-M_PI , -M_PI/2.0 , 315))));
    track.AddSegment(TrackSegment(new TrackSegmentGenerator<StraightAway>(StraightAway(100.0))));
    track.AddSegment(TrackSegment(new TrackSegmentGenerator<Turn>(Turn(-50 , 150))));
    track.AddSegment(TrackSegment(new TrackSegmentGenerator<Turn>(Turn(150 , 50))));
-   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(Curve(-M_PI , 0.0 , 315))));
    
    
    

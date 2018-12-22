@@ -74,8 +74,8 @@
 		<Unit filename="src/Prism.cpp" />
 		<Unit filename="src/Scene.cpp" />
 		<Unit filename="src/SpatialInfo.cpp" />
-		<Unit filename="src/TracGens.cpp" />
 		<Unit filename="src/Track.cpp" />
+		<Unit filename="src/TrackGen.cpp" />
 		<Unit filename="src/Vec3.cpp" />
 		<Extensions>
 			<code_completion />

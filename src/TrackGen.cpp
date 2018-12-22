@@ -10,7 +10,7 @@
 
 SpatialInfo StraightAway::Eval(const SpatialInfo& start , double pct) {
    SpatialInfo current = start;
-   current.pos += start.orient.fw*l*pct;
+   current.pos += start.orient.Fw()*l*pct;
    return current;
 }
 
@@ -21,9 +21,9 @@ SpatialInfo Turn::Eval(const SpatialInfo& start , double pct) {
    if (pct > 1.0) {pct = 1.0;}
    
    SpatialInfo current = start;
-   const double yaw = pct;
+   const double yaw = pct*M_PI/2.0;
    
-   current.orient = AlterPath(current.orient , Vec3(yaw , 0 , 0));
+   current.orient.Turn(Vec3(yaw , 0 , 0) , 1.0);
    
    /// X coord is w*sin(t*PI/2)
    /// Y coord is h*sin(t*PI/2)
@@ -32,8 +32,8 @@ SpatialInfo Turn::Eval(const SpatialInfo& start , double pct) {
    
    Orient o = start.orient;
    
-   current.pos += o.rt*w*sin(M_PI/2.0);
-   current.pos += o.fw*h*sin(M_PI/2.0);
+   current.pos += o.Rt()*w*sin(M_PI/2.0);
+   current.pos += o.Fw()*h*sin(M_PI/2.0);
    return current;
 }
 
@@ -73,13 +73,13 @@ SpatialInfo Curve::Eval(const SpatialInfo& start , double pct) {
    
    Orient o = start.orient;
    
-   o = AlterPath(o , Vec3(yaw,pitch,0.0));
+   o.Turn(Vec3(yaw,pitch,0.0) , 1.0);
    
    Vec3 pos = start.pos;
    
-   Vec3 fw = start.orient.fw;
-   Vec3 up = start.orient.up;
-   Vec3 rt = start.orient.rt;
+   Vec3 fw = start.orient.Fw();
+   Vec3 up = start.orient.Up();
+   Vec3 rt = start.orient.Rt();
    
    up = Rotate3D(up , fw , r);
    rt = Rotate3D(rt , fw , r);

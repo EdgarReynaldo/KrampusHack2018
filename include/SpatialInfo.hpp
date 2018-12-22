@@ -24,7 +24,7 @@ public :
 
 
 
-inline SpatialInfo START() {return SpatialInfo(ORIGIN() , Orient(Vec3(1,0,0) , Vec3(0,1,0) , Vec3(0,0,1)));}
+inline SpatialInfo START() {return SpatialInfo(ORIGIN() , Orient(Vec3(0,0,0)));}
 
 
 #endif // SpatialInfo_HPP

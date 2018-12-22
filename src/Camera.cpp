@@ -32,8 +32,8 @@ void Camera::Setup3D(bool orthographic) {
    al_use_projection_transform(&proj);
    
    Vec3 eye = info.pos;
-   Vec3 look = info.pos + info.orient.fw;
-   Vec3 up = info.orient.up;
+   Vec3 look = info.pos + info.orient.Fw();
+   Vec3 up = info.orient.Up();
    
    al_identity_transform(&cam);
    al_scale_transform_3d(&cam , 1.0 , 1.0 , -1.0);
@@ -62,8 +62,7 @@ void Camera::Move(Vec3 vel , double dt) {
 
 
 void Camera::Turn(Vec3 omega , double dt) {
-   omega*=dt;
-   info.orient = AlterPath(info.orient , omega);
+   info.orient.Turn(omega , dt);
 }
 
 

@@ -9,15 +9,27 @@
 
 
 class Orient {
-public :
-   
+
+protected :
    Vec3 theta;/// yaw,pitch,roll
    
    Vec3 fw,rt,up;
+
+   void CalcAxes();
+   
+public :
+   
    
    Orient() : theta(0,0,0) , fw(FORWARD) , rt(RIGHT) , up(UP) {}
+   Orient(Vec3 angle) : theta(angle) , fw(FORWARD) , rt(RIGHT) , up(UP) {}
    
+   void SetTheta(Vec3 t) {theta = t;CalcAxes();}
    
+   void Turn(Vec3 omega , double dt);
+   
+   inline Vec3 Fw() const {return fw;}
+   inline Vec3 Rt() const {return rt;}
+   inline Vec3 Up() const {return up;}
 };
 
 
@@ -38,9 +50,6 @@ public :
       *this = Future(dt);
    }
 };
-
-
-Orient AlterPath(const Orient& o , const Vec3& m);
 
 
 
