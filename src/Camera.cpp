@@ -13,7 +13,7 @@ void Camera::Setup3D(bool orthographic) {
    ALLEGRO_TRANSFORM proj;
    ALLEGRO_TRANSFORM cam;
    
-   const double near = 10.0;
+   const double near = 1.0;
    const double w = near*tan(hfov/2.0);
    const double l = -w;
    const double r = w;

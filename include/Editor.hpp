@@ -17,7 +17,11 @@ class Editor : public Scene {
 
 protected :
    Camera cam;
-   Track track;
+   Track track1;
+   Track track2;
+   Track track3;
+   Track track4;
+   Track track5;
    
    double cam_speed;
    double cam_turn_rate;

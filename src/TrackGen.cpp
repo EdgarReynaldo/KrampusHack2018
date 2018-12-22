@@ -24,7 +24,9 @@ SpatialInfo Turn::Eval(const SpatialInfo& start , double pct) {
 
    const double yaw = pct*M_PI/2.0;
    
-   current.pos += start.orient.Rt()*w*sin(pct*M_PI/2.0);
+///   double rad = w + (h-w)*pct;
+   
+   current.pos += start.orient.Rt()*w*(cos(pct*M_PI/2.0) - 1.0);
    current.pos += start.orient.Fw()*h*sin(pct*M_PI/2.0);
 
    current.orient.Turn(Vec3(yaw , 0 , 0) , 1.0);
@@ -39,7 +41,7 @@ SpatialInfo Turn::Eval(const SpatialInfo& start , double pct) {
 
 
 
-double Turn::Length() {
+double Turn::CalcLength() {
    const double a = abs(w);
    const double b = abs(h);
    const double h = (a-b)*(a-b)/((a+b)*(a+b));
@@ -64,7 +66,7 @@ SpatialInfo Curve::Eval(const SpatialInfo& start , double pct) {
    /// First find the radius of the curve
    assert(t != 0.0);
    
-   const double radius = l/t;
+   const double radius = l/fabs(t);
    
    const double yaw = t*pct*cos(r);
    const double pitch = t*pct*sin(r);

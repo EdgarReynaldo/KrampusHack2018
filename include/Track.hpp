@@ -23,6 +23,7 @@ protected :
    
 public :
    TrackSegmentBase() : start(START) {}
+   virtual ~TrackSegmentBase() {}
    
    void SetStart(const SpatialInfo& st) {start = st;}
 

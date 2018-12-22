@@ -11,23 +11,34 @@
 Editor::Editor() : 
       Scene(),
       cam(),
-      track(),
+      track1(),
+      track2(),
+      track3(),
+      track4(),
+      track5(),
       cam_speed(100.0),
       cam_turn_rate(2.0*M_PI/5.0)
 {
-///   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(START() , Curve(2.0*M_PI , M_PI , 100.0))));
-///   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(START() , Curve(-2.0*M_PI , M_PI , 100.0))));
+   cam.SetPos(ORIGIN - START.orient.Fw()*10.0);
+
+   track1.AddSegment(TrackSegment(new TrackSegmentGenerator<Turn>(Turn(-50 , 150))));
+   track2.AddSegment(TrackSegment(new TrackSegmentGenerator<StraightAway>(StraightAway(100.0))));
+   track2.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(Curve(-M_PI , -M_PI/2.0 , 315))));
+   track3.AddSegment(TrackSegment(new TrackSegmentGenerator<Turn>(Turn(150 , 50))));
+   track4.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(Curve(2.0*M_PI , M_PI , 500.0))));
+   track5.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(Curve(-2.0*M_PI , M_PI , 1000.0))));
    
-///   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(Curve(-M_PI , -M_PI/2.0 , 315))));
-   track.AddSegment(TrackSegment(new TrackSegmentGenerator<StraightAway>(StraightAway(100.0))));
-   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Turn>(Turn(-50 , 150))));
-   track.AddSegment(TrackSegment(new TrackSegmentGenerator<Turn>(Turn(150 , 50))));
    
    
+   track1.BuildTrack();
+   track2.BuildTrack();
+   track3.BuildTrack();
+   track4.BuildTrack();
+   track5.BuildTrack();
    
-   if (!track.BuildTrack()) {
-      printf("Failed to build track.\n");
-   }
+///   if (!track4.BuildTrack() || !track5.BuildTrack()) {
+///      printf("Failed to build track.\n");
+///   }
 }
 
 
@@ -69,9 +80,12 @@ STATUS Editor::HandleEvent(ALLEGRO_EVENT ev) {
 
 
 void Editor::Display() {
-///   cam.SetPos(track.Bounds().Center());
    cam.Setup3D(false);
-   track.Draw();
+   track1.Draw();
+   track2.Draw();
+   track3.Draw();
+   track4.Draw();
+   track5.Draw();
    
    Camera::Setup2D();
    Vec3 campos = cam.Pos();

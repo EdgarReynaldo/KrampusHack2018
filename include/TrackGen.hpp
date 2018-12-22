@@ -27,15 +27,17 @@ public :
 */
 class Turn {
 
+double w,h,l;
+   
+   double CalcLength();
+   
 public :
    
-double w,h;
-   
-   Turn(double width , double height) : w(width) , h(fabs(height)) {}
+   Turn(double width , double height) : w(width) , h(fabs(height)) , l(CalcLength()) {}
    
    
    SpatialInfo Eval(const SpatialInfo& start , double pct);
-   double Length();
+   double Length() {return l;}
 
 };
 
