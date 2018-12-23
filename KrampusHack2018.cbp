@@ -47,6 +47,8 @@
 		<Unit filename="cbbuild/bin/data/Track1.txt" />
 		<Unit filename="include/BasicAllegro.hpp" />
 		<Unit filename="include/Camera.hpp" />
+		<Unit filename="include/CrossSection.hpp" />
+		<Unit filename="include/CrossSectionGen.hpp" />
 		<Unit filename="include/Drawing.hpp" />
 		<Unit filename="include/Editor.hpp" />
 		<Unit filename="include/Input.hpp" />
@@ -61,8 +63,11 @@
 		<Unit filename="include/Track.hpp" />
 		<Unit filename="include/TrackGen.hpp" />
 		<Unit filename="include/Vec3.hpp" />
+		<Unit filename="include/WidthGen.hpp" />
 		<Unit filename="src/BasicAllegro.cpp" />
 		<Unit filename="src/Camera.cpp" />
+		<Unit filename="src/CrossSection.cpp" />
+		<Unit filename="src/CrossSectionGen.cpp" />
 		<Unit filename="src/Drawing.cpp" />
 		<Unit filename="src/Editor.cpp" />
 		<Unit filename="src/Input.cpp" />
@@ -77,11 +82,13 @@
 		<Unit filename="src/Track.cpp" />
 		<Unit filename="src/TrackGen.cpp" />
 		<Unit filename="src/Vec3.cpp" />
+		<Unit filename="src/WidthGen.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
 			<debugger />
 			<lib_finder disable_auto="1" />
+			<fortran_project />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
