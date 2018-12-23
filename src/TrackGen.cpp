@@ -89,7 +89,7 @@ SpatialInfo Curve::Eval(const SpatialInfo& start , double pct) {
    Vec3 rad = rt*radius*((t < 0.0)?-1.0:1.0);
    Vec3 c = pos + rad;
    
-   rad = Rotate3D(-rad , up , -t*pct);
+   rad = Rotate3D(-rad , up , t*pct);
    
    Vec3 pos2 = c + rad;
    

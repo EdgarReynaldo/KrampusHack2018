@@ -56,7 +56,11 @@ void Camera::Setup2D() {
 
 
 void Camera::Move(Vec3 vel , double dt) {
-   info.pos += vel*dt;
+   vel*=dt;
+   Vec3 fw = info.orient.Fw();
+   Vec3 rt = info.orient.Rt();
+   Vec3 up = info.orient.Up();
+   info.pos += rt*vel.x + up*vel.y + fw*vel.z;
 }
 
 
