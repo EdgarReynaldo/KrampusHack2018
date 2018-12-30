@@ -6,13 +6,42 @@
 #include "Drawing.hpp"
 
 
+const double NSEGSWIDE = 10;
+const double STARTING_DIAMETER = 50.0;
+
+const Curve STARTING_CURVE = new Span(STARTING_DIAMETER);
+
+const CrossSection STARTING_LINE = STARTING_CURVE.Generate(NSEGSWIDE);
 
 
-bool Track::GeneratePath(double dz) {
+/// ------------------------     TrackInfo      --------------------------------
+
+
+
+TrackInfo::TrackInfo(const SpatialInfo& spatial_info , const CrossSection& cross_section) :
+      info(START),
+      csection(STARTING_LINE)
+{
+   Set(spatial_info , cross_section);
+}
+
+
+
+void TrackInfo::Set(const SpatialInfo& spatial_info , const CrossSection& cross_section) {
+   info = spatial_info;
+   csection = cross_section;
+}
+
+
+
+/// ------------------------     Track      --------------------------------
+
+
+bool Track::GenerateTrack(double dz) {
    if (segments.empty()) {return false;}
    
    dz = fabs(dz);
-   path.clear();
+   track.clear();
    const double l = Length();
    double nseg = l/dz;
    if (nseg < 2.0) {nseg = 2.0;}
@@ -37,27 +66,32 @@ bool Track::GeneratePath(double dz) {
       /// How far along that track segment we are
       double pct = l3/l4;
       
-      path.push_back(segments[ntrack].Eval(pct));
+      track.push_back(TrackInfo(segments[ntrack].Eval(pct) , csgenerators[ntrack].Generate(NSEGSWIDE , pct)));
    }
    return true;
 }
 
 
 
-void Track::AddSegment(TrackSegment seg) {
+void Track::AddSegment(TrackSegment seg , CSG csgenerator) {
    const unsigned int NSEGS = segments.size();
-   SpatialInfo S = START;
-   if (NSEGS > 0) {
-      S = segments.back().Eval(1.0);
+   TrackInfo T;/// = START;
+   if (NSEGS == 0) {
+      csgenerator.SetStartingCurve(STARTING_CURVE);
    }
-   seg.SetStart(S);
+   else if (NSEGS > 0) {
+      csgenerator.SetStartingCurve(csgenerators.back().FinishCurve());
+      T = TrackInfo(segments.back().Eval(1.0) , csgenerators.back().Generate(NSEGSWIDE , 1.0));
+   }
+   seg.SetStart(T);
    segments.push_back(seg);
+   csgenerators.push_back(csgenerator);
 }
 
 
 
 bool Track::BuildTrack() {
-   bool ret = GeneratePath(1.0);
+   bool ret = GenerateTrack(1.0);
    bounds = GetBoundingPrism();
    return ret;
 }
@@ -88,8 +122,8 @@ Prism Track::GetBoundingPrism() {
    double maxx = -BIGVAL;
    double maxy = -BIGVAL;
    double maxz = -BIGVAL;
-   for (unsigned int i = 0 ; i < path.size() ; ++i) {
-      const Vec3& p = path[i].pos;
+   for (unsigned int i = 0 ; i < track.size() ; ++i) {
+      const Vec3& p = track[i].Pos();
       const double& x = p.x;
       const double& y = p.y;
       const double& z = p.z;

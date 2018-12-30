@@ -7,25 +7,46 @@
 
 #include "Prism.hpp"
 #include "SpatialInfo.hpp"
-
-
+#include "CrossSection.hpp"
+#include "CrossSectionGen.hpp"
 
 #include <memory>
 #include <vector>
 
 
 
+class TrackInfo {
+   
+protected :
+   SpatialInfo info;
+   CrossSection csection;
+public :
+   
+///   TrackInfo();
+   TrackInfo() :
+         info(START),
+         csection()
+   {}
+   TrackInfo(const SpatialInfo& spatial_info , const CrossSection& cross_section);
+   void Set(const SpatialInfo& spatial_info , const CrossSection& cross_section);
+   
+   SpatialInfo Info()      const {return info;}
+   Vec3 Pos()              const {return info.pos;}
+   Orient Orientation()    const {return info.orient;}
+   double Width()          const {return csection.Width();}
+   CrossSection CSection() const {return csection;}
+   
+};
 
 class TrackSegmentBase {
    
 protected :
-   SpatialInfo start;
-   
+   TrackInfo start;
 public :
-   TrackSegmentBase() : start(START) {}
+   TrackSegmentBase() : start() {}
    virtual ~TrackSegmentBase() {}
    
-   void SetStart(const SpatialInfo& st) {start = st;}
+   void SetStart(const TrackInfo& info) {start = info;}
 
    virtual SpatialInfo Eval(double dt)=0;
    
@@ -35,20 +56,20 @@ public :
 
 
 
-template <class GENERATOR>
-class TrackSegmentGenerator : public TrackSegmentBase {
+template <class TGENERATOR>
+class TSG : public TrackSegmentBase {
    
 protected :
-   GENERATOR g;
+   TGENERATOR tg;
    double length;
 
 public :
-//   TrackSegmentGenerator(GENERATOR generator);
+//   TSG(GENERATOR generator);
    
-   TrackSegmentGenerator(GENERATOR generator) : 
+   TSG(TGENERATOR tgenerator) : 
          TrackSegmentBase(),
-         g(generator),
-         length(generator.Length())
+         tg(tgenerator),
+         length(tgenerator.Length())
    {}
    
    SpatialInfo Eval(double dt);
@@ -60,9 +81,11 @@ public :
 
 
 
-template<class GENERATOR>
-SpatialInfo TrackSegmentGenerator<GENERATOR>::Eval(double dt) {
-   return g.Eval(start , dt);
+template<class TGENERATOR>
+SpatialInfo TSG<TGENERATOR>::Eval(double dt) {
+//   SpatialInfo info = tg.Eval(start.info , dt);
+//   CrossSection cs = csg.Eval(start.csection , dt);
+   return tg.Eval(start.Info() , dt);
 }
 
 
@@ -78,7 +101,7 @@ protected :
 public :
    TrackSegment(TrackSegmentBase* tbase) : pgen(tbase) {}
    
-   void SetStart(const SpatialInfo& st) {pgen->SetStart(st);}
+   void SetStart(const TrackInfo& tinfo) {pgen->SetStart(tinfo);}
 
    SpatialInfo Eval(double dt) {return pgen->Eval(dt);}
    
@@ -92,29 +115,31 @@ class Track {
 
 protected :
    
-   SpatialInfo start;
+   TrackInfo start;
    Prism bounds;
    
-   
    std::vector<TrackSegment> segments;
-   std::vector<SpatialInfo> path;
+   std::vector<CSG> csgenerators;
+   std::vector<TrackInfo> track;
 
-   bool GeneratePath(double dz);
+
+
+   bool GenerateTrack(double dz);
    
    Prism GetBoundingPrism();
 
 public :
    
-   Track() : start() , bounds() , segments() , path() {}
+   Track() : start() , bounds() , segments() , track() {}
    
-   void AddSegment(TrackSegment seg);
+   void AddSegment(TrackSegment seg , CSG csgenerator);
    
    bool BuildTrack();
    
    void Draw();
    void DrawOutlines();
    
-   const std::vector<SpatialInfo>& Path() const {return path;}
+   const std::vector<TrackInfo>& TrackInfoVec() const {return track;}
    double Length();
    
    const Prism& Bounds() const {return bounds;}

@@ -59,7 +59,7 @@ double Turn::CalcLength() {
 
 
 
-SpatialInfo Curve::Eval(const SpatialInfo& start , double pct) {
+SpatialInfo CurvedTrack::Eval(const SpatialInfo& start , double pct) {
    if (pct <= 0.0) {return start;}
    if (pct > 1.0) {pct = 1.0;}
    

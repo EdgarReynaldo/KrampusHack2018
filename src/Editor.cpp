@@ -5,6 +5,8 @@
 #include "Editor.hpp"
 #include "BasicAllegro.hpp"
 #include "Input.hpp"
+#include "CrossSection.hpp"
+#include "CrossSectionTypes.hpp"
 
 
 
@@ -21,15 +23,17 @@ Editor::Editor() :
 {
    cam.SetPos(ORIGIN - START.orient.Fw()*10.0);
 
-   track1.AddSegment(TrackSegment(new TrackSegmentGenerator<Turn>(Turn(-50 , 150))));
-   track2.AddSegment(TrackSegment(new TrackSegmentGenerator<StraightAway>(StraightAway(100.0))));
-   track2.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(Curve(-M_PI , -M_PI/2.0 , 315))));
-   track2.AddSegment(TrackSegment(new TrackSegmentGenerator<StraightAway>(StraightAway(100.0))));
-   track2.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(Curve(-M_PI , -M_PI/2.0 , 315))));
    
-   track3.AddSegment(TrackSegment(new TrackSegmentGenerator<Turn>(Turn(150 , 50))));
-   track4.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(Curve(2.0*M_PI , M_PI , 500.0))));
-   track5.AddSegment(TrackSegment(new TrackSegmentGenerator<Curve>(Curve(-2.0*M_PI , M_PI , 1000.0))));
+   track1.AddSegment(TrackSegment(new TSG<Turn>(Turn(-50,150))) , CSG(new CurvedCSG(Curve(new Span(50)))));
+
+   track2.AddSegment(TrackSegment(new TSG<StraightAway>(StraightAway(100.0)))                    , CSG(new CurvedCSG(Curve(new Span(50)))));
+   track2.AddSegment(TrackSegment(new TSG<CurvedTrack> (CurvedTrack(-M_PI , -M_PI/2.0 , 315)))   , CSG(new CurvedCSG(Curve(new Span(50)))));
+   track2.AddSegment(TrackSegment(new TSG<StraightAway>(StraightAway(100.0)))                    , CSG(new CurvedCSG(Curve(new Span(50)))));
+   track2.AddSegment(TrackSegment(new TSG<CurvedTrack> (CurvedTrack(-M_PI , -M_PI/2.0 , 315)))   , CSG(new CurvedCSG(Curve(new Span(50)))));
+   
+   track3.AddSegment(TrackSegment(new TSG<Turn>(Turn(150 , 50)))                                 , CSG(new CurvedCSG(Curve(new Span(50)))));
+   track4.AddSegment(TrackSegment(new TSG<CurvedTrack>(CurvedTrack(2.0*M_PI , M_PI , 500.0)))    , CSG(new CurvedCSG(Curve(new Span(50)))));
+   track5.AddSegment(TrackSegment(new TSG<CurvedTrack>(CurvedTrack(-2.0*M_PI , M_PI , 1000.0)))  , CSG(new CurvedCSG(Curve(new Span(50)))));
    
    
    

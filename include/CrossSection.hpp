@@ -6,47 +6,35 @@
 #define CrossSection_HPP
 
 
-#include "SpatialInfo.hpp"
-
 
 #include <vector>
-#include <memory>
-
-
-
-class CrossSectionBase {
-   
-protected :
-   SpatialInfo info;
-   
-   /** pts is a collection of points on the xy plane with up corresponding to up and right corresponding to right */
-   std::vector<Vec3> pts;
-   
-   void Clear();
-   
-public :
-   
-   CrossSectionBase(const SpatialInfo& spatial_info);
-   
-   const SpatialInfo& Info() {return info;}
-   const std::vector<Vec3>& Pts() {return pts;}
-   const unsigned int N() {return pts.size();}
-};
-
+#include "Vec3.hpp"
 
 
 class CrossSection {
-   std::shared_ptr<CrossSectionBase> sptr;
-   
+protected :
+
+   double lateral_width;/// lateral x width of track
+
+   /** pts is a collection of points on the xy plane with up corresponding to up and right corresponding to right */
+   std::vector<Vec3> xypts;
+   std::vector<double> rvals;
+
 public :
 //   CrossSection(CrossSectionBase* new_cs);
-   CrossSection(CrossSectionBase* new_cs) : sptr(new_cs) {}
+   CrossSection() : lateral_width(0.0) , xypts() {}
    
-   const SpatialInfo& Info() {return sptr->Info();}
-   const std::vector<Vec3>& Pts() {return sptr->Pts();}
-   const unsigned int N() {return sptr->N();}
-};
+   void Clear();
 
+   void AddPoint(Vec3 xy , double roll);
+   
+   double Width() const {return lateral_width;}
+   const std::vector<Vec3>& XYPts() const {return xypts;}
+   unsigned int NPTS() const {return xypts.size();}
+
+   Vec3 XYPosition(double xpct) const;/// pct is from [-1.0 , 1.0], represents how far along x - axis we are on the cross section
+   double RollValue(double xpct) const;
+};
 
 
 
