@@ -55,6 +55,7 @@
 		<Unit filename="include/Input.hpp" />
 		<Unit filename="include/Interpolate.hpp" />
 		<Unit filename="include/Intro.hpp" />
+		<Unit filename="include/Mesh.hpp" />
 		<Unit filename="include/Move.hpp" />
 		<Unit filename="include/ObjModel.hpp" />
 		<Unit filename="include/Orient.hpp" />
@@ -69,6 +70,7 @@
 		<Unit filename="include/TrackInfo.hpp" />
 		<Unit filename="include/Tri3.hpp" />
 		<Unit filename="include/Vec3.hpp" />
+		<Unit filename="include/Vertex.hpp" />
 		<Unit filename="include/WidthGen.hpp" />
 		<Unit filename="src/BasicAllegro.cpp" />
 		<Unit filename="src/Camera.cpp" />
@@ -80,6 +82,7 @@
 		<Unit filename="src/Input.cpp" />
 		<Unit filename="src/Interpolate.cpp" />
 		<Unit filename="src/Intro.cpp" />
+		<Unit filename="src/Mesh.cpp" />
 		<Unit filename="src/Move.cpp" />
 		<Unit filename="src/ObjModel.cpp" />
 		<Unit filename="src/Orient.cpp" />
@@ -93,6 +96,7 @@
 		<Unit filename="src/TrackGen.cpp" />
 		<Unit filename="src/Tri3.cpp" />
 		<Unit filename="src/Vec3.cpp" />
+		<Unit filename="src/Vertex.cpp" />
 		<Unit filename="src/WidthGen.cpp" />
 		<Extensions>
 			<code_completion />
