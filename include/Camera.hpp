@@ -38,8 +38,8 @@ public :
    const SpatialInfo& Info() {return info;}
    
    
-   void Move(Vec3 vel , double dt);// relative to orientation
-   void Turn(Vec3 omega , double dt);
+   void Move(Vec3 vel , double dt);/// relative to orientation
+   void Turn(Vec3 omega , double dt);/// relative to orientation
    
    inline Vec3 Pos() {return info.pos;}
    inline Orient Orientation() {return info.orient;}

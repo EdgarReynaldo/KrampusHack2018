@@ -15,24 +15,36 @@ protected :
    
    Vec3 fw,rt,up;
 
+   void CalcTheta();
    void CalcAxes();
    
 public :
    
    
    Orient() : theta(0,0,0) , fw(FORWARD) , rt(RIGHT) , up(UP) {}
-   Orient(Vec3 angle) : theta(angle) , fw(FORWARD) , rt(RIGHT) , up(UP) {}
+   Orient(Vec3 angles) : theta() , fw(FORWARD) , rt(RIGHT) , up(UP) {SetTheta(angles);}
    
    void SetTheta(Vec3 t) {theta = t;CalcAxes();}
    
    void Turn(Vec3 omega , double dt);
+   void TurnLocal(Vec3 omega , double dt);
    
    inline Vec3 Fw() const {return fw;}
    inline Vec3 Rt() const {return rt;}
    inline Vec3 Up() const {return up;}
+   inline Vec3 Theta() const {return theta;}
+   
+   friend Orient LocalTurn(const Orient& o , Vec3 omega , double dt);
+   friend Vec3 CalcTheta(const Orient& o);
 };
 
 
+Vec3 CalcTheta(const Orient& o);
+
+
+
+
+/**
 class TurnMove {
 public :
    Vec3 pos,vel,acc;
@@ -50,7 +62,7 @@ public :
       *this = Future(dt);
    }
 };
-
+*/
 
 
 #endif // Orient_HPP

@@ -58,7 +58,7 @@ STATUS Editor::HandleEvent(ALLEGRO_EVENT ev) {
    if (ev.type == ALLEGRO_EVENT_TIMER) {
       /// X movement
       if (keys[ALLEGRO_KEY_LEFT] || keys[ALLEGRO_KEY_RIGHT]) {
-         cam.Move(Vec3((keys[ALLEGRO_KEY_LEFT])?-cam_speed:cam_speed , 0 , 0) , SPT);
+         cam.Move(Vec3((keys[ALLEGRO_KEY_LEFT])?cam_speed:-cam_speed , 0 , 0) , SPT);
       }
       /// Y movement
       if (keys[ALLEGRO_KEY_PGDN] || keys[ALLEGRO_KEY_PGUP]) {
@@ -70,7 +70,7 @@ STATUS Editor::HandleEvent(ALLEGRO_EVENT ev) {
       }
       /// YAW
       if (keys[ALLEGRO_KEY_PAD_4] || keys[ALLEGRO_KEY_PAD_6]) {
-         cam.Turn(Vec3((keys[ALLEGRO_KEY_PAD_4]?-cam_turn_rate:cam_turn_rate) , 0 , 0) , SPT);
+         cam.Turn(Vec3((keys[ALLEGRO_KEY_PAD_4]?cam_turn_rate:-cam_turn_rate) , 0 , 0) , SPT);
       }
       /// PITCH
       if (keys[ALLEGRO_KEY_PAD_2] || keys[ALLEGRO_KEY_PAD_8]) {

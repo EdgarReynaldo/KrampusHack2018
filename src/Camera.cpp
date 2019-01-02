@@ -66,7 +66,7 @@ void Camera::Move(Vec3 vel , double dt) {
 
 
 void Camera::Turn(Vec3 omega , double dt) {
-   info.orient.Turn(omega , dt);
+   info.orient.TurnLocal(omega , dt);
 }
 
 
