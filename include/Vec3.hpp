@@ -11,8 +11,6 @@
 
 
 
-
-
 class Vec3 {
 public :
    union {
@@ -86,7 +84,10 @@ inline double DotProduct(const Vec3& a , const Vec3& b) {
    return a.x*b.x + a.y*b.y + a.z*b.z;
 }
 
-
+//inline Vec3 MidPoint(const Vec3& v1 , const Vec3& v2);
+inline Vec3 MidPoint(const Vec3& v1 , const Vec3& v2) {
+   return Vec3((v1.x + v2.x)/2.0 , (v1.y + v2.y)/2.0 , (v1.z + v2.z)/2.0);
+}
 
 extern const Vec3 ORIGIN;
 

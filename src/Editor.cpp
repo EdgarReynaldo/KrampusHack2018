@@ -18,8 +18,8 @@ Editor::Editor() :
       track3(),
       track4(),
       track5(),
-      cam_speed(100.0),
-      cam_turn_rate(2.0*M_PI/5.0)
+      cam_speed(33.4),
+      cam_turn_rate(2.0*M_PI/12.0)
 {
    cam.SetPos(ORIGIN - START.orient.Fw()*10.0);
 
@@ -93,12 +93,12 @@ void Editor::Display() {
    track3.Draw();
    track4.Draw();
    track5.Draw();
-   
+/**   
    Camera::Setup2D();
    Vec3 campos = cam.Pos();
    al_draw_textf(f , al_map_rgb(255,255,255) , 10 , sh - (10 + al_get_font_line_height(f)) , ALLEGRO_ALIGN_LEFT , 
                  "CamPos = %1.2lf , %1.2lf , %1.2lf" , campos.x , campos.y , campos.z);
-   
+*/
    redraw = false;
 }
 
