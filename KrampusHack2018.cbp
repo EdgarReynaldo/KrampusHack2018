@@ -64,7 +64,6 @@
 		<Unit filename="include/Parametric.hpp" />
 		<Unit filename="include/Path.hpp" />
 		<Unit filename="include/Prism.hpp" />
-		<Unit filename="include/Quad.hpp" />
 		<Unit filename="include/Scene.hpp" />
 		<Unit filename="include/SpatialInfo.hpp" />
 		<Unit filename="include/Track.hpp" />
@@ -92,7 +91,6 @@
 		<Unit filename="src/Parametric.cpp" />
 		<Unit filename="src/Path.cpp" />
 		<Unit filename="src/Prism.cpp" />
-		<Unit filename="src/Quad.cpp" />
 		<Unit filename="src/Scene.cpp" />
 		<Unit filename="src/SpatialInfo.cpp" />
 		<Unit filename="src/Track.cpp" />
