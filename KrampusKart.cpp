@@ -12,6 +12,9 @@
 
 #include "Intro.hpp"
 #include "Editor.hpp"
+#include "Mesh.hpp"
+
+#include "GL/gl.h"
 
 
 
@@ -28,7 +31,15 @@ int main(int argc , char** argv) {
       return setup;
    }
    
+
    
+   const char* glvs = al_get_default_shader_source(ALLEGRO_SHADER_GLSL , ALLEGRO_VERTEX_SHADER);
+   const char* glps = al_get_default_shader_source(ALLEGRO_SHADER_GLSL , ALLEGRO_PIXEL_SHADER);
+   
+   printf("GLSL VERTEX SHADER Source :\n%s\n\n" , glvs);
+   printf("GLSL PIXEL SHADER Source :\n%s\n\n" , glps);
+   
+      
    al_start_timer(t);
    
 //   Intro();
@@ -37,10 +48,66 @@ int main(int argc , char** argv) {
    
    bool quit = false;
    
+   
+   Orient o;
+   Mesh pyramid;
+   
+   ALLEGRO_COLOR c[4] = {al_map_rgb(0,0,255) , al_map_rgb(0,255,0) , al_map_rgb(255,0,0) , al_map_rgb(255,255,0)};
+   
+   for (unsigned int i = 0 ; i < 3 ; ++i) {
+      o.Reset();
+      o.Turn(Vec3(i*2.0*M_PI/3.0 , M_PI/6.0 , 0) , 1.0);
+      pyramid.AddVertex(VERTEX(o.Fw()*50.0 , c[i]));
+   }
+   o.Reset();
+   pyramid.AddVertex(VERTEX(o.Up()*50.0 , c[3]));
+   
+   pyramid.AddEdge(0,1);
+   pyramid.AddEdge(1,2);
+   pyramid.AddEdge(2,0);
+   pyramid.AddEdge(0,3);
+   pyramid.AddEdge(1,3);
+   pyramid.AddEdge(2,3);
+   
+   pyramid.AddTriFace(2,1,0);
+   pyramid.AddTriFace(3,0,1);
+   pyramid.AddTriFace(3,1,2);
+   pyramid.AddTriFace(3,2,0);
+   
+   Mesh cube;
+   ALLEGRO_COLOR white = al_map_rgb(255,255,255);
+   for (unsigned int i = 0 ; i < 2 ; ++i) {
+      for (unsigned int j = 0 ; j < 2 ; ++j) {
+         for (unsigned int k = 0 ; k < 2 ; ++k) {
+            cube.AddVertex(VERTEX(Vec3(-0.5 + i , -0.5 + j , -0.5 + k) , white));
+         }
+      }
+   }
+   
+   cube.AddQuadFace(3,2,1,0);
+   cube.AddQuadFace(7,6,5,4);
+   
+   
+   
    while (!quit) {
       if (scene->Redraw()) {
          al_clear_to_color(al_map_rgb(0,0,0));
+         
+         glClear(GL_DEPTH_BUFFER_BIT);
+         glEnable(GL_DEPTH_TEST);
+         
          scene->Display();
+         
+         glFrontFace(GL_CCW);
+         glCullFace(GL_BACK);
+         glEnable(GL_CULL_FACE);
+         glEnable(GL_COLOR);
+         
+//         pyramid.RenderFaces(SpatialInfo() , Vec3(1,1,1));
+         cube.RenderFaces(SpatialInfo() , Vec3(30,30,30));
+         
+         glDisable(GL_COLOR);
+         glDisable(GL_DEPTH_TEST);
          Camera::Setup2D();
          al_draw_textf(f , al_map_rgb(255,255,255) , 10 , 10 , 0 , "%2.3lf" , al_get_time());
          al_flip_display();
