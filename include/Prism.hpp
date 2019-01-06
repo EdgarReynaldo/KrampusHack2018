@@ -88,6 +88,9 @@ public :
    {
       CreateMesh();
    }
+   
+   inline const Mesh& GetMesh() const {return cube;}
+   
 };
 
 
@@ -95,31 +98,44 @@ public :
 
 class Prism {
    
-   Vec3 tlb;
+   UnitCube unitcube;
+   
+   SpatialInfo info;
+   
    double w;
    double h;
    double d;
    
 public :
    
-   Prism() : tlb() , w(1) , h(1) , d(1) {
-      SetCenter(Vec3(0,0,0));
-   }
+//   Prism();
+   Prism() :
+         unitcube(),
+         info(Vec3(0.0,0.0,0.0) , Orient()),
+         w(1),
+         h(1),
+         d(1)
+   {}
    
-   Prism(Vec3 center , double width , double height , double depth) : tlb() , w(abs(width)) , h(abs(height)) , d(abs(depth)) {
-      SetCenter(center);
-   }
+//   Prism(Vec3 center , double width , double height , double depth);
+   Prism(Vec3 center , double width , double height , double depth) :
+      unitcube(),
+      info(center , Orient()),
+      w(abs(width)),
+      h(abs(height)),
+      d(abs(depth))
+   {}
    
-   inline double Width()  {return w;}
-   inline double Height() {return h;}
-   inline double Depth()  {return d;}
+   inline double Width()  const {return w;}
+   inline double Height() const {return h;}
+   inline double Depth()  const {return d;}
    
-   inline double LeftX()  const {return tlb.x;    }
-   inline double RightX() const {return tlb.x + w;}
-   inline double TopY()   const {return tlb.y;    }
-   inline double BotY()   const {return tlb.y - h;}
-   inline double BackZ()  const {return tlb.z;    }
-   inline double FrontZ() const {return tlb.z - d;}
+   inline double LeftX()  const {return info.pos.x - w/2.0;}
+   inline double RightX() const {return info.pos.x + w/2.0;}
+   inline double TopY()   const {return info.pos.y - h/2.0;}
+   inline double BotY()   const {return info.pos.y + h/2.0;}
+   inline double BackZ()  const {return info.pos.z + d/2.0;}
+   inline double FrontZ() const {return info.pos.z - d/2.0;}
    
    inline Vec3 TopLeftBack()   const {return Vec3(LeftX()  , TopY() , BackZ()  );}
    inline Vec3 TopLeftFront()  const {return Vec3(LeftX()  , TopY() , FrontZ() );}
@@ -130,8 +146,14 @@ public :
    inline Vec3 BotRightBack()  const {return Vec3(RightX() , BotY() , BackZ()  );}
    inline Vec3 BotRightFront() const {return Vec3(RightX() , BotY() , FrontZ() );}
    
-   inline void SetCenter(Vec3 c) {tlb = Vec3(c.x - w/2.0 , c.y + h/2.0 , c.z + d/2.0);}
-   inline Vec3 Center() const {return Vec3(tlb.x + w/2.0 , tlb.y - h/2.0 , tlb.z - d/2.0);}
+   inline void SetCenter(Vec3 c) {info.pos = c;}
+
+   inline Vec3 Center() const {return info.pos;}
+   
+   inline const Mesh& GetMesh() const {return unitcube.GetMesh();}
 };
+
+
+
 
 #endif // Prism_HPP
