@@ -40,6 +40,8 @@
 			<Add directory="Allegro524/include" />
 		</Compiler>
 		<Linker>
+			<Add option="-lopengl32" />
+			<Add option="-lglu32" />
 			<Add directory="cbbuild/lib" />
 			<Add directory="Allegro524/lib" />
 		</Linker>
@@ -69,6 +71,7 @@
 		<Unit filename="include/TrackGen.hpp" />
 		<Unit filename="include/TrackInfo.hpp" />
 		<Unit filename="include/Tri3.hpp" />
+		<Unit filename="include/Vec2.hpp" />
 		<Unit filename="include/Vec3.hpp" />
 		<Unit filename="include/Vertex.hpp" />
 		<Unit filename="include/WidthGen.hpp" />
