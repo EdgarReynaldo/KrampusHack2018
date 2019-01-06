@@ -92,19 +92,55 @@ unsigned int Mesh::UnsignedTIndex(int index) {
 
 
 ALLEGRO_TRANSFORM Mesh::SetupTransform(const SpatialInfo& info , Vec3 scale) const {
-   ALLEGRO_TRANSFORM old = *al_get_current_transform();
+   const ALLEGRO_TRANSFORM old = *al_get_current_transform();
    
 ///   al_translate_transform_3d(&t , -c.x , -c.y , -c.z);/// we are already at 0,0,0, all models are centered there
    const Vec3& c = info.pos;
    const Orient& o = info.orient;
    const Vec3& theta = o.Theta();
 
-   ALLEGRO_TRANSFORM t = old;
-   al_rotate_transform_3d(&t , UP.x , UP.y , UP.z , theta.yaw);
-   al_rotate_transform_3d(&t , RIGHT.x , RIGHT.y , RIGHT.z , theta.pitch);
-   al_rotate_transform_3d(&t , FORWARD.x , FORWARD.y , FORWARD.z , theta.roll);
+   ALLEGRO_TRANSFORM t;/// = old;
+   ALLEGRO_TRANSFORM m;
+
+   
+   float ux = UP.x;
+   float uy = UP.y;
+   float uz = UP.z;
+   float rx = RIGHT.x;
+   float ry = RIGHT.y;
+   float rz = RIGHT.z;
+   float fx = FORWARD.x;
+   float fy = FORWARD.y;
+   float fz = FORWARD.z;
+
+   al_identity_transform(&t);
+   
+   al_identity_transform(&m);
+   al_rotate_transform_3d(&m , ux , uy , uz , theta.yaw);
+   al_transform_coordinates_3d(&m , &fx , &fy , &fz);
+   al_transform_coordinates_3d(&m , &rx , &ry , &rz);
+   
+   al_compose_transform(&t , &m);
+   
+   al_identity_transform(&m);
+   al_rotate_transform_3d(&m , rx , ry , rz , theta.pitch);
+   al_transform_coordinates_3d(&m , &fx , &fy , &fz);
+   al_transform_coordinates_3d(&m , &ux , &uy , &uz);
+   
+   al_compose_transform(&t , &m);
+
+   al_identity_transform(&m);
+   al_rotate_transform_3d(&m , fx , fy , fz , theta.roll);
+   al_transform_coordinates_3d(&m , &rx , &ry , &rz);
+   al_transform_coordinates_3d(&m , &ux , &uy , &uz);
+   
+   al_compose_transform(&t , &m);
+
    al_scale_transform_3d(&t , scale.x , scale.y , scale.z);
    al_translate_transform_3d(&t , c.x , c.y , c.z);
+   
+   al_compose_transform(&t , &old);
+   
    al_use_transform(&t);
    
    return old;
