@@ -147,8 +147,10 @@ public :
    inline Vec3 BotRightFront() const {return Vec3(RightX() , BotY() , FrontZ() );}
    
    inline void SetCenter(Vec3 c) {info.pos = c;}
-
+   inline void SetInfo(SpatialInfo i) {info = i;}
+   
    inline Vec3 Center() const {return info.pos;}
+   inline SpatialInfo Info() const {return info;}
    
    inline const Mesh& GetMesh() const {return unitcube.GetMesh();}
 };

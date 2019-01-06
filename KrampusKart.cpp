@@ -74,20 +74,8 @@ int main(int argc , char** argv) {
    pyramid.AddTriFace(3,1,2);
    pyramid.AddTriFace(3,2,0);
    
-   Mesh cube;
-   ALLEGRO_COLOR white = al_map_rgb(255,255,255);
-   for (unsigned int i = 0 ; i < 2 ; ++i) {
-      for (unsigned int j = 0 ; j < 2 ; ++j) {
-         for (unsigned int k = 0 ; k < 2 ; ++k) {
-            cube.AddVertex(VERTEX(Vec3(-0.5 + i , -0.5 + j , -0.5 + k) , white));
-         }
-      }
-   }
    
-   cube.AddQuadFace(3,2,1,0);
-   cube.AddQuadFace(7,6,5,4);
-   
-   
+   UnitCube cube;
    
    while (!quit) {
       if (scene->Redraw()) {
@@ -104,7 +92,8 @@ int main(int argc , char** argv) {
          glEnable(GL_COLOR);
          
 //         pyramid.RenderFaces(SpatialInfo() , Vec3(1,1,1));
-         cube.RenderFaces(SpatialInfo() , Vec3(30,30,30));
+         cube.GetMesh().RenderFaces(SpatialInfo() , Vec3(30,30,30));
+         cube.GetMesh().RenderEdges(SpatialInfo() , Vec3(30,30,30) , al_map_rgb(0,0,255));
          
          glDisable(GL_COLOR);
          glDisable(GL_DEPTH_TEST);

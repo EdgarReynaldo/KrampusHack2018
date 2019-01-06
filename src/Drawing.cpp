@@ -10,7 +10,7 @@
 void OutlinePrism(const Prism& p , ALLEGRO_COLOR c) {
    const Mesh& cubemesh = p.GetMesh();
    
-   cubemesh.RenderEdges(SpatialInfo(p.Center() , Orient()) , Vec3(p.Width() , p.Height() , p.Depth()) , c);
+   cubemesh.RenderEdges(p.Info() , Vec3(p.Width() , p.Height() , p.Depth()) , c);
 }
 
 
@@ -24,7 +24,7 @@ void DrawTrackOutlines(const Track& track) {
    
    for (unsigned int i = 0 ; i < trackpath.size() - 1 ; ++i) {
          
-      p.SetCenter(trackpath[i].Pos());
+      p.SetInfo(trackpath[i].Info());
       OutlinePrism(p , al_map_rgb(255,255,255));
          
       Vec3 p1 = trackpath[i].Pos();
