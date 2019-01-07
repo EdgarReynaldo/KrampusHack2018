@@ -89,6 +89,11 @@ STATUS Editor::HandleEvent(ALLEGRO_EVENT ev) {
 
 void Editor::Display() {
    cam.Setup3D(false);
+
+   glEnable(GL_TEXTURE_2D);
+   skybox.Render();
+   glDisable(GL_TEXTURE_2D);
+
    track1.Draw();
    track2.Draw();
    track3.Draw();
@@ -100,9 +105,6 @@ void Editor::Display() {
    al_draw_textf(f , al_map_rgb(255,255,255) , 10 , sh - (10 + al_get_font_line_height(f)) , ALLEGRO_ALIGN_LEFT , 
                  "CamPos = %1.2lf , %1.2lf , %1.2lf" , campos.x , campos.y , campos.z);
 */
-   glEnable(GL_TEXTURE_2D);
-   skybox.Render();
-   glDisable(GL_TEXTURE_2D);
    
    redraw = false;
 }

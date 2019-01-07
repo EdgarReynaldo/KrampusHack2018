@@ -31,6 +31,9 @@ int SetupAllegro(int screenw , int screenh) {
    
    FreeAllegro();
    
+   al_set_new_display_option(ALLEGRO_FLOAT_DEPTH , 1 , ALLEGRO_SUGGEST);
+   al_set_new_display_option(ALLEGRO_DEPTH_SIZE , 32 , ALLEGRO_SUGGEST);
+   
    al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW | ALLEGRO_OPENGL);
    al_set_new_display_flags(ALLEGRO_WINDOWED | ALLEGRO_OPENGL);
    
