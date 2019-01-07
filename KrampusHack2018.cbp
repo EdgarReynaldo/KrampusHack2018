@@ -52,6 +52,7 @@
 		<Unit filename="include/CrossSection.hpp" />
 		<Unit filename="include/CrossSectionGen.hpp" />
 		<Unit filename="include/CrossSectionTypes.hpp" />
+		<Unit filename="include/Cube.hpp" />
 		<Unit filename="include/Drawing.hpp" />
 		<Unit filename="include/Editor.hpp" />
 		<Unit filename="include/Input.hpp" />
@@ -80,6 +81,7 @@
 		<Unit filename="src/CrossSection.cpp" />
 		<Unit filename="src/CrossSectionGen.cpp" />
 		<Unit filename="src/CrossSectionTypes.cpp" />
+		<Unit filename="src/Cube.cpp" />
 		<Unit filename="src/Drawing.cpp" />
 		<Unit filename="src/Editor.cpp" />
 		<Unit filename="src/Input.cpp" />
