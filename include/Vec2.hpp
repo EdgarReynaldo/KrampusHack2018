@@ -11,6 +11,7 @@
 
 
 class Vec2 {
+public :
    union {
       double x;
       double u;

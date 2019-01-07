@@ -19,7 +19,8 @@ Editor::Editor() :
       track4(),
       track5(),
       cam_speed(33.4),
-      cam_turn_rate(2.0*M_PI/12.0)
+      cam_turn_rate(2.0*M_PI/12.0),
+      skybox("Data/Skybox/KorzonSkybox.png")
 {
    cam.SetPos(ORIGIN - START.orient.Fw()*10.0);
 
@@ -99,6 +100,10 @@ void Editor::Display() {
    al_draw_textf(f , al_map_rgb(255,255,255) , 10 , sh - (10 + al_get_font_line_height(f)) , ALLEGRO_ALIGN_LEFT , 
                  "CamPos = %1.2lf , %1.2lf , %1.2lf" , campos.x , campos.y , campos.z);
 */
+   glEnable(GL_TEXTURE_2D);
+   skybox.Render();
+   glDisable(GL_TEXTURE_2D);
+   
    redraw = false;
 }
 

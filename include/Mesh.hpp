@@ -34,25 +34,11 @@ public :
    unsigned int tv1;
    unsigned int tv2;
    unsigned int tv3;
+   
+   bool Textured() const;
 };
 typedef TriFace TRIFACE;
 
-class QuadFace {
-   
-public :
-   QuadFace(unsigned int tl , unsigned int bl , unsigned int br , unsigned int tr);
-   QuadFace(unsigned int tl , unsigned int bl , unsigned int br , unsigned int tr,
-            unsigned int titl , unsigned int tibl  , unsigned int tibr , unsigned int titr);
-   unsigned int vtl;
-   unsigned int vbl;
-   unsigned int vbr;
-   unsigned int vtr;
-   unsigned int ttl;
-   unsigned int tbl;
-   unsigned int tbr;
-   unsigned int ttr;
-};
-typedef QuadFace QUADFACE;
 
 
 
@@ -101,6 +87,7 @@ public :
    void RenderFacesBack (const SpatialInfo& o , Vec3 scale) const;
    void RenderEdges     (const SpatialInfo& o , Vec3 scale , ALLEGRO_COLOR col) const;
 
+   void ClearAll();
 };
 
 

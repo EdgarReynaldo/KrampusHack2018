@@ -9,7 +9,7 @@
 Vec3 CalcTheta(const Orient& o) {
    
    const Vec3& fw = o.fw;
-   const Vec3& rt = o.rt;
+///   const Vec3& rt = o.rt;
    const Vec3& up = o.up;
    
    double yaw = 0.0;

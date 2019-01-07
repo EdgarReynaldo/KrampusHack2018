@@ -13,6 +13,9 @@
 #include "Intro.hpp"
 #include "Editor.hpp"
 #include "Mesh.hpp"
+#include "Skybox.hpp"
+
+
 
 #include "GL/gl.h"
 
@@ -75,7 +78,8 @@ int main(int argc , char** argv) {
    pyramid.AddTriFace(3,2,0);
    
    
-   UnitCube cube;
+   
+   
    
    while (!quit) {
       if (scene->Redraw()) {
@@ -84,19 +88,23 @@ int main(int argc , char** argv) {
          glClear(GL_DEPTH_BUFFER_BIT);
          glEnable(GL_DEPTH_TEST);
          
-         scene->Display();
-         
          glFrontFace(GL_CCW);
          glCullFace(GL_BACK);
          glEnable(GL_CULL_FACE);
          glEnable(GL_COLOR);
+
+         scene->Display();
+         
          
 //         pyramid.RenderFaces(SpatialInfo() , Vec3(1,1,1));
-         cube.GetMesh().RenderFaces(SpatialInfo() , Vec3(30,30,30));
-         cube.GetMesh().RenderEdges(SpatialInfo() , Vec3(30,30,30) , al_map_rgb(0,0,255));
+///         cube.GetMesh().RenderFaces(SpatialInfo() , Vec3(30,30,30));
+///         cube.GetMesh().RenderEdges(SpatialInfo() , Vec3(30,30,30) , al_map_rgb(0,0,255));
+         
+         
          
          glDisable(GL_COLOR);
          glDisable(GL_DEPTH_TEST);
+         glDisable(GL_CULL_FACE);
          Camera::Setup2D();
          al_draw_textf(f , al_map_rgb(255,255,255) , 10 , 10 , 0 , "%2.3lf" , al_get_time());
          al_flip_display();

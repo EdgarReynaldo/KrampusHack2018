@@ -4,12 +4,12 @@
 
 #include "Mesh.hpp"
 
-
+#include "allegro5/allegro_opengl.h"
 #include "GL/gl.h"
 
 
 const int TEXTURE_NONE = -1;///0xFFFFFFFF;
-
+const unsigned int BAD_TEXTURE = (unsigned int)TEXTURE_NONE;
 
 
 Edge::Edge(unsigned int from , unsigned int to) :
@@ -24,9 +24,9 @@ TriFace::TriFace(unsigned int i1 , unsigned int i2 , unsigned int i3) :
       v1(i1),
       v2(i2),
       v3(i3),
-      tv1((unsigned int)TEXTURE_NONE),
-      tv2((unsigned int)TEXTURE_NONE),
-      tv3((unsigned int)TEXTURE_NONE)
+      tv1(BAD_TEXTURE),
+      tv2(BAD_TEXTURE),
+      tv3(BAD_TEXTURE)
 {}
 
 
@@ -42,30 +42,10 @@ TriFace::TriFace(unsigned int i1 , unsigned int i2 , unsigned int i3 , unsigned 
 
 
 
-QuadFace::QuadFace(unsigned int tl , unsigned int bl , unsigned int br , unsigned int tr) :
-   vtl(tl),
-   vbl(bl),
-   vbr(br),
-   vtr(tr),
-   ttl((unsigned int)TEXTURE_NONE),
-   tbl((unsigned int)TEXTURE_NONE),
-   tbr((unsigned int)TEXTURE_NONE),
-   ttr((unsigned int)TEXTURE_NONE)
-{}
+bool TriFace::Textured() const {
+   return ((tv1 != BAD_TEXTURE) && (tv2 != BAD_TEXTURE) && (tv3 != BAD_TEXTURE));
+}
 
-
-
-QuadFace::QuadFace(unsigned int tl , unsigned int bl , unsigned int br , unsigned int tr,
-                   unsigned int titl , unsigned int tibl  , unsigned int tibr , unsigned int titr) :
-   vtl(tl),
-   vbl(bl),
-   vbr(br),
-   vtr(tr),
-   ttl(titl),
-   tbl(tibl),
-   tbr(tibr),
-   ttr(titr)
-{}
 
 
 
@@ -114,6 +94,7 @@ ALLEGRO_TRANSFORM Mesh::SetupTransform(const SpatialInfo& info , Vec3 scale) con
    float fz = FORWARD.z;
 
    al_identity_transform(&t);
+///   t = old;
    
    al_identity_transform(&m);
    al_rotate_transform_3d(&m , ux , uy , uz , theta.yaw);
@@ -306,20 +287,33 @@ void Mesh::RenderFacesFront(const SpatialInfo& info , Vec3 scale) const {
    
    ALLEGRO_TRANSFORM old = SetupTransform(info , scale);
 //      glEnable(GL_COLOR);
-   glBegin(GL_TRIANGLES);
    for (unsigned int f = 0 ; f < faces.size() ; ++f) {
       const TRIFACE& face = faces[f];
       const VERTEX* v[3] = {&vertices[face.v1] , &vertices[face.v2] , &vertices[face.v3]};
       
+      const unsigned int texfaces[3] = {face.tv1 , face.tv2 , face.tv3};
+      
+      bool textured = face.Textured();
+      if (textured) {
+         ALLEGRO_BITMAP* bmp = texverts[face.tv1].bmp;
+         assert(bmp);
+         GLuint texid = al_get_opengl_texture(bmp);
+         glBindTexture(GL_TEXTURE_2D , texid);
+      }
+      
+   glBegin(GL_TRIANGLES);
       for (unsigned int i = 0 ; i < 3 ; ++i) {
          unsigned char c[4] = {0};
          al_unmap_rgba(v[i]->col , &c[0] , &c[1] , &c[2] , &c[3]);
          glColor4ub(c[0] , c[1] , c[2] , c[3]);
+         if (textured) {
+            glTexCoord2d(texverts[texfaces[i]].uv.u , texverts[texfaces[i]].uv.v);
+         }
          glVertex3d(v[i]->pos.x , v[i]->pos.y , v[i]->pos.z);
 ///         glNormal3d(v[i].nml.x , v[i].nml.y , v[i].nml.z);
       }
-   }
    glEnd();
+   }
 
    al_use_transform(&old);
 }
@@ -373,4 +367,10 @@ void Mesh::RenderEdges(const SpatialInfo& info , Vec3 scale , ALLEGRO_COLOR col)
 
 
 
+void Mesh::ClearAll() {
+   vertices.clear();
+   texverts.clear();
+   edges.clear();
+   faces.clear();
+}
 

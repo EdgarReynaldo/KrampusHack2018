@@ -10,7 +10,7 @@
 #include "Camera.hpp"
 #include "Track.hpp"
 #include "TrackGen.hpp"
-
+#include "Skybox.hpp"
 
 
 class Editor : public Scene {
@@ -26,7 +26,8 @@ protected :
    double cam_speed;
    double cam_turn_rate;
    
-   
+   Skybox skybox;
+
 public :
    
 //   Editor();
