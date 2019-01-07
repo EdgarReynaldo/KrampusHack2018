@@ -98,7 +98,6 @@ void TexturedUnitCube::CreateTexturedMesh() {
    const unsigned int RTF1 = cubeoutside.AddVertex(VERTEX(rtf , white)); 
    const unsigned int RTB1 = cubeoutside.AddVertex(VERTEX(rtb , white)); 
 
-/**
    const unsigned int LBB2 = cubeinside.AddVertex(VERTEX(lbb , white)); 
    const unsigned int LBF2 = cubeinside.AddVertex(VERTEX(lbf , white)); 
    const unsigned int LTF2 = cubeinside.AddVertex(VERTEX(ltf , white)); 
@@ -107,8 +106,8 @@ void TexturedUnitCube::CreateTexturedMesh() {
    const unsigned int RBF2 = cubeinside.AddVertex(VERTEX(rbf , white)); 
    const unsigned int RTF2 = cubeinside.AddVertex(VERTEX(rtf , white)); 
    const unsigned int RTB2 = cubeinside.AddVertex(VERTEX(rtb , white)); 
-*/
 
+   
    const Vec2 corners[NUM_FACE_CORNERS] = {
       Vec2(0.0 , 1.0),
       Vec2(0.0 , 0.0),
@@ -152,6 +151,7 @@ void TexturedUnitCube::CreateTexturedMesh() {
    for (unsigned int f = 0 ; f < NUM_CUBE_FACES ; ++f) {
       for (unsigned int c = 0 ; c < NUM_FACE_CORNERS ; ++c) {
          texindex[f][c] = cubeoutside.AddTexVertex(texcoords[f][c]);
+         cubeinside.AddTexVertex(texcoords[f][c]);
       }
    }
    
@@ -218,6 +218,53 @@ void TexturedUnitCube::CreateTexturedMesh() {
                                        texindex[CUBE_FACE_BOTTOM][FACEBL] ,
                                        texindex[CUBE_FACE_BOTTOM][FACEBR] ,
                                        texindex[CUBE_FACE_BOTTOM][FACETR]);
+
+   /// Inside of the cube, for skyboxes
+   /// A cube has six faces
+   
+   /// Left side
+   cubeinside.AddTexturedFlatQuadFace(LTF2 , LBF2 , LBB2 , LTB2 , 
+                                       texindex[CUBE_FACE_LEFT][FACETL] ,
+                                       texindex[CUBE_FACE_LEFT][FACEBL] ,
+                                       texindex[CUBE_FACE_LEFT][FACEBR] ,
+                                       texindex[CUBE_FACE_LEFT][FACETR]);
+   
+   /// Right side
+   cubeinside.AddTexturedFlatQuadFace(RTB2 , RBB2 , RBF2 , RTF2 ,
+                                       texindex[CUBE_FACE_RIGHT][FACETL] ,
+                                       texindex[CUBE_FACE_RIGHT][FACEBL] ,
+                                       texindex[CUBE_FACE_RIGHT][FACEBR] ,
+                                       texindex[CUBE_FACE_RIGHT][FACETR]);
+                                       
+   /// Front side
+   cubeinside.AddTexturedFlatQuadFace(RTF2 , RBF2 , LBF2 , LTF2 ,
+                                       texindex[CUBE_FACE_FRONT][FACETL] ,
+                                       texindex[CUBE_FACE_FRONT][FACEBL] ,
+                                       texindex[CUBE_FACE_FRONT][FACEBR] ,
+                                       texindex[CUBE_FACE_FRONT][FACETR]);
+
+   /// Back side
+   cubeinside.AddTexturedFlatQuadFace(LTB2 , LBB2 , RBB2 , RTB2 ,
+                                       texindex[CUBE_FACE_BACK][FACETL] ,
+                                       texindex[CUBE_FACE_BACK][FACEBL] ,
+                                       texindex[CUBE_FACE_BACK][FACEBR] ,
+                                       texindex[CUBE_FACE_BACK][FACETR]);
+   
+   /// Top side
+   cubeinside.AddTexturedFlatQuadFace(RTB2 , RTF2 , LTF2 , LTB2 ,
+                                       texindex[CUBE_FACE_TOP][FACETL] ,
+                                       texindex[CUBE_FACE_TOP][FACEBL] ,
+                                       texindex[CUBE_FACE_TOP][FACEBR] ,
+                                       texindex[CUBE_FACE_TOP][FACETR]);
+   
+   /// Bottom side
+   cubeinside.AddTexturedFlatQuadFace(RBF2 , RBB2 , LBB2 , LBF2 ,
+                                       texindex[CUBE_FACE_BOTTOM][FACETL] ,
+                                       texindex[CUBE_FACE_BOTTOM][FACEBL] ,
+                                       texindex[CUBE_FACE_BOTTOM][FACEBR] ,
+                                       texindex[CUBE_FACE_BOTTOM][FACETR]);
+
+
 }
 
 

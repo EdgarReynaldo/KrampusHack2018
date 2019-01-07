@@ -30,6 +30,7 @@ public :
    ~Skybox() {Clear();}
    
    void Render() {
+      sbcube.Inside().RenderFaces(SpatialInfo() , Vec3(1000,1000,1000));
       sbcube.Outside().RenderFaces(SpatialInfo() , Vec3(10,10,10));
    }
 };
