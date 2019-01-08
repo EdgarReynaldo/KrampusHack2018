@@ -46,7 +46,7 @@
 			<Add directory="Allegro524/lib" />
 		</Linker>
 		<Unit filename="KrampusKart.cpp" />
-		<Unit filename="cbbuild/bin/data/Track1.txt" />
+		<Unit filename="cbbuild/bin/Data/Track1.txt" />
 		<Unit filename="include/BasicAllegro.hpp" />
 		<Unit filename="include/Camera.hpp" />
 		<Unit filename="include/CrossSection.hpp" />
