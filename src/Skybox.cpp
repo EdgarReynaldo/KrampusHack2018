@@ -55,7 +55,13 @@ enum CUBE_FACE {
    
    for(unsigned int i = 0 ; i < NUM_CUBE_FACES ; ++i) {
       ALLEGRO_BITMAP* sub = al_create_sub_bitmap(sbimage , x[i] , y[i] , w , h);
-      sbfaces[i] = al_clone_bitmap(sub);
+      ALLEGRO_BITMAP* tex = al_clone_bitmap(sub);
+///      ALLEGRO_BITMAP* tex = al_create_bitmap(w + 2 , h + 2);
+///      ALLEGRO_BITMAP* tex = al_create_bitmap(w  , h );
+///      al_set_target_bitmap(tex);
+///      al_clear_to_color(al_map_rgba(0,0,0,0));
+///      al_draw_bitmap_region(sbimage , x[i] , y[i] , w , h , 1 , 1 , 0);
+      sbfaces[i] = tex;
       al_destroy_bitmap(sub);
    }
    sbcube.Texture(sbfaces);

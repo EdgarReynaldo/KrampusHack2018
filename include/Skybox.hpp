@@ -8,11 +8,15 @@
 
 #include "Cube.hpp"
 #include "allegro5/allegro.h"
+#include "allegro5/allegro_opengl.h"
 
 
 #include "Cube.hpp"
 
+#include "GL/gl.h"
+#include "GL/glu.h"
 
+#define GL_CLAMP_TO_EDGE 0x812F
 
 class Skybox {
    
@@ -29,9 +33,11 @@ public :
    Skybox(const char* skybox_file);
    ~Skybox() {Clear();}
    
-   void Render() {
-      sbcube.Inside().RenderFaces(SpatialInfo() , Vec3(1000,1000,1000));
-      sbcube.Outside().RenderFaces(SpatialInfo() , Vec3(10,10,10));
+   void Render(Vec3 pos) {
+      glTexParameteri(GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_CLAMP_TO_EDGE);
+      glTexParameteri(GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_CLAMP_TO_EDGE);
+      sbcube.Inside().RenderFaces(SpatialInfo(pos , Orient()) , Vec3(500,500,500));
+///      sbcube.Outside().RenderFaces(SpatialInfo() , Vec3(10,10,10));
    }
 };
 

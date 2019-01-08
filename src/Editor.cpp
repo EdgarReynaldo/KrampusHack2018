@@ -20,7 +20,10 @@ Editor::Editor() :
       track5(),
       cam_speed(33.4),
       cam_turn_rate(2.0*M_PI/12.0),
-      skybox("Data/Skybox/KorzonSkybox.png")
+///      skybox("Data/Skybox/KorzonSkybox2.png")
+///      skybox("Data/Skybox/Space1.png")
+      skybox("Data/Skybox/GreenSpace1.png")
+///      skybox("Data/Skybox/SkyboxC.png")
 {
    cam.SetPos(ORIGIN - START.orient.Fw()*10.0);
 
@@ -88,12 +91,16 @@ STATUS Editor::HandleEvent(ALLEGRO_EVENT ev) {
 
 
 void Editor::Display() {
+   al_set_target_backbuffer(d);
+   
    cam.Setup3D(false);
 
    glEnable(GL_TEXTURE_2D);
-   skybox.Render();
+   skybox.Render(cam.Pos());
    glDisable(GL_TEXTURE_2D);
 
+   glClear(GL_DEPTH_BUFFER_BIT);
+   
    track1.Draw();
    track2.Draw();
    track3.Draw();

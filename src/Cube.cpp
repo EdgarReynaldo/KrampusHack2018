@@ -79,14 +79,14 @@ void TexturedUnitCube::CreateTexturedMesh() {
    /// A cube has 8 vertices
    ALLEGRO_COLOR white = al_map_rgb(255,255,255);
 
-   const Vec3 lbb(-0.5 , -0.5 ,  0.5);
-   const Vec3 lbf(-0.5 , -0.5 , -0.5);
-   const Vec3 ltf(-0.5 ,  0.5 , -0.5);
-   const Vec3 ltb(-0.5 ,  0.5 ,  0.5);
-   const Vec3 rbb( 0.5 , -0.5 ,  0.5);
-   const Vec3 rbf( 0.5 , -0.5 , -0.5);
-   const Vec3 rtf( 0.5 ,  0.5 , -0.5);
-   const Vec3 rtb( 0.5 ,  0.5 ,  0.5);
+   const Vec3 lbb(-0.5 , -0.5 , -0.5);
+   const Vec3 lbf(-0.5 , -0.5 ,  0.5);
+   const Vec3 ltf(-0.5 ,  0.5 ,  0.5);
+   const Vec3 ltb(-0.5 ,  0.5 , -0.5);
+   const Vec3 rbb( 0.5 , -0.5 , -0.5);
+   const Vec3 rbf( 0.5 , -0.5 ,  0.5);
+   const Vec3 rtf( 0.5 ,  0.5 ,  0.5);
+   const Vec3 rtb( 0.5 ,  0.5 , -0.5);
 
    /// L or R, T or B, B or F
    const unsigned int LBB1 = cubeoutside.AddVertex(VERTEX(lbb , white)); 
@@ -206,6 +206,7 @@ void TexturedUnitCube::CreateTexturedMesh() {
                                        texindex[CUBE_FACE_BACK][FACETR]);
    
    /// Top side
+///   cubeoutside.AddTexturedFlatQuadFace(RTF1 , RTB1 , LTB1 , LTF1 , 
    cubeoutside.AddTexturedFlatQuadFace(LTB1 , LTF1 , RTF1 , RTB1 ,
                                        texindex[CUBE_FACE_TOP][FACETL] ,
                                        texindex[CUBE_FACE_TOP][FACEBL] ,
@@ -251,14 +252,16 @@ void TexturedUnitCube::CreateTexturedMesh() {
                                        texindex[CUBE_FACE_BACK][FACETR]);
    
    /// Top side
-   cubeinside.AddTexturedFlatQuadFace(RTB2 , RTF2 , LTF2 , LTB2 ,
+///   cubeinside.AddTexturedFlatQuadFace(RTB2 , RTF2 , LTF2 , LTB2 ,
+   cubeinside.AddTexturedFlatQuadFace(LTF2 , LTB2 , RTB2 , RTF2 , 
                                        texindex[CUBE_FACE_TOP][FACETL] ,
                                        texindex[CUBE_FACE_TOP][FACEBL] ,
                                        texindex[CUBE_FACE_TOP][FACEBR] ,
                                        texindex[CUBE_FACE_TOP][FACETR]);
    
    /// Bottom side
-   cubeinside.AddTexturedFlatQuadFace(RBF2 , RBB2 , LBB2 , LBF2 ,
+///   cubeinside.AddTexturedFlatQuadFace(RBF2 , RBB2 , LBB2 , LBF2 ,
+   cubeinside.AddTexturedFlatQuadFace(LBB2 , LBF2 , RBF2 , RBB2 ,
                                        texindex[CUBE_FACE_BOTTOM][FACETL] ,
                                        texindex[CUBE_FACE_BOTTOM][FACEBL] ,
                                        texindex[CUBE_FACE_BOTTOM][FACEBR] ,
