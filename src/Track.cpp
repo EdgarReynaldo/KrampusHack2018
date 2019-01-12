@@ -198,6 +198,8 @@ bool Track::GenerateTrackMesh() {
             TextureVertex(trackbmp , uv[3])
          };
          
+         
+         
          for (unsigned int n = 0 ; n < 4 ; ++n) {
             uppermesh.AddVertex(vtx[n]);
             lowermesh.AddVertex(vtx[n+4]);
