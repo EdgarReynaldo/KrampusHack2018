@@ -192,7 +192,6 @@ bool Track::GenerateTrackMesh() {
          };
          
          const TEXTEX texvtx[4] = {
-<<<<<<< HEAD
             TextureVertex(trackbmp , uv[0]),
             TextureVertex(trackbmp , uv[1]),
             TextureVertex(trackbmp , uv[2]),
@@ -211,11 +210,6 @@ bool Track::GenerateTrackMesh() {
          
          
          
-=======
-            
-         }
-         
->>>>>>> a2e48514c48242a93a70736d9cb7992f6fac01b7
       }
       
    }
