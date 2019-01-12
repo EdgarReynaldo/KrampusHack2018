@@ -117,15 +117,25 @@ protected :
    
    TrackInfo start;
    Prism bounds;
+   double length;
    
    Mesh uppermesh;
    Mesh lowermesh;
+   Mesh sidemesh;
    
    std::vector<TrackSegment> segments;
    std::vector<CSG> csgenerators;
    std::vector<TrackInfo> track;
 
-   SpatialInfo GetRealInfoFromLocal(const SpatialInfo& info , Vec2 csxy , double roll);
+   ALLEGRO_BITMAP* trackbmp;
+   
+   
+   
+   SpatialInfo GetRealInfoFromLocal(const SpatialInfo& info , const Vec2& csxy , const double& roll);
+
+   void ClearMeshes();
+   double CalcLength();
+   
 
    bool GenerateTrack(double dz);
    
@@ -142,10 +152,14 @@ public :
          bounds(),
          uppermesh(),
          lowermesh(),
+         sidemesh(),
          segments(),
          csgenerators(),
-         track() 
-   {}
+         track(),
+         trackbmp(0)
+   {
+      trackbmp = al_load_bitmap("Data/Textures/CobbleStone1024.png");
+   }
    
    void AddSegment(TrackSegment seg , CSG csgenerator);
    
@@ -155,7 +169,7 @@ public :
    void DrawOutlines();
    
    const std::vector<TrackInfo>& TrackInfoVec() const {return track;}
-   double Length();
+   double Length() {return length;}
    
    const Prism& Bounds() const {return bounds;}
 };
