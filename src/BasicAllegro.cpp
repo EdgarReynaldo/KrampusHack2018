@@ -18,6 +18,28 @@ int sh = 600;
 double FPS = 60.0;
 double SPT = 1.0/FPS;
 
+#include "GL/gl.h"
+#include "GL/glu.h"
+
+#include <cstdio>
+
+
+/**
+void __stdcall
+MessageCallback( GLenum source,
+                 GLenum type,
+                 GLuint id,
+                 GLenum severity,
+                 GLsizei length,
+                 const GLbyte* message,
+                 const void* userParam )
+{
+  fprintf( stdout, "GL CALLBACK: %s type = 0x%x, severity = 0x%x, message = %s\n",
+           ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
+            type, severity, message );
+}
+*/
+
 
 int SetupAllegro(int screenw , int screenh) {
    
@@ -56,6 +78,12 @@ int SetupAllegro(int screenw , int screenh) {
    al_register_event_source(q , al_get_mouse_event_source());
    al_register_event_source(q , al_get_timer_event_source(t));
    
+
+   // During init, enable debug output
+///   glEnable              ( GL_DEBUG_OUTPUT );
+///   glDebugMessageCallback( MessageCallback, 0 );
+
+
    return 0;
 }
 

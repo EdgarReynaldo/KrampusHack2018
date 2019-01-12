@@ -19,7 +19,8 @@ public :
    CrossSectionBase() {}
    virtual ~CrossSectionBase() {}
    
-   virtual Vec3 XYPosition(double xpct) const =0;
+   virtual Vec2 XYPosition(double xpct) const =0;
+   virtual double LatDist(double xpct) const =0;
    virtual double Roll(double xpct) const =0;/// Measures the amount of roll, so we can get the orientation at that point on the cross section
    
    CrossSection Generate(const unsigned int NSEGS);
@@ -46,7 +47,8 @@ public :
    
    ArcBase(double hdiameter , double vradius , double ycenter , double theta_width);
    
-   virtual Vec3 XYPosition(double xpct) const;
+   virtual Vec2 XYPosition(double xpct) const;
+   virtual double LatDist(double xpct) const;
    virtual double Roll(double xpct) const;
    
    double HDiameter() const {return 2.0*hrad;}
@@ -122,7 +124,7 @@ class Span : public ArcBase {
 public :
    Span(double width);
    
-//   virtual Vec3 XYPosition(double xpct) {return xpct*w/2.0;}
+   virtual Vec2 XYPosition(double xpct) {return Vec2(xpct*w/2.0 , 0.0);}
    virtual double Roll(double xpct) {(void)xpct;return 0.0;}
    
 };
@@ -138,7 +140,7 @@ public :
    Curve(ArcBase* base) : pbase(base) {}
       
    
-   Vec3 XYPosition(double xpct) const {return pbase->XYPosition(xpct);}
+   Vec2 XYPosition(double xpct) const {return pbase->XYPosition(xpct);}
    double Roll(double xpct)     const {return pbase->Roll(xpct);}
    
    CrossSection Generate(const unsigned int NSEGS) const {return pbase->Generate(NSEGS);}

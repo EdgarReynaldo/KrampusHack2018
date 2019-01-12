@@ -118,19 +118,34 @@ protected :
    TrackInfo start;
    Prism bounds;
    
+   Mesh uppermesh;
+   Mesh lowermesh;
+   
    std::vector<TrackSegment> segments;
    std::vector<CSG> csgenerators;
    std::vector<TrackInfo> track;
 
-
+   SpatialInfo GetRealInfoFromLocal(const SpatialInfo& info , Vec2 csxy , double roll);
 
    bool GenerateTrack(double dz);
+   
+   bool GenerateTrackMesh();
    
    Prism GetBoundingPrism();
 
 public :
    
-   Track() : start() , bounds() , segments() , track() {}
+///   Track();
+   
+   Track() :
+         start(),
+         bounds(),
+         uppermesh(),
+         lowermesh(),
+         segments(),
+         csgenerators(),
+         track() 
+   {}
    
    void AddSegment(TrackSegment seg , CSG csgenerator);
    

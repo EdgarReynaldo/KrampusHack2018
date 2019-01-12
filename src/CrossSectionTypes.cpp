@@ -25,7 +25,7 @@ CrossSection CrossSectionBase::Generate(const unsigned int NSEGS) {
    CrossSection cs;
    for (unsigned int i = 0 ; i < NPOINTS ; ++i) {
       double pct = (double)i/(NPOINTS-1);
-      cs.AddPoint(XYPosition(pct) , Roll(pct));
+      cs.AddPoint(XYPosition(pct) , LatDist(pct) , Roll(pct));
    }
    return cs;
 }
@@ -85,12 +85,35 @@ ArcBase::ArcBase(double hdiameter , double vradius , double ycenter , double the
 
 
 
-Vec3 ArcBase::XYPosition(double xpct) const {
+Vec2 ArcBase::XYPosition(double xpct) const {
    if (xpct < -1.0) {xpct = -1.0;}
    if (xpct > 1.0) {xpct = 1.0;}
    if (ypos > 0.0) {xpct = -xpct;}
    double theta = tcenter + xpct*twidth/2.0;
-   return Vec3(hrad*cos(theta) , vrad*sin(theta) - ypos , 0);
+   return Vec2(hrad*cos(theta) , vrad*sin(theta) - ypos);
+}
+
+
+
+double ArcBase::LatDist(double xpct) const {
+   if (xpct < -1.0) {xpct = -1.0;}
+   if (xpct > 1.0) {xpct = 1.0;}
+   if (hrad == vrad) {
+      /// arc length is rtheta
+      return hrad*twidth*xpct*0.5;
+   }
+   else if (vrad == 0.0) {
+      /// span
+      return hrad*xpct;
+   }
+   else {
+      /// Fucking ellipse
+//      double theta1 = tcenter;
+      double theta = tcenter + twidth*xpct/2.0;
+      Vec2 arcpos(hrad*cos(theta) , vrad*sin(theta));
+      return arcpos.Magnitude()*M_PI*0.5/sqrt(2.0);
+   }
+   return xpct;
 }
 
 
