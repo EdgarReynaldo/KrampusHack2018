@@ -140,6 +140,9 @@ protected :
    bool GenerateTrack(double dz);
    
    bool GenerateTrackMesh();
+
+   
+}
    
    Prism GetBoundingPrism();
 
