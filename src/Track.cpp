@@ -8,6 +8,7 @@
 
 const double NSEGSWIDE = 10;
 const double STARTING_DIAMETER = 50.0;
+const double TRACK_THICKNESS = 5.0;
 
 const Curve STARTING_CURVE = new Span(STARTING_DIAMETER);
 
@@ -38,16 +39,16 @@ void TrackInfo::Set(const SpatialInfo& spatial_info , const CrossSection& cross_
 
 
 
-SpatialInfo Track::GetRealInfoFromLocal(const SpatialInfo& info , const Vec2& csxy , const double& roll);
+SpatialInfo Track::GetRealInfoFromLocal(const SpatialInfo& info , const Vec2& csxy , const double& roll) {
    
    const Vec3& pos = info.pos;
    const Orient& o = info.orient;
    
    Vec3 realpos = pos + csxy.x*o.Rt() + csxy.y*o.Up();
    Orient realo = o;
-   o.TurnLocal(Vec3(0,0,roll) , 1.0);
+   realo.TurnLocal(Vec3(0,0,roll) , 1.0);
    
-   return SpatialInfo(realpos , o);
+   return SpatialInfo(realpos , realo);
 }
 
 
@@ -121,12 +122,6 @@ bool Track::GenerateTrackMesh() {
       const SpatialInfo& info1 = tinfo1.Info();
       const SpatialInfo& info2 = tinfo2.Info();
       
-      const Vec3& tpos1 = info1.pos;
-      const Vec3& tpos2 = info2.pos;
-      
-      const Orient& torient1 = info1.orient;
-      const Orient& torient2 = info2.orient;
-
       const CrossSection& cs1 = tinfo1.CSection();
       const CrossSection& cs2 = tinfo2.CSection();
    
@@ -174,15 +169,15 @@ bool Track::GenerateTrackMesh() {
             Vertex(zrinfo1b , col),
             Vertex(zrinfo2b , col),
             Vertex(zrinfo2a , col),
-         }
+         };
          
          const double x1a = ldist1[i2];
          const double x1b = ldist1[i2 + 1];
          const double x2a = ldist2[i2];
          const double x2b = ldist2[i2 + 1];
          
-         const double y1 = Length()*(double)( i )/(double)(track.size() - 2);
-         const double y2 = Length()*(double)(i+1)/(double)(track.size() - 2);
+         const double y1 = Length()*(double)( i1 )/(double)(track.size() - 2);
+         const double y2 = Length()*(double)(i1+1)/(double)(track.size() - 2);
          
          const Vec2 uv[4] = {
             Vec2(x1a , y1),
@@ -223,26 +218,31 @@ bool Track::GenerateTrackMesh() {
          
          /// Left
          if (i2 == 0) {
-            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[3].pos , sidecolor));
-            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[7].pos , sidecolor));
-            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[4].pos , sidecolor));
-            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[0].pos , sidecolor));
+            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[3].pos , sidecol));
+            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[7].pos , sidecol));
+            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[4].pos , sidecol));
+            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[0].pos , sidecol));
             sidemesh.AddFlatQuadFace(v0 , v1 , v2 , v3);
          }
          /// Right
          else if (i2 == NSEGSWIDE - 1) {
-            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[1].pos , sidecolor));
-            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[5].pos , sidecolor));
-            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[6].pos , sidecolor));
-            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[2].pos , sidecolor));
+            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[1].pos , sidecol));
+            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[5].pos , sidecol));
+            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[6].pos , sidecol));
+            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[2].pos , sidecol));
             sidemesh.AddFlatQuadFace(v0 , v1 , v2 , v3);
          }
          
          /// Top and bottom meshes
          
+         unsigned int idx[8] = {0};
+         unsigned int texidx[4] = {0};
+         
          for (unsigned int n = 0 ; n < 4 ; ++n) {
-            uppermesh.AddVertex(vtx[n]);
-            lowermesh.AddVertex(vtx[n+4]);
+            idx[n] = uppermesh.AddVertex(vtx[n]);
+            texidx[n] = uppermesh.AddTexVertex(texvtx[n]);
+            
+            idx[n+4] = lowermesh.AddVertex(vtx[n+4]);
          }
          
          for (unsigned int n = 0 ; n < 4 ; ++n) {
@@ -250,11 +250,12 @@ bool Track::GenerateTrackMesh() {
             lowermesh.AddEdge((n+4) , 4 + (n+1)%4);
          }
          
-         
-         
+         uppermesh.AddTexturedQuadFace(idx[3] , idx[0] , idx[1] , idx[2] , texidx[3] , texidx[0] , texidx[1] , texidx[2]);
+         lowermesh.AddFlatQuadFace(idx[4] , idx[7] , idx[6] , idx[5]);
       }
       
    }
+   return true;
 }
 
 
