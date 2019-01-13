@@ -173,13 +173,15 @@ bool Track::GenerateTrackMesh() {
             Vertex(zrinfo2a , col),
          };
          
-         const double x1a = ldist1[i2];
-         const double x1b = ldist1[i2 + 1];
-         const double x2a = ldist2[i2];
-         const double x2b = ldist2[i2 + 1];
+         const double factor = 0.05;
          
-         const double y1 = Length()*(double)( i1 )/(double)(track.size() - 2);
-         const double y2 = Length()*(double)(i1+1)/(double)(track.size() - 2);
+         const double x1a = factor*ldist1[i2];
+         const double x1b = factor*ldist1[i2 + 1];
+         const double x2a = factor*ldist2[i2];
+         const double x2b = factor*ldist2[i2 + 1];
+         
+         const double y1 = factor*Length()*(double)( i1 )/(double)(track.size() - 2);
+         const double y2 = factor*Length()*(double)(i1+1)/(double)(track.size() - 2);
          
          const Vec2 uv[4] = {
             Vec2(x1a , y1),
@@ -248,8 +250,8 @@ bool Track::GenerateTrackMesh() {
          }
          
          for (unsigned int n = 0 ; n < 4 ; ++n) {
-            uppermesh.AddEdge(n , (n+1)%4);
-            lowermesh.AddEdge((n+4) , 4 + (n+1)%4);
+            uppermesh.AddEdge(idx[ n ] , idx[(n+1)%4]);
+            lowermesh.AddEdge(idx[n+4] , idx[4 + (n+1)%4]);
          }
          
          uppermesh.AddTexturedQuadFace(idx[3] , idx[0] , idx[1] , idx[2] , texidx[3] , texidx[0] , texidx[1] , texidx[2]);
@@ -289,7 +291,18 @@ bool Track::BuildTrack() {
 
 
 void Track::Draw() {
-   DrawTrackOutlines(*this);
+///   DrawTrackOutlines(*this);
+
+
+   sidemesh.RenderFacesFront(SpatialInfo() , Vec3(1,1,1));
+   sidemesh.RenderEdges(SpatialInfo() , Vec3(1,1,1) , al_map_rgba(255,255,0,255));
+   lowermesh.RenderFacesFront(SpatialInfo() , Vec3(1,1,1));
+   lowermesh.RenderEdges(SpatialInfo() , Vec3(1,1,1) , al_map_rgba(0,0,0,255));
+   glEnable(GL_TEXTURE_2D);
+   uppermesh.RenderTexturedFacesFront(SpatialInfo() , Vec3(1,1,1));
+///   uppermesh.RenderFacesFront(SpatialInfo() , Vec3(1,1,1));
+   glDisable(GL_TEXTURE_2D);
+///   uppermesh.RenderEdges(SpatialInfo() , Vec3(1,1,1) , al_map_rgba(255,255,255,255));
 }
 
 

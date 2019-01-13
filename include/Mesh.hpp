@@ -82,10 +82,11 @@ public :
    inline const TRIFACE& GetTriFace  (unsigned int index) {return faces[index];}
    
    
-   void RenderFaces     (const SpatialInfo& o , Vec3 scale) const;
-   void RenderFacesFront(const SpatialInfo& o , Vec3 scale) const;
-   void RenderFacesBack (const SpatialInfo& o , Vec3 scale) const;
-   void RenderEdges     (const SpatialInfo& o , Vec3 scale , ALLEGRO_COLOR col) const;
+   void RenderFaces             (const SpatialInfo& info , Vec3 scale) const;
+   void RenderTexturedFacesFront(const SpatialInfo& info , Vec3 scale) const;
+   void RenderFacesFront        (const SpatialInfo& info , Vec3 scale) const;
+   void RenderFacesBack         (const SpatialInfo& info , Vec3 scale) const;
+   void RenderEdges             (const SpatialInfo& info , Vec3 scale , ALLEGRO_COLOR col) const;
 
    void ClearAll();
 };

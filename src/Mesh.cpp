@@ -292,14 +292,40 @@ void Mesh::RenderFacesFront(const SpatialInfo& info , Vec3 scale) const {
       const TRIFACE& face = faces[f];
       const VERTEX* v[3] = {&vertices[face.v1] , &vertices[face.v2] , &vertices[face.v3]};
       
+      glBegin(GL_TRIANGLES);
+      for (unsigned int i = 0 ; i < 3 ; ++i) {
+         unsigned char c[4] = {0};
+         al_unmap_rgba(v[i]->col , &c[0] , &c[1] , &c[2] , &c[3]);
+         glColor4ub(c[0] , c[1] , c[2] , c[3]);
+         glVertex3d(v[i]->pos.x , v[i]->pos.y , v[i]->pos.z);
+///         glNormal3d(v[i].nml.x , v[i].nml.y , v[i].nml.z);
+      }
+      glEnd();
+   }
+
+   al_use_transform(&old);
+}
+
+
+
+void Mesh::RenderTexturedFacesFront(const SpatialInfo& info , Vec3 scale) const {
+   ALLEGRO_TRANSFORM old = SetupTransform(info , scale);
+//      glEnable(GL_COLOR);
+   for (unsigned int f = 0 ; f < faces.size() ; ++f) {
+      const TRIFACE& face = faces[f];
+      const VERTEX* v[3] = {&vertices[face.v1] , &vertices[face.v2] , &vertices[face.v3]};
+      
       const unsigned int texfaces[3] = {face.tv1 , face.tv2 , face.tv3};
       
       bool textured = face.Textured();
+      EAGLE_ASSERT(textured);
       if (textured) {
          ALLEGRO_BITMAP* bmp = texverts[face.tv1].bmp;
          EAGLE_ASSERT(bmp);
          GLuint texid = al_get_opengl_texture(bmp);
          glBindTexture(GL_TEXTURE_2D , texid);
+         glTexParameteri(GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT);
+         glTexParameteri(GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT);
       }
       
    glBegin(GL_TRIANGLES);
@@ -307,9 +333,7 @@ void Mesh::RenderFacesFront(const SpatialInfo& info , Vec3 scale) const {
          unsigned char c[4] = {0};
          al_unmap_rgba(v[i]->col , &c[0] , &c[1] , &c[2] , &c[3]);
          glColor4ub(c[0] , c[1] , c[2] , c[3]);
-         if (textured) {
-            glTexCoord2d(texverts[texfaces[i]].uv.u , texverts[texfaces[i]].uv.v);
-         }
+         glTexCoord2d(texverts[texfaces[i]].uv.u , texverts[texfaces[i]].uv.v);
          glVertex3d(v[i]->pos.x , v[i]->pos.y , v[i]->pos.z);
 ///         glNormal3d(v[i].nml.x , v[i].nml.y , v[i].nml.z);
       }

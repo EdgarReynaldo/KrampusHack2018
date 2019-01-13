@@ -87,7 +87,7 @@ int main(int argc , char** argv) {
          
          glClear(GL_DEPTH_BUFFER_BIT);
          glEnable(GL_DEPTH_TEST);
-         glDepthFunc(GL_LEQUAL);
+         glDepthFunc(GL_LESS);///LEQUAL);
          glFrontFace(GL_CCW);
          glCullFace(GL_BACK);
          glEnable(GL_CULL_FACE);
