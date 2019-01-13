@@ -66,6 +66,7 @@ public :
    friend Vec3 Rotate3D(const Vec3& axis , const double theta_radians);
    
    friend Vec3 operator*(const Vec3& lhs , double factor);
+   friend Vec3 operator*(double factor , const Vec3& lhs);
    friend Vec3 CrossProduct(const Vec3& a , const Vec3& b);
    friend double DotProduct(const Vec3& a , const Vec3& b);
 };
@@ -73,6 +74,10 @@ public :
 Vec3 Rotate3D(const Vec3& vec , const Vec3& axis , const double theta_radians);
 
 inline Vec3 operator*(const Vec3& lhs , double factor) {
+   return Vec3(factor*lhs.x , factor*lhs.y , factor*lhs.z);
+}
+
+inline Vec3 operator*(double factor , const Vec3& lhs) {
    return Vec3(factor*lhs.x , factor*lhs.y , factor*lhs.z);
 }
 
