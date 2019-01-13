@@ -170,10 +170,10 @@ bool Track::GenerateTrackMesh() {
             Vertex(rinfo1b.pos , col),
             Vertex(rinfo2b.pos , col),
             Vertex(rinfo2a.pos , col),
-            Vertex(zrinfo1a.pos , col),
-            Vertex(zrinfo1b.pos , col),
-            Vertex(zrinfo2b.pos , col),
-            Vertex(zrinfo2a.pos , col),
+            Vertex(zrinfo1a , col),
+            Vertex(zrinfo1b , col),
+            Vertex(zrinfo2b , col),
+            Vertex(zrinfo2a , col),
          }
          
          const double x1a = ldist1[i2];
@@ -198,7 +198,47 @@ bool Track::GenerateTrackMesh() {
             TextureVertex(trackbmp , uv[3])
          };
          
+         /// Side mesh
          
+         const ALLEGRO_COLOR sidecol = al_map_rgba(255,255,0,255);
+         
+         /// Front 
+         if ((i1 == 0) && (i2 == 0)) {
+            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[3].pos , sidecol));
+            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[7].pos , sidecol));
+            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[4].pos , sidecol));
+            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[0].pos , sidecol));
+            sidemesh.AddFlatQuadFace(v0,v1,v2,v3);
+         }
+         /// Back
+         else if ((i1 == (track.size() - 2)) && (i2 == 0)) {
+            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[1].pos , sidecol));
+            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[5].pos , sidecol));
+            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[6].pos , sidecol));
+            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[2].pos , sidecol));
+            sidemesh.AddFlatQuadFace(v0,v1,v2,v3);
+         }
+         
+         /// Sides
+         
+         /// Left
+         if (i2 == 0) {
+            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[3].pos , sidecolor));
+            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[7].pos , sidecolor));
+            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[4].pos , sidecolor));
+            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[0].pos , sidecolor));
+            sidemesh.AddFlatQuadFace(v0 , v1 , v2 , v3);
+         }
+         /// Right
+         else if (i2 == NSEGSWIDE - 1) {
+            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[1].pos , sidecolor));
+            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[5].pos , sidecolor));
+            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[6].pos , sidecolor));
+            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[2].pos , sidecolor));
+            sidemesh.AddFlatQuadFace(v0 , v1 , v2 , v3);
+         }
+         
+         /// Top and bottom meshes
          
          for (unsigned int n = 0 ; n < 4 ; ++n) {
             uppermesh.AddVertex(vtx[n]);

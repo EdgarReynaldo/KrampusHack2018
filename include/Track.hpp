@@ -161,6 +161,8 @@ public :
       trackbmp = al_load_bitmap("Data/Textures/CobbleStone1024.png");
    }
    
+   ~Track() {al_destroy_bitmap(trackbmp);}
+   
    void AddSegment(TrackSegment seg , CSG csgenerator);
    
    bool BuildTrack();
