@@ -95,8 +95,10 @@ STATUS Editor::HandleEvent(ALLEGRO_EVENT ev) {
 
 void Editor::Display() {
    al_set_target_backbuffer(d);
-   
+
    cam.Setup3D(false);
+
+   glClear(GL_DEPTH_BUFFER_BIT);
 
    glEnable(GL_TEXTURE_2D);
    skybox.Render(cam.Pos());

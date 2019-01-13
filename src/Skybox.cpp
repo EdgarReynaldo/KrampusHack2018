@@ -82,4 +82,13 @@ Skybox::Skybox(const char* skybox_file) :
 
 
 
+void Skybox::Render(Vec3 pos) {
+   glTexParameteri(GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_CLAMP_TO_EDGE);
+   glTexParameteri(GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_CLAMP_TO_EDGE);
+   sbcube.Inside().RenderTexturedFacesFront(SpatialInfo(pos , Orient()) , Vec3(500,500,500));
+///      sbcube.Outside().RenderFaces(SpatialInfo() , Vec3(10,10,10));
+}
+
+
+
 

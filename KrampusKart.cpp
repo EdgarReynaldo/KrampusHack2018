@@ -83,6 +83,8 @@ int main(int argc , char** argv) {
    
    while (!quit) {
       if (scene->Redraw()) {
+         al_set_target_backbuffer(d);
+      
          al_clear_to_color(al_map_rgb(0,0,0));
          
          glClear(GL_DEPTH_BUFFER_BIT);
