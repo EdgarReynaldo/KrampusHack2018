@@ -5,7 +5,7 @@
 #include "CrossSectionGen.hpp"
 
 
-#include <cassert>
+#include "Exception.hpp"
 
 
 #include "allegro5/allegro_primitives.h"
@@ -18,7 +18,7 @@
 
 
 CrossSection CrossSectionBase::Generate(const unsigned int NSEGS) {
-   assert(NSEGS > 0);
+   EAGLE_ASSERT(NSEGS > 0);
 
    const unsigned int NPOINTS = NSEGS + 1;
    

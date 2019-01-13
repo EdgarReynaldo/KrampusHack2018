@@ -3,7 +3,7 @@
 
 
 #include "TrackGen.hpp"
-
+#include "Exception.hpp"
 
 
 
@@ -64,7 +64,7 @@ SpatialInfo CurvedTrack::Eval(const SpatialInfo& start , double pct) {
    if (pct > 1.0) {pct = 1.0;}
    
    /// First find the radius of the curve
-   assert(t != 0.0);
+   EAGLE_ASSERT(t != 0.0);
    
    const double radius = l/fabs(t);
    

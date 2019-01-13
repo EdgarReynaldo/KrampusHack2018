@@ -4,6 +4,8 @@
 
 #include "Track.hpp"
 #include "Drawing.hpp"
+#include "Exception.hpp"
+
 
 
 const double NSEGSWIDE = 10;
@@ -112,7 +114,7 @@ bool Track::GenerateTrackMesh() {
    
    ClearMeshes();
    
-   assert(track.size() > 1);
+   EAGLE_ASSERT(track.size() > 1);
    
    for (unsigned int i1 = 0 ; i1 < track.size() - 1 ; ++i1) {
 
@@ -134,8 +136,8 @@ bool Track::GenerateTrackMesh() {
       const std::vector<double>& rvals2 = cs2.RollValues();
    
       
-      assert(xypts1.size() == NSEGSWIDE + 1);
-      assert(xypts2.size() == NSEGSWIDE + 1);
+      EAGLE_ASSERT(xypts1.size() == NSEGSWIDE + 1);
+      EAGLE_ASSERT(xypts2.size() == NSEGSWIDE + 1);
       
       for (unsigned int i2 = 0 ; i2 < NSEGSWIDE ; ++i2) {
          const Vec2& xy1a = xypts1[i2];

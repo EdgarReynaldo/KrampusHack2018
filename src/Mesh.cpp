@@ -3,6 +3,7 @@
 
 
 #include "Mesh.hpp"
+#include "Exception.hpp"
 
 #include "allegro5/allegro_opengl.h"
 #include "GL/gl.h"
@@ -54,7 +55,7 @@ unsigned int Mesh::UnsignedVIndex(int index) {
       index = (int)vertices.size() - index;
    }
    unsigned int uidx = index;
-   assert(uidx <= vertices.size());
+   EAGLE_ASSERT(uidx <= vertices.size());
    return uidx;
 }
 
@@ -65,7 +66,7 @@ unsigned int Mesh::UnsignedTIndex(int index) {
       index = (int)texverts.size() - index;
    }
    unsigned int uidx = index;
-   assert(uidx <= texverts.size());
+   EAGLE_ASSERT(uidx <= texverts.size());
    return uidx;
 }
 
@@ -296,7 +297,7 @@ void Mesh::RenderFacesFront(const SpatialInfo& info , Vec3 scale) const {
       bool textured = face.Textured();
       if (textured) {
          ALLEGRO_BITMAP* bmp = texverts[face.tv1].bmp;
-         assert(bmp);
+         EAGLE_ASSERT(bmp);
          GLuint texid = al_get_opengl_texture(bmp);
          glBindTexture(GL_TEXTURE_2D , texid);
       }

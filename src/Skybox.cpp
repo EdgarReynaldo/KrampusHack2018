@@ -3,6 +3,7 @@
 
 
 #include "Skybox.hpp"
+#include "Exception.hpp"
 
 
 
@@ -27,11 +28,11 @@ void Skybox::MakeSkybox(const char* skybox_file) {
    Clear();
    
    sbimage = al_load_bitmap(skybox_file);
-   assert(sbimage);
+   EAGLE_ASSERT(sbimage);
    
    int tw = al_get_bitmap_width(sbimage);
    int th = al_get_bitmap_height(sbimage);
-   assert(tw*3 == th*4);/// Enforce aspect ration of skybox image - it should be a grid of 4x3 squares, any size
+   EAGLE_ASSERT(tw*3 == th*4);/// Enforce aspect ration of skybox image - it should be a grid of 4x3 squares, any size
 /*   
 enum CUBE_FACE {
    CUBE_FACE_LEFT   = 0,
@@ -51,7 +52,7 @@ enum CUBE_FACE {
    };
    const int w = tw/4;
    const int h = th/3;
-   assert(w == h);/// Each side of the cube must be square
+   EAGLE_ASSERT(w == h);/// Each side of the cube must be square
    
    for(unsigned int i = 0 ; i < NUM_CUBE_FACES ; ++i) {
       ALLEGRO_BITMAP* sub = al_create_sub_bitmap(sbimage , x[i] , y[i] , w , h);
