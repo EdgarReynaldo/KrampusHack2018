@@ -202,19 +202,19 @@ bool Track::GenerateTrackMesh() {
          const ALLEGRO_COLOR sidecol = al_map_rgba(255,255,0,255);
          
          /// Front 
-         if ((i1 == 0) && (i2 == 0)) {
-            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[3].pos , sidecol));
-            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[7].pos , sidecol));
-            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[4].pos , sidecol));
-            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[0].pos , sidecol));
+         if (i1 == 0) {
+            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[0].pos , sidecol));
+            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[4].pos , sidecol));
+            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[5].pos , sidecol));
+            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[1].pos , sidecol));
             sidemesh.AddFlatQuadFace(v0,v1,v2,v3);
          }
          /// Back
-         else if ((i1 == (track.size() - 2)) && (i2 == 0)) {
-            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[1].pos , sidecol));
-            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[5].pos , sidecol));
-            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[6].pos , sidecol));
-            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[2].pos , sidecol));
+         else if (i1 == (track.size() - 2)) {
+            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[2].pos , sidecol));
+            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[6].pos , sidecol));
+            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[7].pos , sidecol));
+            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[3].pos , sidecol));
             sidemesh.AddFlatQuadFace(v0,v1,v2,v3);
          }
          
@@ -226,6 +226,10 @@ bool Track::GenerateTrackMesh() {
             unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[7].pos , sidecol));
             unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[4].pos , sidecol));
             unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[0].pos , sidecol));
+            sidemesh.AddEdge(v0,v1);
+            sidemesh.AddEdge(v1,v2);
+            sidemesh.AddEdge(v2,v3);
+            sidemesh.AddEdge(v3,v0);
             sidemesh.AddFlatQuadFace(v0 , v1 , v2 , v3);
          }
          /// Right
@@ -234,6 +238,10 @@ bool Track::GenerateTrackMesh() {
             unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[5].pos , sidecol));
             unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[6].pos , sidecol));
             unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[2].pos , sidecol));
+            sidemesh.AddEdge(v0,v1);
+            sidemesh.AddEdge(v1,v2);
+            sidemesh.AddEdge(v2,v3);
+            sidemesh.AddEdge(v3,v0);
             sidemesh.AddFlatQuadFace(v0 , v1 , v2 , v3);
          }
          
@@ -295,7 +303,7 @@ void Track::Draw() {
 
 
    sidemesh.RenderFacesFront(SpatialInfo() , Vec3(1,1,1));
-   sidemesh.RenderEdges(SpatialInfo() , Vec3(1,1,1) , al_map_rgba(255,255,0,255));
+   sidemesh.RenderEdges(SpatialInfo() , Vec3(1,1,1) , al_map_rgba(0,255,255,255));
    lowermesh.RenderFacesFront(SpatialInfo() , Vec3(1,1,1));
    lowermesh.RenderEdges(SpatialInfo() , Vec3(1,1,1) , al_map_rgba(0,0,0,255));
    glEnable(GL_TEXTURE_2D);
