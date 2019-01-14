@@ -121,7 +121,10 @@ protected :
    
    Mesh uppermesh;
    Mesh lowermesh;
-   Mesh sidemesh;
+   Mesh leftmesh;
+   Mesh rightmesh;
+   Mesh frontmesh;
+   Mesh backmesh;
    
    std::vector<TrackSegment> segments;
    std::vector<CSG> csgenerators;
@@ -152,7 +155,10 @@ public :
          bounds(),
          uppermesh(),
          lowermesh(),
-         sidemesh(),
+         leftmesh(),
+         rightmesh(),
+         frontmesh(),
+         backmesh(),
          segments(),
          csgenerators(),
          track(),

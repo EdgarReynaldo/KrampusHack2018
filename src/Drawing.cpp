@@ -10,7 +10,7 @@
 void OutlinePrism(const Prism& p , ALLEGRO_COLOR c) {
    const Mesh& cubemesh = p.GetMesh();
    
-   cubemesh.RenderEdges(p.Info() , Vec3(p.Width() , p.Height() , p.Depth()) , c);
+   cubemesh.RenderEdges(c , p.Info() , Vec3(p.Width() , p.Height() , p.Depth()));
 }
 
 

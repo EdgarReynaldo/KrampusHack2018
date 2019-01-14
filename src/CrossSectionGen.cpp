@@ -28,8 +28,8 @@ Curve CurvedCSG::FinishCurve() {
 
 CrossSection CurvedCSG::Generate(const unsigned int NSEGS , double pct) {
    
-   if (pct < 0.0) {return cstart.Generate(NSEGS);}
-   if (pct > 1.0) {return cfinish.Generate(NSEGS);}
+   if (pct <= 0.0) {return cstart.Generate(NSEGS);}
+   if (pct >= 1.0) {return cfinish.Generate(NSEGS);}
    
    double hdiameter = Interpolate(cstart.HDiameter() , cfinish.HDiameter() , pct);
    double vradius   = Interpolate(cstart.VRadius()   , cfinish.VRadius()   , pct);

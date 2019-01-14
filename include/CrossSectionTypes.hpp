@@ -20,7 +20,7 @@ public :
    virtual ~CrossSectionBase() {}
    
    virtual Vec2 XYPosition(double xpct) const =0;
-   virtual double LatDist(double xpct) const =0;
+///   virtual double LatDist(double xpct) const =0;
    virtual double Roll(double xpct) const =0;/// Measures the amount of roll, so we can get the orientation at that point on the cross section
    
    CrossSection Generate(const unsigned int NSEGS);
@@ -48,7 +48,7 @@ public :
    ArcBase(double hdiameter , double vradius , double ycenter , double theta_width);
    
    virtual Vec2 XYPosition(double xpct) const;
-   virtual double LatDist(double xpct) const;
+///   virtual double LatDist(double xpct) const;
    virtual double Roll(double xpct) const;
    
    double HDiameter() const {return 2.0*hrad;}

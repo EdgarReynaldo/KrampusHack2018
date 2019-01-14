@@ -10,19 +10,27 @@
 
 void CrossSection::Clear() {
    xypts.clear();
+   lateral_width = 0.0;
    
 }
 
 
 
-void CrossSection::AddPoint(Vec2 xy , double lateral_distance , double roll) {
+void CrossSection::AddPoint(Vec2 xy , double roll) {
+///void CrossSection::AddPoint(Vec2 xy , double lateral_distance , double roll) {
+
+   double d = 0.0;
    if (NPTS()) {
       Vec2 p1 = xypts.back();
-      double d = (xy - p1).Magnitude();
-      lateral_width += d;
+      d = (xy - p1).Magnitude();
    }
+   for (unsigned int N = 0 ; N < NPTS() ; ++N) {
+      latdist[N] -= d/2.0;
+   }
+   lateral_width += d;
+   latdist.push_back(lateral_width/2.0);
    xypts.push_back(xy);
-   latdist.push_back(lateral_distance);
+///   latdist.push_back(lateral_distance);
    rvals.push_back(roll);
 }
 

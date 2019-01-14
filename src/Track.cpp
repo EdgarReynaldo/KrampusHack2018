@@ -58,7 +58,10 @@ SpatialInfo Track::GetRealInfoFromLocal(const SpatialInfo& info , const Vec2& cs
 void Track::ClearMeshes() {
    uppermesh.ClearAll();
    lowermesh.ClearAll();
-   sidemesh.ClearAll();
+   leftmesh.ClearAll();
+   rightmesh.ClearAll();
+   frontmesh.ClearAll();
+   backmesh.ClearAll();
 }
 
 
@@ -139,6 +142,8 @@ bool Track::GenerateTrackMesh() {
       EAGLE_ASSERT(xypts1.size() == NSEGSWIDE + 1);
       EAGLE_ASSERT(xypts2.size() == NSEGSWIDE + 1);
       
+      /// a is left, b is right, 1 is front, 2 is back, 
+      
       for (unsigned int i2 = 0 ; i2 < NSEGSWIDE ; ++i2) {
          const Vec2& xy1a = xypts1[i2];
          const Vec2& xy1b = xypts1[i2+1];
@@ -199,50 +204,53 @@ bool Track::GenerateTrackMesh() {
          
          /// Side mesh
          
-         const ALLEGRO_COLOR sidecol = al_map_rgba(255,255,0,255);
+         const ALLEGRO_COLOR lsidecol = al_map_rgba(255,255,0,255);
+         const ALLEGRO_COLOR rsidecol = al_map_rgba(255,127,0,255);
+         const ALLEGRO_COLOR fsidecol = al_map_rgba(0,255,0,255);
+         const ALLEGRO_COLOR bsidecol = al_map_rgba(255,0,0,255);
          
          /// Front 
          if (i1 == 0) {
-            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[0].pos , sidecol));
-            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[4].pos , sidecol));
-            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[5].pos , sidecol));
-            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[1].pos , sidecol));
-            sidemesh.AddFlatQuadFace(v0,v1,v2,v3);
+            unsigned int v0 = frontmesh.AddVertex(VERTEX(vtx[0].pos , fsidecol));
+            unsigned int v1 = frontmesh.AddVertex(VERTEX(vtx[4].pos , fsidecol));
+            unsigned int v2 = frontmesh.AddVertex(VERTEX(vtx[5].pos , fsidecol));
+            unsigned int v3 = frontmesh.AddVertex(VERTEX(vtx[1].pos , fsidecol));
+            frontmesh.AddFlatQuadFace(v0,v1,v2,v3);
          }
          /// Back
          else if (i1 == (track.size() - 2)) {
-            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[2].pos , sidecol));
-            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[6].pos , sidecol));
-            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[7].pos , sidecol));
-            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[3].pos , sidecol));
-            sidemesh.AddFlatQuadFace(v0,v1,v2,v3);
+            unsigned int v0 = backmesh.AddVertex(VERTEX(vtx[2].pos , bsidecol));
+            unsigned int v1 = backmesh.AddVertex(VERTEX(vtx[6].pos , bsidecol));
+            unsigned int v2 = backmesh.AddVertex(VERTEX(vtx[7].pos , bsidecol));
+            unsigned int v3 = backmesh.AddVertex(VERTEX(vtx[3].pos , bsidecol));
+            backmesh.AddFlatQuadFace(v0,v1,v2,v3);
          }
          
          /// Sides
          
          /// Left
          if (i2 == 0) {
-            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[3].pos , sidecol));
-            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[7].pos , sidecol));
-            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[4].pos , sidecol));
-            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[0].pos , sidecol));
-            sidemesh.AddEdge(v0,v1);
-            sidemesh.AddEdge(v1,v2);
-            sidemesh.AddEdge(v2,v3);
-            sidemesh.AddEdge(v3,v0);
-            sidemesh.AddFlatQuadFace(v0 , v1 , v2 , v3);
+            unsigned int v0 = leftmesh.AddVertex(VERTEX(vtx[3].pos , lsidecol));
+            unsigned int v1 = leftmesh.AddVertex(VERTEX(vtx[7].pos , lsidecol));
+            unsigned int v2 = leftmesh.AddVertex(VERTEX(vtx[4].pos , lsidecol));
+            unsigned int v3 = leftmesh.AddVertex(VERTEX(vtx[0].pos , lsidecol));
+            leftmesh.AddEdge(v0,v1);
+            leftmesh.AddEdge(v1,v2);
+            leftmesh.AddEdge(v2,v3);
+            leftmesh.AddEdge(v3,v0);
+            leftmesh.AddFlatQuadFace(v0 , v1 , v2 , v3);
          }
          /// Right
          else if (i2 == NSEGSWIDE - 1) {
-            unsigned int v0 = sidemesh.AddVertex(VERTEX(vtx[1].pos , sidecol));
-            unsigned int v1 = sidemesh.AddVertex(VERTEX(vtx[5].pos , sidecol));
-            unsigned int v2 = sidemesh.AddVertex(VERTEX(vtx[6].pos , sidecol));
-            unsigned int v3 = sidemesh.AddVertex(VERTEX(vtx[2].pos , sidecol));
-            sidemesh.AddEdge(v0,v1);
-            sidemesh.AddEdge(v1,v2);
-            sidemesh.AddEdge(v2,v3);
-            sidemesh.AddEdge(v3,v0);
-            sidemesh.AddFlatQuadFace(v0 , v1 , v2 , v3);
+            unsigned int v0 = rightmesh.AddVertex(VERTEX(vtx[1].pos , rsidecol));
+            unsigned int v1 = rightmesh.AddVertex(VERTEX(vtx[5].pos , rsidecol));
+            unsigned int v2 = rightmesh.AddVertex(VERTEX(vtx[6].pos , rsidecol));
+            unsigned int v3 = rightmesh.AddVertex(VERTEX(vtx[2].pos , rsidecol));
+            rightmesh.AddEdge(v0,v1);
+            rightmesh.AddEdge(v1,v2);
+            rightmesh.AddEdge(v2,v3);
+            rightmesh.AddEdge(v3,v0);
+            rightmesh.AddFlatQuadFace(v0 , v1 , v2 , v3);
          }
          
          /// Top and bottom meshes
@@ -301,16 +309,24 @@ bool Track::BuildTrack() {
 void Track::Draw() {
 ///   DrawTrackOutlines(*this);
 
+   const ALLEGRO_COLOR edgecol1 = al_map_rgba(0,255,255,255);
 
-   sidemesh.RenderFacesFront(SpatialInfo() , Vec3(1,1,1));
-   sidemesh.RenderEdges(SpatialInfo() , Vec3(1,1,1) , al_map_rgba(0,255,255,255));
-   lowermesh.RenderFacesFront(SpatialInfo() , Vec3(1,1,1));
-   lowermesh.RenderEdges(SpatialInfo() , Vec3(1,1,1) , al_map_rgba(0,0,0,255));
+   leftmesh.RenderFacesFront();
+   leftmesh.RenderEdges(edgecol1);
+   rightmesh.RenderFacesFront();
+   rightmesh.RenderEdges(edgecol1);
+   frontmesh.RenderFacesFront();
+   frontmesh.RenderEdges(edgecol1);
+   backmesh.RenderFacesFront();
+   backmesh.RenderEdges(edgecol1);
+
+   lowermesh.RenderFacesFront();
+   lowermesh.RenderEdges(al_map_rgba(0,0,0,255));
+
    glEnable(GL_TEXTURE_2D);
-   uppermesh.RenderTexturedFacesFront(SpatialInfo() , Vec3(1,1,1));
-///   uppermesh.RenderFacesFront(SpatialInfo() , Vec3(1,1,1));
+   uppermesh.RenderTexturedFacesFront();
    glDisable(GL_TEXTURE_2D);
-///   uppermesh.RenderEdges(SpatialInfo() , Vec3(1,1,1) , al_map_rgba(255,255,255,255));
+///   uppermesh.RenderEdges(al_map_rgba(255,255,255,255));
 }
 
 

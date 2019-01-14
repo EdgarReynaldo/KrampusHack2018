@@ -275,16 +275,17 @@ unsigned int Mesh::AddTexturedFlatQuadFace(int vtl , int vbl , int vbr , int vtr
 
 
 
-void Mesh::RenderFaces(const SpatialInfo& info , Vec3 scale) const {
+void Mesh::RenderFacesFrontBack(const SpatialInfo info , const Vec3 scale) const {
    glColor4d(1.0 , 1.0 , 1.0 , 1.0);
    RenderFacesFront(info , scale);
+   RenderFacesBack(info , scale);
 ///   RenderFacesBack(info , scale);
 ///   RenderEdges(info , scale , al_map_rgba(0,127,0,255));
 }
 
 
 
-void Mesh::RenderFacesFront(const SpatialInfo& info , Vec3 scale) const {
+void Mesh::RenderFacesFront(const SpatialInfo info , const Vec3 scale) const {
    
    ALLEGRO_TRANSFORM old = SetupTransform(info , scale);
 //      glEnable(GL_COLOR);
@@ -308,7 +309,7 @@ void Mesh::RenderFacesFront(const SpatialInfo& info , Vec3 scale) const {
 
 
 
-void Mesh::RenderTexturedFacesFront(const SpatialInfo& info , Vec3 scale) const {
+void Mesh::RenderTexturedFacesFront(const SpatialInfo info , const Vec3 scale) const {
    ALLEGRO_TRANSFORM old = SetupTransform(info , scale);
 //      glEnable(GL_COLOR);
    for (unsigned int f = 0 ; f < faces.size() ; ++f) {
@@ -345,7 +346,7 @@ void Mesh::RenderTexturedFacesFront(const SpatialInfo& info , Vec3 scale) const 
 
 
 
-void Mesh::RenderFacesBack(const SpatialInfo& info , Vec3 scale) const {
+void Mesh::RenderFacesBack(const SpatialInfo info , const Vec3 scale) const {
    
    ALLEGRO_TRANSFORM old = SetupTransform(info , scale);
 //      glEnable(GL_COLOR);
@@ -369,7 +370,7 @@ void Mesh::RenderFacesBack(const SpatialInfo& info , Vec3 scale) const {
 
 
 
-void Mesh::RenderEdges(const SpatialInfo& info , Vec3 scale , ALLEGRO_COLOR col) const {
+void Mesh::RenderEdges(ALLEGRO_COLOR col , const SpatialInfo info , const Vec3 scale) const {
 
    ALLEGRO_TRANSFORM old = SetupTransform(info , scale);
    

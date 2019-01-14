@@ -23,11 +23,18 @@ protected :
 
 public :
 //   CrossSection(CrossSectionBase* new_cs);
-   CrossSection() : lateral_width(0.0) , xypts() , latdist() , rvals() {}
+///   CrossSection();
+   CrossSection() :
+         lateral_width(0.0),
+         xypts(),
+         latdist(),
+         rvals()
+   {}
    
    void Clear();
 
-   void AddPoint(Vec2 xy , double lateral_distance , double roll);
+   void AddPoint(Vec2 xy , double roll);
+///   void AddPoint(Vec2 xy , double lateral_distance , double roll);
    
    double Width() const {return lateral_width;}
    const std::vector<Vec2>& XYPts() const {return xypts;}
