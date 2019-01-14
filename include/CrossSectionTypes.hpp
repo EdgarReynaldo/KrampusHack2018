@@ -124,8 +124,8 @@ class Span : public ArcBase {
 public :
    Span(double width);
    
-   virtual Vec2 XYPosition(double xpct) {return Vec2(xpct*w/2.0 , 0.0);}
-   virtual double Roll(double xpct) {(void)xpct;return 0.0;}
+   virtual Vec2 XYPosition(double xpct) const {return Vec2(xpct*w/2.0 , 0.0);}
+   virtual double Roll(double xpct) const {(void)xpct;return 0.0;}
    
 };
 

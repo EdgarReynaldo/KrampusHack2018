@@ -124,6 +124,9 @@ double ArcBase::Roll(double xpct) const {
    if (xpct < -1.0) {xpct = -1.0;}
    if (xpct > 1.0) {xpct = 1.0;}
    if (ypos > 0.0) {xpct = -xpct;}
+   if (vrad == 0.0) {
+      return 0.0;
+   }
    return xpct*twidth/2.0;/// TODO : This is only true for circular shapes, not ellipsis FIXME
 }
 
