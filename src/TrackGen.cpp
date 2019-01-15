@@ -93,7 +93,7 @@ SpatialInfo CurvedTrack::Eval(const SpatialInfo& start , double pct) {
    const double yaw = turn*pct*cos(roll);
    const double pitch = turn*pct*sin(roll);
 
-   o.TurnLocal(Vec3(yaw,pitch,0.0) , 1.0);
+   o.TurnLocal(Vec3(yaw,-pitch,0.0) , 1.0);
    
    return SpatialInfo(pos2 , o);
 }
