@@ -8,6 +8,15 @@
 
 
 
+Camera::Camera() :
+      info(START),
+      hfov(90.0),
+      aspect(4.0/3.0),
+      ortho(false)
+{}
+
+
+
 void Camera::Setup3D(bool orthographic) {
    ortho  = orthographic;
    ALLEGRO_TRANSFORM proj;
@@ -15,8 +24,13 @@ void Camera::Setup3D(bool orthographic) {
    
    const double near = 1.0;
    const double w = near*tan(hfov/2.0);
-   const double l = -w;
-   const double r = w;
+
+///   const double l = -w;
+///   const double r = w;
+   
+   const double l = w;
+   const double r = -w;
+   
    const double top = w/aspect;
    const double bot = -w/aspect;
    const double far = 2000.0;
@@ -36,8 +50,8 @@ void Camera::Setup3D(bool orthographic) {
    Vec3 up = info.orient.Up();
    
    al_identity_transform(&cam);
-   al_scale_transform_3d(&cam , 1.0 , 1.0 , -1.0);
    al_build_camera_transform(&cam , eye.x , eye.y , eye.z , look.x , look.y , look.z , up.x , up.y , up.z);
+///   al_scale_transform_3d(&cam , 1.0 , 1.0 , 1.0);
    al_use_transform(&cam);
 }
 

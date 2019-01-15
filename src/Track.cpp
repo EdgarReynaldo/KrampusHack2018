@@ -216,6 +216,10 @@ bool Track::GenerateTrackMesh() {
             unsigned int v2 = frontmesh.AddVertex(VERTEX(vtx[5].pos , fsidecol));
             unsigned int v3 = frontmesh.AddVertex(VERTEX(vtx[1].pos , fsidecol));
             frontmesh.AddFlatQuadFace(v0,v1,v2,v3);
+            frontmesh.AddEdge(v0,v1);
+            frontmesh.AddEdge(v1,v2);
+            frontmesh.AddEdge(v2,v3);
+            frontmesh.AddEdge(v3,v0);
          }
          /// Back
          else if (i1 == (track.size() - 2)) {
@@ -224,6 +228,10 @@ bool Track::GenerateTrackMesh() {
             unsigned int v2 = backmesh.AddVertex(VERTEX(vtx[7].pos , bsidecol));
             unsigned int v3 = backmesh.AddVertex(VERTEX(vtx[3].pos , bsidecol));
             backmesh.AddFlatQuadFace(v0,v1,v2,v3);
+            backmesh.AddEdge(v0,v1);
+            backmesh.AddEdge(v1,v2);
+            backmesh.AddEdge(v2,v3);
+            backmesh.AddEdge(v3,v0);
          }
          
          /// Sides

@@ -90,7 +90,7 @@ int main(int argc , char** argv) {
          glClear(GL_DEPTH_BUFFER_BIT);
          glEnable(GL_DEPTH_TEST);
          glDepthFunc(GL_LESS);///LEQUAL);
-         glFrontFace(GL_CW);
+         glFrontFace(GL_CCW);
          glCullFace(GL_BACK);
          glEnable(GL_CULL_FACE);
          glEnable(GL_COLOR);
@@ -110,6 +110,7 @@ int main(int argc , char** argv) {
          glFrontFace(GL_NONE);
          glClear(GL_DEPTH_BUFFER_BIT);
          Camera::Setup2D();
+         glGetError();
          al_draw_textf(f , al_map_rgb(255,255,255) , 10 , 10 , 0 , "%2.3lf" , al_get_time());
          al_flip_display();
       }

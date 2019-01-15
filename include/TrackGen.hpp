@@ -43,16 +43,21 @@ public :
 
 class CurvedTrack {
    
-   double l;
-   double t;
-   double r;
+   double length;
+   double turn;
+   double roll;
    
 public :   
-   CurvedTrack(double turn , double roll , double length) : l(abs(length)) , t(turn) , r(roll) {}
+///   CurvedTrack(double turn_angle , double roll_angle , double track_length);
+   CurvedTrack(double turn_angle , double roll_angle , double track_length) :
+         length(abs(track_length)),
+         turn(turn_angle),
+         roll(roll_angle)
+   {}
    
    
    SpatialInfo Eval(const SpatialInfo& start , double pct);
-   double Length() {return l;}
+   double Length() {return length;}
 };
 
 

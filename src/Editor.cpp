@@ -7,6 +7,8 @@
 #include "Input.hpp"
 #include "CrossSection.hpp"
 #include "CrossSectionTypes.hpp"
+#include "Drawing.hpp"
+
 
 
 
@@ -31,16 +33,16 @@ Editor::Editor() :
    track1.AddSegment(TrackSegment(new TSG<Turn>(Turn(-50,150))) , CSG(new CurvedCSG(Curve(new Span(50)))));
 
    track2.AddSegment(TrackSegment(new TSG<StraightAway>(StraightAway(100.0)))                    , CSG(new CurvedCSG(Curve(new Span(50)))));
-   track2.AddSegment(TrackSegment(new TSG<CurvedTrack> (CurvedTrack(-M_PI , -M_PI/2.0 , 315)))   , CSG(new CurvedCSG(Curve(new Span(50)))));
+   track2.AddSegment(TrackSegment(new TSG<CurvedTrack> (CurvedTrack(M_PI , M_PI/2.0 , 315)))   , CSG(new CurvedCSG(Curve(new Span(50)))));
    track2.AddSegment(TrackSegment(new TSG<StraightAway>(StraightAway(100.0)))                    , CSG(new CurvedCSG(Curve(new Span(50)))));
-   track2.AddSegment(TrackSegment(new TSG<CurvedTrack> (CurvedTrack(-M_PI , -M_PI/2.0 , 315)))   , CSG(new CurvedCSG(Curve(new Span(50)))));
+   track2.AddSegment(TrackSegment(new TSG<CurvedTrack> (CurvedTrack(M_PI , M_PI/2.0 , 315)))   , CSG(new CurvedCSG(Curve(new Span(50)))));
    
 ///   track3.AddSegment(TrackSegment(new TSG<Turn>(Turn(150 , 50)))                                 , CSG(new CurvedCSG(Curve(new Span(50)))));
    track3.AddSegment(TrackSegment(new TSG<Turn>(Turn(150 , 50)))                                 , 
                      CSG(new CurvedCSG(Curve(new Span(50)))));
 
    track4.AddSegment(TrackSegment(new TSG<CurvedTrack>(CurvedTrack(2.0*M_PI , M_PI , 500.0)))    , CSG(new CurvedCSG(Curve(new Span(50)))));
-   track5.AddSegment(TrackSegment(new TSG<CurvedTrack>(CurvedTrack(-2.0*M_PI , M_PI , 1000.0)))  , CSG(new CurvedCSG(Curve(new Span(50)))));
+   track5.AddSegment(TrackSegment(new TSG<CurvedTrack>(CurvedTrack(2.0*M_PI , 0.0 , 1000.0)))  , CSG(new CurvedCSG(Curve(new Span(50)))));
    
    
    
@@ -118,6 +120,21 @@ void Editor::Display() {
                  "CamPos = %1.2lf , %1.2lf , %1.2lf" , campos.x , campos.y , campos.z);
 */
    
+   SpatialInfo s = START;
+   s.pos += s.orient.Up()*10.0;
+   const double length = 10.0;
+   
+
+   DrawLine(s.pos , s.pos + 2.0*length*UP , al_map_rgba(0,255,0,255));;
+   DrawLine(s.pos , s.pos + 2.0*length*RIGHT , al_map_rgba(255,0,0,255));;
+   DrawLine(s.pos , s.pos + 2.0*length*FORWARD , al_map_rgba(0,0,255,255));;
+
+   s.pos -= 10.0*RIGHT;
+   
+   DrawLine(s.pos , s.pos + length*s.orient.Up() , al_map_rgba(0,127,0,255));;
+   DrawLine(s.pos , s.pos + length*s.orient.Rt() , al_map_rgba(127,0,0,255));;
+   DrawLine(s.pos , s.pos + length*s.orient.Fw() , al_map_rgba(0,0,127,255));;
+      
    redraw = false;
 }
 

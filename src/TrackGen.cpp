@@ -59,37 +59,41 @@ double Turn::CalcLength() {
 
 
 
+
+/// ------------------------       CurvedTrack     ---------------------------------------
+
+
+
 SpatialInfo CurvedTrack::Eval(const SpatialInfo& start , double pct) {
    if (pct <= 0.0) {return start;}
    if (pct > 1.0) {pct = 1.0;}
    
    /// First find the radius of the curve
-   EAGLE_ASSERT(t != 0.0);
+   EAGLE_ASSERT(turn != 0.0);/// TODO : Straight curves?
    
-   const double radius = l/fabs(t);
-   
-   const double yaw = t*pct*cos(r);
-   const double pitch = t*pct*sin(r);
-
    Orient o = start.orient;
-   
-   o.Turn(Vec3(yaw,pitch,0.0) , 1.0);
-   
    Vec3 pos = start.pos;
    
-   Vec3 fw = start.orient.Fw();
-   Vec3 up = start.orient.Up();
-   Vec3 rt = start.orient.Rt();
+   Vec3 fw = o.Fw();
+   Vec3 up = o.Up();
+   Vec3 rt = o.Rt();
    
-   up = Rotate3D(up , fw , r);
-   rt = Rotate3D(rt , fw , r);
+   up = Rotate3D(up , fw , roll);
+   rt = Rotate3D(rt , fw , roll);
 
-   Vec3 rad = rt*radius*((t < 0.0)?-1.0:1.0);
+   const double radius = length/fabs(turn);
+
+   Vec3 rad = rt*radius*((turn < 0.0)?-1.0:1.0);
    Vec3 c = pos + rad;
    
-   rad = Rotate3D(-rad , up , t*pct);
+   rad = Rotate3D(-rad , up , turn*pct);
    
    Vec3 pos2 = c + rad;
+
+   const double yaw = turn*pct*cos(roll);
+   const double pitch = turn*pct*sin(roll);
+
+   o.TurnLocal(Vec3(yaw,pitch,0.0) , 1.0);
    
    return SpatialInfo(pos2 , o);
 }
