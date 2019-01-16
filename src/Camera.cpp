@@ -10,7 +10,7 @@
 
 Camera::Camera() :
       info(START),
-      hfov(10.0*M_PI/12.0),/// In RADIANS
+      hfov(6.0*M_PI/12.0),/// In RADIANS (PI/2 (90 degrees) looks best, with the least distortion)
       aspect((double)sw/sh),
       ortho(false)
 {}
