@@ -45,48 +45,6 @@ int CountNewLines(std::string s);
 
 std::vector<std::string> SplitByNewLines(std::string s);
 
-std::vector<std::string> SplitByDelimiterString(std::string string_to_split , const std::string token);
-
-// returns pointer to one past end of quoted string, returns null on failure
-const char* CopyQuotedString(const char* start_quote , std::string& s);
-
-const char* SkipWhiteSpace(const char* str);
-void TrimTrailingWhiteSpace(char* str);
-
-std::string Replace(std::string str , const char* exp , const char* rep);
-
-char* CStrDup(const char* str);
-
-
-
-// Splits a gui string into two, one w/o ampersands, and one with underlines and spaces only
-// TODO : Replace with a gui text drawing function
-std::string GetGuiText(std::string gui_text);// gui_text carries ampersands prepended to characters that should be underlined
-std::string GetGuiUnderlineText(std::string gui_text);// returns underline text only, based off of ampersand markers in text
-
-
-std::string GetFileExtension(std::string& s);
-
-std::list<std::string> TokenizeString(const std::string& str , char delimiter);
-
-std::string RemoveTrailingSlash(std::string str);
-std::string FixFilenameSlashes(const std::string& str);
-
-std::string GetShortFileName(const std::string& s);
-
-std::string StripFileName(const std::string& s);
-
-
-int MatchingParenthesisIndex(const char* cstr);
-
-int ReverseStringSearch(const char* str , int start , char c);// returns offset from start or 1 if not found
-
-int StringSearch(const char* str , int start , char c);// returns offset from start or -1 if not found
-int StringSearch(const char* str , int start , const char* find);// returns offset from start or -1 if not found
-
-std::string FormatDouble(double d);
-std::string FormatDoubleString(std::string str);
-
 
 
 

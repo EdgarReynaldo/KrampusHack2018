@@ -10,8 +10,8 @@
 
 Camera::Camera() :
       info(START),
-      hfov(90.0),
-      aspect(4.0/3.0),
+      hfov(10.0*M_PI/12.0),/// In RADIANS
+      aspect((double)sw/sh),
       ortho(false)
 {}
 
@@ -41,7 +41,8 @@ void Camera::Setup3D(bool orthographic) {
       al_perspective_transform(&proj , l , top , near , r , bot , far);
    }
    else {
-      al_orthographic_transform(&proj , -500,500,0,500,-500,1000);
+      int diam = 500;
+      al_orthographic_transform(&proj , -diam , diam , -diam , diam , -diam , diam);
    }
    al_use_projection_transform(&proj);
    

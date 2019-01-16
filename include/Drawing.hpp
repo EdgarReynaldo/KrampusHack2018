@@ -11,8 +11,6 @@
 
 
 #include "Vec3.hpp"
-//#include "Triangle.hpp"
-//#include "Quad.hpp"
 #include "Prism.hpp"
 #include "Track.hpp"
 
@@ -21,9 +19,8 @@
 
 /** Not thread safe */
 
-/// inline void DrawLine(Vec3 p1 , Vec3 p2 , ALLEGRO_COLOR c);
-
-inline void DrawLine(Vec3 p1 , Vec3 p2 , ALLEGRO_COLOR col) {
+///inline void DrawLine(const Vec3& p1 , const Vec3& p2 , ALLEGRO_COLOR col) {
+inline void DrawLine(const Vec3& p1 , const Vec3& p2 , ALLEGRO_COLOR col) {
    
    unsigned char c[4] = {0};
    al_unmap_rgba(col , &c[0] , &c[1] , &c[2] , &c[3]);

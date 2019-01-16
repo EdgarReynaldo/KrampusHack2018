@@ -43,6 +43,7 @@ public :
    
    inline Vec3 Pos() {return info.pos;}
    inline Orient Orientation() {return info.orient;}
+   inline bool Ortho() {return ortho;}
 };
 
 

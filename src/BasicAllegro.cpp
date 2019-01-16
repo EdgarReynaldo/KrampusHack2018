@@ -56,12 +56,19 @@ int SetupAllegro(int screenw , int screenh) {
    al_set_new_display_option(ALLEGRO_FLOAT_DEPTH , 1 , ALLEGRO_SUGGEST);
    al_set_new_display_option(ALLEGRO_DEPTH_SIZE , 32 , ALLEGRO_SUGGEST);
    
-   al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW | ALLEGRO_OPENGL);
-   al_set_new_display_flags(ALLEGRO_WINDOWED | ALLEGRO_OPENGL);
+   al_set_new_display_flags(ALLEGRO_FULLSCREEN | ALLEGRO_OPENGL);
+///   al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW | ALLEGRO_OPENGL);
+///   al_set_new_display_flags(ALLEGRO_WINDOWED | ALLEGRO_OPENGL);
    
-   d = al_create_display(sw , sh);
+   screenw = 1920;
+   screenh = 1080;
    
-   buf = al_create_bitmap(sw,sh);
+   d = al_create_display(screenw , screenh);
+   
+   buf = al_create_bitmap(screenw,screenh);
+   
+   sw = al_get_display_width(d);
+   sh = al_get_display_width(d);
    
    q = al_create_event_queue();
    

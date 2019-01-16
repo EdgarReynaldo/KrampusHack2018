@@ -10,7 +10,7 @@
 #include "Drawing.hpp"
 
 
-
+bool ortho = false;
 
 Editor::Editor() : 
       Scene(),
@@ -22,12 +22,12 @@ Editor::Editor() :
       track5(),
       cam_speed(33.4),
       cam_turn_rate(2.0*M_PI/12.0),
-///      skybox("Data/Skybox/KorzonSkybox2.png")
 ///      skybox("Data/Skybox/Space1.png")
-      skybox("Data/Skybox/GreenSpace1.png")
-///      skybox("Data/Skybox/SkyboxC.png")
+///      skybox("Data/Skybox/GreenSpace1.png")
+      skybox("Data/Skybox/SkyboxA.png")
+///      skybox("Data/Skybox/KorzonSkybox.png")
 {
-   cam.SetPos(ORIGIN - START.orient.Fw()*10.0);
+   cam.SetPos(ORIGIN - START.orient.Fw()*10.0 + START.orient.Up()*10.0);
 
    
    track1.AddSegment(TrackSegment(new TSG<Turn>(Turn(-50,150))) , CSG(new CurvedCSG(Curve(new Span(50)))));
@@ -62,6 +62,10 @@ Editor::Editor() :
 STATUS Editor::HandleEvent(ALLEGRO_EVENT ev) {
    STATUS s = Scene::HandleEvent(ev);
    if (s == STATUS_QUIT) {return s;}
+   
+   if (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_P) {
+      ortho = !ortho;
+   }
    
    /// INPUT HANDLING
    if (ev.type == ALLEGRO_EVENT_TIMER) {
@@ -112,6 +116,8 @@ void Editor::Display() {
    glEnable(GL_DEPTH_TEST);
    glClear(GL_DEPTH_BUFFER_BIT);
    
+   cam.Setup3D(ortho);
+
    track1.Draw();
    track2.Draw();
    track3.Draw();

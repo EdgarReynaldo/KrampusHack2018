@@ -110,7 +110,7 @@ int main(int argc , char** argv) {
          glFrontFace(GL_NONE);
          glClear(GL_DEPTH_BUFFER_BIT);
          Camera::Setup2D();
-         glGetError();
+         printf("%u" , glGetError());
          al_draw_textf(f , al_map_rgb(255,255,255) , 10 , 10 , 0 , "%2.3lf" , al_get_time());
          al_flip_display();
       }
