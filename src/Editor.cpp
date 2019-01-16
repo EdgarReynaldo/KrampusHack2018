@@ -100,12 +100,16 @@ void Editor::Display() {
 
    cam.Setup3D(false);
 
+   glDisable(GL_DEPTH_TEST);
    glClear(GL_DEPTH_BUFFER_BIT);
 
+   glFrontFace(GL_CW);
    glEnable(GL_TEXTURE_2D);
    skybox.Render(cam.Pos());
    glDisable(GL_TEXTURE_2D);
-
+   
+   glFrontFace(GL_CCW);
+   glEnable(GL_DEPTH_TEST);
    glClear(GL_DEPTH_BUFFER_BIT);
    
    track1.Draw();
