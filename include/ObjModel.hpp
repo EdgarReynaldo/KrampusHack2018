@@ -10,31 +10,71 @@
 #include <vector>
 
 
+#include "FileWork.hpp"
+#include "Vec3.hpp"
 
-class TextFile {
-private :
-   std::string fpath;
-   std::string fstr;
-   std::vector<std::string> flines;
+#include <string>
+#include <map>
+
+class Material {
    
-   void Clear();
+protected :
+   std::string matname;/// Material name
    
 public :
-   TextFile();
    
-   bool Load(std::string filepath);
+///   Material(std::string name);
+   Material(std::string name) : matname(name) {}
    
-   const std::vector<std::string>& Lines() {return flines;}
+   Vec3 ambientlc;/// Ka
+   Vec3 diffuselc;/// Kd
+   Vec3 specularlc;/// Ks
+   double alpha;/// d, or 1.0 - Tr
+   double shine;/// Ns
+   unsigned int illumination_model;/// illum
+   std::string diffuse_texmap_fp;/// map_Kd
 };
 
 class MaterialFile : protected TextFile {
 
+   std::map<std::string , Material*> materialmap;
+
+   void ClearMaterials();
+   bool ProcessFile();
+
+   
+public :
+   
+   bool Load(std::string filepath);
+   bool Save(std::string filepath);
+/**
+bool MaterialFile::Load(std::string filepath) {
+   bool loaded = TextFile::Load(filepath);
+   if (loaded) {
+      loaded = ProcessFile();
+   }
+   return loaded;
+}
+bool MaterialFile::Save(std::string filepath) {
+   
+}
+*/
 };
 
 class ObjectFile : protected TextFile {
    
+public :
    
-///   bool LoadObjectFile
+   bool Load(std::string filepath);
+   bool Save(std::string filepath);
+/*
+bool ObjectFile::Load(std::string filepath) {
+   
+}
+bool ObjectFile::Save(std::string filepath) {
+   
+}
+*/
 };
 
 
