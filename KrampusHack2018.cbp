@@ -18,7 +18,37 @@
 					<Add option="-DEAGLE_ASSERT_EXCEPTION" />
 				</Compiler>
 				<Linker>
-					<Add option="-lallegro_monolith-debug.dll" />
+					<Add option="-static-libstdc++" />
+					<Add option="-static-libgcc" />
+					<Add option="-static" />
+					<Add option="-lallegro_monolith-debug-static" />
+					<Add option="-ljpeg" />
+					<Add option="-ldumb" />
+					<Add option="-lFLAC" />
+					<Add option="-ltheora" />
+					<Add option="-lvorbisfile" />
+					<Add option="-lvorbis" />
+					<Add option="-logg" />
+					<Add option="-lphysfs" />
+					<Add option="-lfreetype" />
+					<Add option="-lpng16" />
+					<Add option="-lzlibstatic" />
+					<Add option="-ldsound" />
+					<Add option="-lgdiplus" />
+					<Add option="-luuid" />
+					<Add option="-lkernel32" />
+					<Add option="-lwinmm" />
+					<Add option="-lpsapi" />
+					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
+					<Add option="-luser32" />
+					<Add option="-lcomdlg32" />
+					<Add option="-lgdi32" />
+					<Add option="-lshell32" />
+					<Add option="-lole32" />
+					<Add option="-ladvapi32" />
+					<Add option="-lws2_32" />
+					<Add option="-lshlwapi" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -32,7 +62,37 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
-					<Add option="-lallegro_monoilith.dll" />
+					<Add option="-static-libstdc++" />
+					<Add option="-static-libgcc" />
+					<Add option="-static" />
+					<Add option="-lallegro_monolith-static" />
+					<Add option="-ljpeg" />
+					<Add option="-ldumb" />
+					<Add option="-lFLAC" />
+					<Add option="-ltheora" />
+					<Add option="-lvorbisfile" />
+					<Add option="-lvorbis" />
+					<Add option="-logg" />
+					<Add option="-lphysfs" />
+					<Add option="-lfreetype" />
+					<Add option="-lpng16" />
+					<Add option="-lzlibstatic" />
+					<Add option="-ldsound" />
+					<Add option="-lgdiplus" />
+					<Add option="-luuid" />
+					<Add option="-lkernel32" />
+					<Add option="-lwinmm" />
+					<Add option="-lpsapi" />
+					<Add option="-lopengl32" />
+					<Add option="-lglu32" />
+					<Add option="-luser32" />
+					<Add option="-lcomdlg32" />
+					<Add option="-lgdi32" />
+					<Add option="-lshell32" />
+					<Add option="-lole32" />
+					<Add option="-ladvapi32" />
+					<Add option="-lws2_32" />
+					<Add option="-lshlwapi" />
 				</Linker>
 			</Target>
 		</Build>
