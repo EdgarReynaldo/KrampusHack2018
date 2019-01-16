@@ -43,19 +43,37 @@ bool MaterialFile::ProcessFile() {
          }
       }
       else if (strncmp(line.c_str() , "Ka " , 3) == 0) {
-            
+         if (!ScanVec3(line.c_str() + 3 , cmat->acol)) {
+            error = true;
+         }
       }
       else if (strncmp(line.c_str() , "Kd " , 3) == 0) {
-            
+         if (!ScanVec3(line.c_str() + 3 , cmat->dcol)) {
+            error = true;
+         }
       }
       else if (strncmp(line.c_str() , "Ks " , 3) == 0) {
-            
+         if (!ScanVec3(line.c_str() + 7 , cmat->scol)) {
+            error = true;
+         }
       }
       else if (strncmp(line.c_str() , "d " , 2) == 0) {
-            
+         double opacity = -1.0;
+         if (1 == sscanf(line.c_str() + 2 , "%lf" , &opacity)) {
+            cmat->alpha = opacity;
+         }
+         else {
+            error = true;
+         }
       }
-      else if (strncmp(line.c_str() , "d " , 2) == 0) {
-            
+      else if (strncmp(line.c_str() , "Tr " , 3) == 0) {
+         double trans = 0.0;
+         if (1 == sscanf(line.c_str() + 3 , "%lf" , &trans)) {
+            cmat->alpha = 1.0 - trans;
+         }
+         else {
+            error = true;
+         }
       }
       else {
          printf("Unrecognized line in material file %s :\n%s\n" , Path().c_str() , line.c_str());

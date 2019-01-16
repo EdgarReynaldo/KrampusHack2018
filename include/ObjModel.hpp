@@ -24,15 +24,24 @@ protected :
 public :
    
 ///   Material(std::string name);
-   Material(std::string name) : matname(name) {}
+   Material(std::string name) : 
+         matname(name),
+         acol(),
+         dcol(),
+         scol(),
+         alpha(1.0),
+         shine(0.0),
+         illumination_model((unsigned int)-1),
+         diffuse_texmap_fp()
+   {}
    
-   Vec3 ambientlc;/// Ka
-   Vec3 diffuselc;/// Kd
-   Vec3 specularlc;/// Ks
-   double alpha;/// d, or 1.0 - Tr
-   double shine;/// Ns
-   unsigned int illumination_model;/// illum
-   std::string diffuse_texmap_fp;/// map_Kd
+   Vec3 acol;/// Ka, ambient light color
+   Vec3 dcol;/// Kd, diffuse light color
+   Vec3 scol;/// Ks, specular light color
+   double alpha;/// d, or 1.0 - Tr, d is opacity, Tr is translucency, alpha value
+   double shine;/// Ns, shininess
+   unsigned int illumination_model;/// illum, illumination model
+   std::string diffuse_texmap_fp;/// map_Kd, diffuse texture map
 };
 
 class MaterialFile : protected TextFile {
