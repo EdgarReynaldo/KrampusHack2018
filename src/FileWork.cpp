@@ -3,6 +3,8 @@
 
 
 #include "FileWork.hpp"
+#include "StringWork.hpp"
+
 
 
 bool LoadTextFile(std::string filepath , std::string& fstr) {
@@ -47,14 +49,62 @@ bool SaveTextFile(std::string filepath , const std::vector<std::string>& lines ,
    FILE* f = fopen(filepath.c_str() , flags);
    if (f) {
       for (unsigned int i = 0 ; i < lines.size() ; ++i) {
-         if (lines[i].size() != fwrite(&lines[i][0] , sizeof(char) , lines[i].size() , f)) {
+         if (0 > fprintf(f , "%s\n" , lines[i].c_str())) {
             ret = false;
             break;
          }
-         fprintf(f , "\n");
       }
       fclose(f);
    }
    return ret;
+}
+
+
+
+/// ------------------------------     TextFile     ---------------------------------
+
+
+
+void TextFile::Clear() {
+   fstr.clear();
+   flines.clear();
+}
+
+
+
+bool TextFile::Load(std::string filepath) {
+   Clear();
+   fpath = filepath;
+   if (!LoadTextFile(filepath , fstr)) {
+      return false;
+   }
+   flines = SplitByNewLines(fstr);
+   fstr.clear();
+   return true;
+}
+
+
+
+void TextFile::AddLine(const std::string line) {
+   flines.push_back(line);
+}
+
+
+
+void TextFile::AppendCurrentLine(const std::string append) {
+   if (!flines.size()) {
+      flines.push_back("");
+   }
+   flines.back() += append;
+}
+
+
+
+bool TextFile::Save(std::string filepath) {
+   fpath = filepath;
+   if (!SaveTextFile(filepath , flines , false , true)) {
+      return false;
+   }
+   return true;
 }
 
