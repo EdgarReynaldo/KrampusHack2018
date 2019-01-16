@@ -8,6 +8,9 @@
 #include "allegro5/allegro.h"
 
 
+#include <cstdio>
+
+
 const Vec3 ORIGIN(0,0,0);
 
 const Vec3 UP(0,1,0);
@@ -33,3 +36,12 @@ Vec3 Rotate3D(const Vec3& vec , const Vec3& axis , const double theta_radians) {
    
    return Vec3(fx,fy,fz);
 }
+
+
+
+bool ScanVec3(const char* str , Vec3& v) {
+   return 3 == sscanf(str , "%lf%lf%lf" , &v.x , &v.y , &v.z);
+}
+
+
+

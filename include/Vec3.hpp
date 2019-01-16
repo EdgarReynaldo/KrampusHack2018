@@ -96,7 +96,7 @@ inline Vec3 MidPoint(const Vec3& v1 , const Vec3& v2) {
 
 extern const Vec3 ORIGIN;
 
-
+bool ScanVec3(const char* str , Vec3& v);
 
 extern const Vec3 UP;
 extern const Vec3 RIGHT;
