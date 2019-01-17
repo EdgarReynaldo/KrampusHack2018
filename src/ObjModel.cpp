@@ -42,6 +42,9 @@ bool MaterialFile::ProcessFile() {
             materialmap[name] = newmat;
          }
       }
+      else if (strncmp(line.c_str() , "map_Kd " , 7) == 0) {
+         diffuse_texmap_fp = line.c_str() + 7;
+      }
       else if (strncmp(line.c_str() , "Ka " , 3) == 0) {
          if (!ScanVec3(line.c_str() + 3 , cmat->acol)) {
             error = true;
@@ -72,6 +75,11 @@ bool MaterialFile::ProcessFile() {
             cmat->alpha = 1.0 - trans;
          }
          else {
+            error = true;
+         }
+      }
+      else if (strncmp(line.c_str() , "illum " , 6) == 0) {
+         if (1 != sscanf(line.c_str() + 6 , "%d" , &cmat->illumination_model)) {
             error = true;
          }
       }

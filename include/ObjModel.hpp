@@ -26,13 +26,13 @@ public :
 ///   Material(std::string name);
    Material(std::string name) : 
          matname(name),
-         acol(),
-         dcol(),
-         scol(),
+         acol(1,1,1),
+         dcol(1,1,1),
+         scol(1,1,1),
          alpha(1.0),
          shine(0.0),
          illumination_model((unsigned int)-1),
-         diffuse_texmap_fp()
+         diffuse_texmap_fp("")
    {}
    
    Vec3 acol;/// Ka, ambient light color
