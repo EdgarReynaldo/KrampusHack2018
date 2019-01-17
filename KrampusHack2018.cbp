@@ -119,6 +119,7 @@
 		<Unit filename="include/Drawing.hpp" />
 		<Unit filename="include/Editor.hpp" />
 		<Unit filename="include/Exception.hpp" />
+		<Unit filename="include/FileWork.hpp" />
 		<Unit filename="include/Input.hpp" />
 		<Unit filename="include/Interpolate.hpp" />
 		<Unit filename="include/Intro.hpp" />
@@ -150,6 +151,7 @@
 		<Unit filename="src/Drawing.cpp" />
 		<Unit filename="src/Editor.cpp" />
 		<Unit filename="src/Exception.cpp" />
+		<Unit filename="src/FileWork.cpp" />
 		<Unit filename="src/Input.cpp" />
 		<Unit filename="src/Interpolate.cpp" />
 		<Unit filename="src/Intro.cpp" />
