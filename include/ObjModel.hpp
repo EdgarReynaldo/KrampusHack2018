@@ -56,34 +56,22 @@ public :
    
    bool Load(std::string filepath);
    bool Save(std::string filepath);
-/**
-bool MaterialFile::Load(std::string filepath) {
-   bool loaded = TextFile::Load(filepath);
-   if (loaded) {
-      loaded = ProcessFile();
-   }
-   return loaded;
-}
-bool MaterialFile::Save(std::string filepath) {
-   
-}
-*/
+
+   Material* GetMaterial(std::string mat) {return materialmap[mat];}
+   const std::map<std::string , Material*>& MatMap() {return materialmap;}
 };
 
 class ObjectFile : protected TextFile {
    
+   std::map<std::string , MaterialFile*> matfiles;
+   
+   void ClearFiles();
+   bool ProcessObjectFile();
+
 public :
    
    bool Load(std::string filepath);
    bool Save(std::string filepath);
-/*
-bool ObjectFile::Load(std::string filepath) {
-   
-}
-bool ObjectFile::Save(std::string filepath) {
-   
-}
-*/
 };
 
 

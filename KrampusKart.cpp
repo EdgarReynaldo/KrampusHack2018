@@ -39,9 +39,17 @@ int main(int argc , char** argv) {
    const char* glvs = al_get_default_shader_source(ALLEGRO_SHADER_GLSL , ALLEGRO_VERTEX_SHADER);
    const char* glps = al_get_default_shader_source(ALLEGRO_SHADER_GLSL , ALLEGRO_PIXEL_SHADER);
    
-   printf("GLSL VERTEX SHADER Source :\n%s\n\n" , glvs);
-   printf("GLSL PIXEL SHADER Source :\n%s\n\n" , glps);
+   FILE* f1 = fopen("Vertex.shader.txt" , "w");
+   FILE* f2 = fopen("Fragment.shader.txt" , "w");
    
+   if (f1) {
+      fprintf(f1 , "GLSL VERTEX SHADER Source :\n%s\n\n" , glvs);
+   }
+   if (f2) {
+      fprintf(f2 , "GLSL PIXEL SHADER Source :\n%s\n\n" , glps);
+   }
+   fclose(f1);
+   fclose(f2);
       
    al_start_timer(t);
    

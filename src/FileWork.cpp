@@ -65,6 +65,14 @@ bool SaveTextFile(std::string filepath , const std::vector<std::string>& lines ,
 
 
 
+TextFile::TextFile() :
+      fpath(""),
+      fstr(""),
+      flines()
+{}
+
+
+
 void TextFile::Clear() {
    fstr.clear();
    flines.clear();
