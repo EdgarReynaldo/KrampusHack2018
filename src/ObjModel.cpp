@@ -116,7 +116,7 @@ bool MaterialFile::Save(std::string filepath) {
 
 
 
-void ObjectFile::ClearFiles() {
+void ObjectFile::ClearMaterialFiles() {
    std::map<std::string , MaterialFile*>::iterator it = matfiles.begin();
    while (it != matfiles.end()) {
       MaterialFile* mfile = it->second;
@@ -130,11 +130,31 @@ void ObjectFile::ClearFiles() {
 
 
 
+void ObjectFile::ClearObjects() {
+   std::map<std::string , Mesh*>::iterator it = objects.begin();
+   while (it != objects.end()) {
+      Mesh* mesh = it->second;
+      if (mesh) {
+         delete mesh;
+      }
+      ++it;
+   }
+   objects.clear();
+}
+
+
+
+void ObjectFile::Clear() {
+   ClearMaterialFiles();
+   ClearObjects();
+}
+
+
+
 bool ObjectFile::ProcessObjectFile() {
    
-   ClearFiles();
-
    MaterialFile* cmatlib = 0;/// Current material
+   Mesh* cobjmesh = 0;
    
    bool error = false;
    int ecount = 0;
@@ -161,8 +181,29 @@ bool ObjectFile::ProcessObjectFile() {
             }
          }
       }
+      else if (strncmp(line.c_str() , "o " , 2) == 0) {
+         /// New object
+         std::string objname = line.c_str() + 2;
+         Mesh* objmesh = new Mesh();
+         objects[objname] = objmesh;
+         cobjmesh = objmesh;
+      }
       else if (strncmp(line.c_str() , "v " , 2) == 0) {
-         /// vertice
+         /// vertice = v x y z
+         Vec3 xyz;
+         if (!ScanVec3(line.c_str() + 2 , xyz)) {
+            error = true;
+         }
+         else {
+            cobjmesh->AddVertex(xyz);
+         }
+      }
+      else if (strncmp(line.c_str() , "vn " , 3) == 0) {
+         /// vertice normal = vn x y z
+         
+      }
+      else if (strncmp(line.c_str() , "vt " , 3) == 0) {
+         /// texture vertice = vt u v
          
       }
       

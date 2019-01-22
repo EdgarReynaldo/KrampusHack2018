@@ -65,10 +65,26 @@ class ObjectFile : protected TextFile {
    
    std::map<std::string , MaterialFile*> matfiles;
    
-   void ClearFiles();
+   std::map<std::string , Mesh*> objects;
+   
+   
+   
+   void ClearMaterialFiles();
+   void ClearObjects()();
+
+   void Clear();
+
+
    bool ProcessObjectFile();
 
 public :
+   
+   ObjectFile() :
+         TextFile(),
+         matfiles(),
+         objects()
+   {}
+   
    
    bool Load(std::string filepath);
    bool Save(std::string filepath);
