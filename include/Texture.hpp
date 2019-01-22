@@ -8,6 +8,11 @@
 #include <map>
 #include <string>
 
+#include "Vec2.hpp"
+
+#include "GL/gl.h"
+
+
 struct ALLEGRO_BITMAP;
 
 class TexID {
@@ -15,13 +20,31 @@ class TexID {
 public :
    GLuint tid;
    ALLEGRO_BITMAP* bmp;
+   
+   TexID();
+   
+   TexID(ALLEGRO_BITMAP* tex);
+
+
 };
 
 
 class TexLib {
    
-public :
    std::map<std::string , TexID> texlib;
+
+public :
+   
+   TexLib() : texlib() {}
+   ~TexLib() {Clear();}
+   
+   void Clear();
+   
+   TexID LoadTexture(std::string image_file);
+
+   const TexID& TID(std::string texname);
+
+
 };
 
 
@@ -30,11 +53,12 @@ public :
 
 ///   TextureVertex(ALLEGRO_BITMAP* tex , Vec2 tuv);
    TextureVertex(ALLEGRO_BITMAP* tex , Vec2 tuv) :
-         bmp(tex),
+         tid(tex),
          uv(tuv)
    {}
 
-   ALLEGRO_BITMAP* bmp;
+   TexID tid;
+   
    Vec2 uv;///double u,v;
    
    

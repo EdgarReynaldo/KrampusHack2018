@@ -11,6 +11,8 @@
 
 const int TEXTURE_NONE = -1;///0xFFFFFFFF;
 const unsigned int BAD_TEXTURE = (unsigned int)TEXTURE_NONE;
+const unsigned int BAD_NORMAL = (unsigned int)TEXTURE_NONE;
+
 
 
 Edge::Edge(unsigned int from , unsigned int to) :
@@ -27,7 +29,10 @@ TriFace::TriFace(unsigned int i1 , unsigned int i2 , unsigned int i3) :
       v3(i3),
       tv1(BAD_TEXTURE),
       tv2(BAD_TEXTURE),
-      tv3(BAD_TEXTURE)
+      tv3(BAD_TEXTURE),
+      n1(BAD_NORMAL),
+      n2(BAD_NORMAL),
+      n3(BAD_NORMAL)
 {}
 
 
@@ -38,7 +43,10 @@ TriFace::TriFace(unsigned int i1 , unsigned int i2 , unsigned int i3 , unsigned 
       v3(i3),
       tv1(ti1),
       tv2(ti2),
-      tv3(ti3)
+      tv3(ti3),
+      n1(BAD_NORMAL),
+      n2(BAD_NORMAL),
+      n3(BAD_NORMAL)
 {}
 
 
@@ -67,6 +75,17 @@ unsigned int Mesh::UnsignedTIndex(int index) {
    }
    unsigned int uidx = index;
    EAGLE_ASSERT(uidx <= texverts.size());
+   return uidx;
+}
+
+
+
+unsigned int Mesh::UnsignedNIndex(int index) {
+   if (index < 0) {
+      index = (int)normals.size() - index;
+   }
+   unsigned int uidx = index;
+   EAGLE_ASSERT(uidx <= normals.size());
    return uidx;
 }
 
@@ -140,6 +159,13 @@ unsigned int Mesh::AddVertex(VERTEX v) {
 unsigned int Mesh::AddTexVertex(TEXTEX t) {
    texverts.push_back(t);
    return texverts.size() - 1;
+}
+
+
+
+unsigned int Mesh::AddNormal(NORMAL n) {
+   normals.push_back(n);
+   return normals.size() - 1;
 }
 
 
@@ -236,7 +262,7 @@ unsigned int Mesh::AddTexturedQuadFace(int vtl , int vbl , int vbr , int vtr,
 
    Vec2 texcenter(MidPoint(MidPoint(GetTexVertex(textl).uv , GetTexVertex(textr).uv) , MidPoint(GetTexVertex(texbl).uv , GetTexVertex(texbr).uv)));
 
-   const unsigned int ctex = AddTexVertex(TEXTEX(GetTexVertex(textl).bmp , texcenter));
+   const unsigned int ctex = AddTexVertex(TEXTEX(GetTexVertex(textl).tid.bmp , texcenter));
    
    const unsigned int f1 = AddTexturedTriFace(c,tl,bl , ctex , textl , texbl);
    const unsigned int f2 = AddTexturedTriFace(c,bl,br , ctex , texbl , texbr);
@@ -321,9 +347,7 @@ void Mesh::RenderTexturedFacesFront(const SpatialInfo info , const Vec3 scale) c
       bool textured = face.Textured();
       EAGLE_ASSERT(textured);
       if (textured) {
-         ALLEGRO_BITMAP* bmp = texverts[face.tv1].bmp;
-         EAGLE_ASSERT(bmp);
-         GLuint texid = al_get_opengl_texture(bmp);
+         GLuint texid = texverts[face.tv1].tid.tid;
          glBindTexture(GL_TEXTURE_2D , texid);
          glTexParameteri(GL_TEXTURE_2D , GL_TEXTURE_WRAP_S , GL_REPEAT);
          glTexParameteri(GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT);

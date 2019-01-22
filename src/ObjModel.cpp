@@ -20,8 +20,21 @@ void MaterialFile::ClearMaterials() {
 
 
 
-bool MaterialFile::ProcessFile() {
+void MaterialFile::ClearTextures() {
+   texture_library.Clear();
+}
+
+
+
+void MaterialFile::Clear() {
    ClearMaterials();
+   ClearTextures();
+}
+
+
+
+bool MaterialFile::ProcessFile() {
+   Clear();
 
    Material* cmat = 0;/// Current material
    
@@ -48,6 +61,7 @@ bool MaterialFile::ProcessFile() {
       }
       else if (strncmp(line.c_str() , "map_Kd " , 7) == 0) {
          cmat->diffuse_texmap_fp = line.c_str() + 7;
+         cmat->tid = texture_library.TID(cmat->diffuse_texmap_fp);
       }
       else if (strncmp(line.c_str() , "Ka " , 3) == 0) {
          if (!ScanVec3(line.c_str() + 3 , cmat->acol)) {

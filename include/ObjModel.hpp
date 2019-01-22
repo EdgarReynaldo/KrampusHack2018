@@ -12,9 +12,13 @@
 
 #include "FileWork.hpp"
 #include "Vec3.hpp"
+#include "Mesh.hpp"
 
 #include <string>
 #include <map>
+
+
+
 
 class Material {
    
@@ -32,7 +36,8 @@ public :
          alpha(1.0),
          shine(0.0),
          illumination_model((unsigned int)-1),
-         diffuse_texmap_fp("")
+         diffuse_texmap_fp(""),
+         tid()
    {}
    
    Vec3 acol;/// Ka, ambient light color
@@ -42,17 +47,32 @@ public :
    double shine;/// Ns, shininess
    unsigned int illumination_model;/// illum, illumination model
    std::string diffuse_texmap_fp;/// map_Kd, diffuse texture map
+   TexID tid;
 };
 
 class MaterialFile : protected TextFile {
 
    std::map<std::string , Material*> materialmap;
 
+   TexLib texture_library;
+   
+   
    void ClearMaterials();
+   void ClearTextures();
+   void Clear();
+
+
    bool ProcessFile();
 
    
 public :
+   
+//   MaterialFile();
+   MaterialFile() :
+         TextFile(),
+         materialmap(),
+         texture_library()
+   {}
    
    bool Load(std::string filepath);
    bool Save(std::string filepath);
@@ -70,7 +90,7 @@ class ObjectFile : protected TextFile {
    
    
    void ClearMaterialFiles();
-   void ClearObjects()();
+   void ClearObjects();
 
    void Clear();
 

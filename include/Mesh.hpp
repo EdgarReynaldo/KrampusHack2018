@@ -6,6 +6,7 @@
 #define Mesh_HPP
 
 #include "Vertex.hpp"
+#include "Texture.hpp"
 #include "Orient.hpp"
 #include "SpatialInfo.hpp"
 
@@ -34,18 +35,22 @@ public :
    unsigned int tv1;
    unsigned int tv2;
    unsigned int tv3;
+   unsigned int n1;
+   unsigned int n2;
+   unsigned int n3;
    
    bool Textured() const;
 };
 typedef TriFace TRIFACE;
 
 
-
+typedef Vec3 NORMAL;
 
 class Mesh {
    
 protected :
    std::vector<VERTEX> vertices;
+   std::vector<NORMAL> normals;
    std::vector<TEXTEX> texverts;
 
    std::vector<EDGE> edges;
@@ -53,6 +58,7 @@ protected :
    
    unsigned int UnsignedVIndex(int index);
    unsigned int UnsignedTIndex(int index);
+   unsigned int UnsignedNIndex(int index);
    
    ALLEGRO_TRANSFORM SetupTransform(const SpatialInfo& info , Vec3 scale) const;
    
@@ -63,6 +69,7 @@ public :
    
    unsigned int AddVertex(VERTEX v);
    unsigned int AddTexVertex(TEXTEX t);
+   unsigned int AddNormal(NORMAL n);
 
    unsigned int AddEdge(int vfrom , int vto);/// returns the absolute index of the new edge
    unsigned int AddTriFace(int v1 , int v2 , int v3);/// returns the absolute index of the new triangle face
@@ -78,6 +85,8 @@ public :
    
    inline const VERTEX&  GetVertex   (unsigned int index) {return vertices[index];}
    inline const TEXTEX&  GetTexVertex(unsigned int index) {return texverts[index];}
+   inline const NORMAL&  GetNormal   (unsigned int index) {return normals[index];}
+   
    inline const EDGE&    GetEdge     (unsigned int index) {return edges[index];}
    inline const TRIFACE& GetTriFace  (unsigned int index) {return faces[index];}
    
