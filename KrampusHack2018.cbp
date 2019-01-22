@@ -108,6 +108,8 @@
 			<Add directory="Allegro524/lib" />
 		</Linker>
 		<Unit filename="KrampusKart.cpp" />
+		<Unit filename="Models/hull3.mtl" />
+		<Unit filename="Models/hull3.obj" />
 		<Unit filename="README.md" />
 		<Unit filename="cbbuild/bin/Data/Track1.txt" />
 		<Unit filename="include/BasicAllegro.hpp" />
@@ -131,9 +133,11 @@
 		<Unit filename="include/Path.hpp" />
 		<Unit filename="include/Prism.hpp" />
 		<Unit filename="include/Scene.hpp" />
+		<Unit filename="include/Shader.hpp" />
 		<Unit filename="include/Skybox.hpp" />
 		<Unit filename="include/SpatialInfo.hpp" />
 		<Unit filename="include/StringWork.hpp" />
+		<Unit filename="include/Texture.hpp" />
 		<Unit filename="include/Track.hpp" />
 		<Unit filename="include/TrackGen.hpp" />
 		<Unit filename="include/TrackInfo.hpp" />
@@ -163,9 +167,11 @@
 		<Unit filename="src/Path.cpp" />
 		<Unit filename="src/Prism.cpp" />
 		<Unit filename="src/Scene.cpp" />
+		<Unit filename="src/Shader.cpp" />
 		<Unit filename="src/Skybox.cpp" />
 		<Unit filename="src/SpatialInfo.cpp" />
 		<Unit filename="src/StringWork.cpp" />
+		<Unit filename="src/Texture.cpp" />
 		<Unit filename="src/Track.cpp" />
 		<Unit filename="src/TrackGen.cpp" />
 		<Unit filename="src/Tri3.cpp" />
