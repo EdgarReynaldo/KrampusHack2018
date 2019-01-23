@@ -54,7 +54,7 @@ TexID TexLib::LoadTexture(std::string image_file) {
 
 
 
-const TexID& TexLib::TID(std::string texname) {
+TexID TexLib::TID(std::string texname) {
    if (texlib.find(texname) == texlib.end()) {
       return LoadTexture(texname);
    }

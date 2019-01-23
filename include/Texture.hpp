@@ -47,7 +47,7 @@ public :
    
    TexID LoadTexture(std::string image_file);
 
-   const TexID& TID(std::string texname);
+   TexID TID(std::string texname);
 
 
 };

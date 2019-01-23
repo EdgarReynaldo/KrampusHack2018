@@ -191,15 +191,17 @@ unsigned int Mesh::AddEdge(int vfrom , int vto) {
 
 
 
-unsigned int Mesh::AddTriFace(int v1 , int v2 , int v3) {
-   faces.push_back(TRIFACE(UnsignedVIndex(v1) , UnsignedVIndex(v2) , UnsignedVIndex(v3) ));
+unsigned int Mesh::AddTriFace(int v1 , int v2 , int v3 , int n1 , int n2 , int n3) {
+   faces.push_back(TRIFACE(UnsignedVIndex(v1) , UnsignedVIndex(v2) , UnsignedVIndex(v3),
+                           BAD_TEXTURE , BAD_TEXTURE , BAD_TEXTURE,
+                           UnsignedNIndex(n1) , UnsignedNIndex(n2) , UnsignedNIndex(n3)));
    return faces.size() - 1;
 }
 
 
 
 /// Returns the index of the first of the four faces added by this function, also adds a new vertice
-unsigned int Mesh::AddQuadFace(int vtl , int vbl , int vbr , int vtr) {
+unsigned int Mesh::AddQuadFace(int vtl , int vbl , int vbr , int vtr , int ntl , int nbl , int nbr , int ntr) {
    
    /// A quad is made up of two or more triangles - we'll use 4 based on the center, so it creates a pyramid
    const unsigned int tl = UnsignedVIndex(vtl);
@@ -207,10 +209,29 @@ unsigned int Mesh::AddQuadFace(int vtl , int vbl , int vbr , int vtr) {
    const unsigned int br = UnsignedVIndex(vbr);
    const unsigned int tr = UnsignedVIndex(vtr);
 
+   const unsigned int tln = UnsignedNIndex(ntl);
+   const unsigned int bln = UnsignedNIndex(nbl);
+   const unsigned int brn = UnsignedNIndex(nbr);
+   const unsigned int trn = UnsignedNIndex(ntr);
+
    VERTEX center(MidPoint(MidPoint(GetVertex(tl).pos , GetVertex(tr).pos) , MidPoint(GetVertex(bl).pos , GetVertex(br).pos)));
-   
    const unsigned int c = AddVertex(center);
 
+   if ((tln != BAD_NORMAL) && (bln != BAD_NORMAL) && (brn != BAD_NORMAL) && (trn != BAD_NORMAL)) {
+      NORMAL ncenter(MidPoint(MidPoint(GetNormal(tln) , GetNormal(trn)) , MidPoint(GetNormal(bln) , GetNormal(brn))));
+      const unsigned int nc = AddNormal(ncenter);
+
+      const unsigned int f1 = AddTriFace(c,tl,bl,nc,ntl,nbl);
+      const unsigned int f2 = AddTriFace(c,bl,br,nc,nbl,nbr);
+      const unsigned int f3 = AddTriFace(c,br,tr,nc,nbr,ntr);
+      const unsigned int f4 = AddTriFace(c,tr,tl,nc,ntr,ntl);
+      
+      (void)f2;
+      (void)f3;
+      (void)f4;
+
+      return f1;
+   }
    const unsigned int f1 = AddTriFace(c,tl,bl);
    const unsigned int f2 = AddTriFace(c,bl,br);
    const unsigned int f3 = AddTriFace(c,br,tr);
@@ -226,13 +247,27 @@ unsigned int Mesh::AddQuadFace(int vtl , int vbl , int vbr , int vtr) {
 
 
 /// Returns the index of the first of the two faces added by this function, also adds a new vertice
-unsigned int Mesh::AddFlatQuadFace(int vtl , int vbl , int vbr , int vtr) {
+unsigned int Mesh::AddFlatQuadFace(int vtl , int vbl , int vbr , int vtr , int ntl , int nbl , int nbr , int ntr) {
    
    /// A quad is made up of two or more triangles - we'll use 4 based on the center, so it creates a pyramid
    const unsigned int tl = UnsignedVIndex(vtl);
    const unsigned int bl = UnsignedVIndex(vbl);
    const unsigned int br = UnsignedVIndex(vbr);
    const unsigned int tr = UnsignedVIndex(vtr);
+
+   const unsigned int tln = UnsignedNIndex(ntl);
+   const unsigned int bln = UnsignedNIndex(nbl);
+   const unsigned int brn = UnsignedNIndex(nbr);
+   const unsigned int trn = UnsignedNIndex(ntr);
+   
+   if ((tln != BAD_NORMAL) && (bln != BAD_NORMAL) && (brn != BAD_NORMAL) && (trn != BAD_NORMAL)) {
+      const unsigned int f1 = AddTriFace(tl,bl,br,tln,bln,brn);
+      const unsigned int f2 = AddTriFace(br,tr,tl,brn,trn,tln);
+
+      (void)f2;
+
+      return f1;
+   }
 
    const unsigned int f1 = AddTriFace(tl,bl,br);
    const unsigned int f2 = AddTriFace(br,tr,tl);
@@ -242,20 +277,21 @@ unsigned int Mesh::AddFlatQuadFace(int vtl , int vbl , int vbr , int vtr) {
    return f1;
 }
 
-/**
-
-unsigned int Mesh::AddTexturedTriFace(int v1 , int v2 , int v3 ,
-                                int tv1 , int tv2 , int tv3) {
+unsigned int Mesh::AddTexturedTriFace(int v1  , int v2  , int v3 ,
+                                      int tv1 , int tv2 , int tv3,
+                                      int n1  , int n2  , int n3  ) {
    
-   faces.push_back(TRIFACE(UnsignedVIndex(v1) , UnsignedVIndex(v2) , UnsignedVIndex(v3) ,
-                           UnsignedTIndex(tv1) , UnsignedTIndex(tv2) , UnsignedTIndex(tv3)));
+   faces.push_back(TRIFACE(UnsignedVIndex(v1)  , UnsignedVIndex(v2)  , UnsignedVIndex(v3)  ,
+                           UnsignedTIndex(tv1) , UnsignedTIndex(tv2) , UnsignedTIndex(tv3) ,
+                           UnsignedNIndex(n1)  , UnsignedNIndex(n2)  , UnsignedNIndex(n3)));
    return faces.size() - 1;
 }
 
 
 
 unsigned int Mesh::AddTexturedQuadFace(int vtl , int vbl , int vbr , int vtr,
-                                 int ttl , int tbl , int tbr , int ttr) {
+                                       int ttl , int tbl , int tbr , int ttr,
+                                       int ntl , int nbl , int nbr , int ntr) {
    
    
    
@@ -278,6 +314,28 @@ unsigned int Mesh::AddTexturedQuadFace(int vtl , int vbl , int vbr , int vtr,
 
    const unsigned int ctex = AddTexVertex(TEXTEX(GetTexVertex(textl).tid.bmp , texcenter));
    
+   const unsigned int tln = UnsignedNIndex(ntl);
+   const unsigned int bln = UnsignedNIndex(nbl);
+   const unsigned int brn = UnsignedNIndex(nbr);
+   const unsigned int trn = UnsignedNIndex(ntr);
+   
+   if ((tln != BAD_NORMAL) && (bln != BAD_NORMAL) && (brn != BAD_NORMAL) && (trn != BAD_NORMAL)) {
+      NORMAL ncenter = MidPoint(MidPoint(GetNormal(tln) , GetNormal(trn)) , MidPoint(GetNormal(bln) , GetNormal(brn)));
+      unsigned int cn = AddNormal(ncenter);
+
+      const unsigned int f1 = AddTexturedTriFace(c,tl,bl , ctex , textl , texbl , cn , tln , bln);
+      const unsigned int f2 = AddTexturedTriFace(c,bl,br , ctex , texbl , texbr , cn , bln , brn);
+      const unsigned int f3 = AddTexturedTriFace(c,br,tr , ctex , texbr , textr , cn , brn , trn);
+      const unsigned int f4 = AddTexturedTriFace(c,tr,tl , ctex , textr , textl , cn , trn , tln);
+      
+      (void)f2;
+      (void)f3;
+      (void)f4;
+      
+      return f1;
+   }
+   
+   
    const unsigned int f1 = AddTexturedTriFace(c,tl,bl , ctex , textl , texbl);
    const unsigned int f2 = AddTexturedTriFace(c,bl,br , ctex , texbl , texbr);
    const unsigned int f3 = AddTexturedTriFace(c,br,tr , ctex , texbr , textr);
@@ -293,7 +351,8 @@ unsigned int Mesh::AddTexturedQuadFace(int vtl , int vbl , int vbr , int vtr,
 
 
 unsigned int Mesh::AddTexturedFlatQuadFace(int vtl , int vbl , int vbr , int vtr,
-                                     int ttl , int tbl , int tbr , int ttr) {
+                                           int ttl , int tbl , int tbr , int ttr,
+                                           int ntl , int nbl , int nbr , int ntr) {
    
    const unsigned int tl = UnsignedVIndex(vtl);
    const unsigned int bl = UnsignedVIndex(vbl);
@@ -305,6 +364,21 @@ unsigned int Mesh::AddTexturedFlatQuadFace(int vtl , int vbl , int vbr , int vtr
    const unsigned int texbr = UnsignedTIndex(tbr);
    const unsigned int textr = UnsignedTIndex(ttr);
 
+   const unsigned int tln = UnsignedNIndex(ntl);
+   const unsigned int bln = UnsignedNIndex(nbl);
+   const unsigned int brn = UnsignedNIndex(nbr);
+   const unsigned int trn = UnsignedNIndex(ntr);
+   
+   if ((tln != BAD_NORMAL) && (tln != BAD_NORMAL) && (tln != BAD_NORMAL) && (tln != BAD_NORMAL)) {
+         
+      const unsigned int f1 = AddTexturedTriFace(tl,bl,br , textl , texbl , texbr , tln , bln , brn);
+      const unsigned int f2 = AddTexturedTriFace(br,tr,tl , texbr , textr , textl , brn , trn , tln);
+      
+      (void)f2;
+      
+      return f1;
+   }
+   
    const unsigned int f1 = AddTexturedTriFace(tl,bl,br , textl , texbl , texbr);
    const unsigned int f2 = AddTexturedTriFace(br,tr,tl , texbr , textr , textl);
    
@@ -314,7 +388,7 @@ unsigned int Mesh::AddTexturedFlatQuadFace(int vtl , int vbl , int vbr , int vtr
 }
 
 
-*/
+
 void Mesh::RenderFacesFrontBack(const SpatialInfo info , const Vec3 scale) const {
    glColor4d(1.0 , 1.0 , 1.0 , 1.0);
    RenderFacesFront(info , scale);

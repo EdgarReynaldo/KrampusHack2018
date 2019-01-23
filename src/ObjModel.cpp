@@ -296,15 +296,16 @@ bool ObjectFile::ProcessPolygon(std::string line , Mesh* cmesh , Material* cmat)
       for (unsigned int i = 1 ; i < vertdata.size() - 1 ; ++i) {
          ObjVertex vd1 = vertdata[i];
          ObjVertex vd2 = vertdata[i+1];
-      }
-      if (cmat) {
-         /// Uses a material
-         if (cmat->tid != BAD_TEXID) {
-            /// Textured face
-         }
-         else {
-            /// Flat face
-            cmesh->AddTriFace();
+         if (cmat) {
+            /// Uses a material
+            if (cmat->tid != BAD_TEXID) {
+               /// Textured face
+               cmesh->AddTexturedTriFace(vd0.v , vd1.v , vd2.v , vd0.vt , vd1.vt , vd2.vt , vd0.vn , vd1.vn , vd2.vn);
+            }
+            else {
+               /// Flat face
+               cmesh->AddTriFace(vd0.v , vd1.v , vd2.v , vd0.vn , vd1.vn , vd2.vn);
+            }
          }
       }
    }
@@ -387,7 +388,7 @@ bool ObjectFile::ProcessObjectFile() {
             error = true;
          }
          else {
-            cobjmesh->AddTexVertex(TextureVertex(cmat->tid , uv));
+            cobjmesh->AddTexVertex(TextureVertex((cmat?cmat->tid:BAD_TEXID) , uv));
          }
       }
       else if (strncmp(line.c_str() , "f " , 2) == 0) {

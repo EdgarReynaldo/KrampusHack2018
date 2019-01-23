@@ -102,11 +102,11 @@ public :
    
 
 
-   unsigned int AddTexturedTriFace(int v1 , int v2 , int v3 , int tv1 , int tv2 , int tv3.
+   unsigned int AddTexturedTriFace(int v1 , int v2 , int v3 , int tv1 , int tv2 , int tv3 ,
                                    int n1 = BAD_INDEX , int n2 = BAD_INDEX , int n3 = BAD_INDEX);
 
    unsigned int AddTexturedQuadFace(int vtl , int vbl , int vbr , int vtr,
-                                    int vitl , int vibl , int vibr , int vitr
+                                    int vitl , int vibl , int vibr , int vitr ,
                                     int ntl = BAD_INDEX , int nbl = BAD_INDEX , int nbr = BAD_INDEX , int ntr = BAD_INDEX);
 
    unsigned int AddTexturedFlatQuadFace(int vtl , int vbl , int vbr , int vtr,
