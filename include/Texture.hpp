@@ -26,7 +26,11 @@ public :
    TexID(ALLEGRO_BITMAP* tex);
 
 
+   inline bool operator!=(const TexID& tid) {return (this->tid != tid.tid) && (this->bmp != tid.bmp);}
 };
+
+
+extern const TexID BAD_TEXID;
 
 
 class TexLib {
@@ -40,6 +44,7 @@ public :
    
    void Clear();
    
+   
    TexID LoadTexture(std::string image_file);
 
    const TexID& TID(std::string texname);
@@ -52,8 +57,8 @@ class TextureVertex {
 public :
 
 ///   TextureVertex(ALLEGRO_BITMAP* tex , Vec2 tuv);
-   TextureVertex(ALLEGRO_BITMAP* tex , Vec2 tuv) :
-         tid(tex),
+   TextureVertex(TexID texid , Vec2 tuv) :
+         tid(texid),
          uv(tuv)
    {}
 

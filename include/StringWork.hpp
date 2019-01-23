@@ -45,6 +45,7 @@ int CountNewLines(std::string s);
 
 std::vector<std::string> SplitByNewLines(std::string s);
 
+std::vector<std::string> SplitByDelimiterString(std::string string_to_split , const std::string token);
 
 
 

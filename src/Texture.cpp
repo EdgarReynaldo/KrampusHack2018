@@ -8,6 +8,10 @@
 
 
 
+extern const TexID BAD_TEXID = TexID();
+
+
+
 TexID::TexID() :
       tid((GLuint)-1),
       bmp(0)
@@ -45,7 +49,7 @@ TexID TexLib::LoadTexture(std::string image_file) {
       texlib[image_file] = TexID(tex);
       return texlib[image_file];
    }
-   return TexID();
+   return BAD_TEXID;
 }
 
 

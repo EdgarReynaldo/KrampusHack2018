@@ -9,9 +9,13 @@
 #include "GL/gl.h"
 
 
-const int TEXTURE_NONE = -1;///0xFFFFFFFF;
-const unsigned int BAD_TEXTURE = (unsigned int)TEXTURE_NONE;
-const unsigned int BAD_NORMAL = (unsigned int)TEXTURE_NONE;
+const int BAD_INDEX = INT_MAX;
+
+const unsigned int INDEX_NONE = (unsigned int)-1;
+
+const unsigned int BAD_VERTEX = (unsigned int)INDEX_NONE;
+const unsigned int BAD_TEXTURE = (unsigned int)INDEX_NONE;
+const unsigned int BAD_NORMAL = (unsigned int)INDEX_NONE;
 
 
 
@@ -37,16 +41,18 @@ TriFace::TriFace(unsigned int i1 , unsigned int i2 , unsigned int i3) :
 
 
 
-TriFace::TriFace(unsigned int i1 , unsigned int i2 , unsigned int i3 , unsigned int ti1 , unsigned int ti2 , unsigned int ti3) :
+TriFace::TriFace(unsigned int i1  , unsigned int i2  , unsigned int i3  ,
+                 unsigned int ti1 , unsigned int ti2 , unsigned int ti3 ,
+                 unsigned int ni1 , unsigned int ni2 , unsigned int ni3) :
       v1(i1),
       v2(i2),
       v3(i3),
       tv1(ti1),
       tv2(ti2),
       tv3(ti3),
-      n1(BAD_NORMAL),
-      n2(BAD_NORMAL),
-      n3(BAD_NORMAL)
+      n1(ni1),
+      n2(ni2),
+      n3(ni3)
 {}
 
 
@@ -57,8 +63,14 @@ bool TriFace::Textured() const {
 
 
 
+bool TriFace::Normaled() const {
+   return ((n1 != BAD_NORMAL) && (n2 != BAD_NORMAL) && (n3 != BAD_NORMAL));
+}
+
+
 
 unsigned int Mesh::UnsignedVIndex(int index) {
+   if (index == BAD_INDEX) {return BAD_VERTEX;}
    if (index < 0) {
       index = (int)vertices.size() - index;
    }
@@ -70,6 +82,7 @@ unsigned int Mesh::UnsignedVIndex(int index) {
 
 
 unsigned int Mesh::UnsignedTIndex(int index) {
+   if (index == BAD_INDEX) {return BAD_TEXTURE;}
    if (index < 0) {
       index = (int)texverts.size() - index;
    }
@@ -81,6 +94,7 @@ unsigned int Mesh::UnsignedTIndex(int index) {
 
 
 unsigned int Mesh::UnsignedNIndex(int index) {
+   if (index == BAD_INDEX) {return BAD_NORMAL;}
    if (index < 0) {
       index = (int)normals.size() - index;
    }
@@ -228,7 +242,7 @@ unsigned int Mesh::AddFlatQuadFace(int vtl , int vbl , int vbr , int vtr) {
    return f1;
 }
 
-
+/**
 
 unsigned int Mesh::AddTexturedTriFace(int v1 , int v2 , int v3 ,
                                 int tv1 , int tv2 , int tv3) {
@@ -300,7 +314,7 @@ unsigned int Mesh::AddTexturedFlatQuadFace(int vtl , int vbl , int vbr , int vtr
 }
 
 
-
+*/
 void Mesh::RenderFacesFrontBack(const SpatialInfo info , const Vec3 scale) const {
    glColor4d(1.0 , 1.0 , 1.0 , 1.0);
    RenderFacesFront(info , scale);
@@ -353,7 +367,7 @@ void Mesh::RenderTexturedFacesFront(const SpatialInfo info , const Vec3 scale) c
          glTexParameteri(GL_TEXTURE_2D , GL_TEXTURE_WRAP_T , GL_REPEAT);
       }
       
-   glBegin(GL_TRIANGLES);
+      glBegin(GL_TRIANGLES);
       for (unsigned int i = 0 ; i < 3 ; ++i) {
          unsigned char c[4] = {0};
          al_unmap_rgba(v[i]->col , &c[0] , &c[1] , &c[2] , &c[3]);
@@ -362,7 +376,7 @@ void Mesh::RenderTexturedFacesFront(const SpatialInfo info , const Vec3 scale) c
          glVertex3d(v[i]->pos.x , v[i]->pos.y , v[i]->pos.z);
 ///         glNormal3d(v[i].nml.x , v[i].nml.y , v[i].nml.z);
       }
-   glEnd();
+      glEnd();
    }
 
    al_use_transform(&old);

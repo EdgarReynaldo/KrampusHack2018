@@ -18,7 +18,7 @@
 #include <map>
 
 
-
+extern const std::string DEFAULT_MATERIAL;
 
 class Material {
    
@@ -73,12 +73,19 @@ public :
          materialmap(),
          texture_library()
    {}
+   ~MaterialFile() {Clear();}
    
    bool Load(std::string filepath);
    bool Save(std::string filepath);
 
-   Material* GetMaterial(std::string mat) {return materialmap[mat];}
-   const std::map<std::string , Material*>& MatMap() {return materialmap;}
+ //  Material* GetMaterial(std::string mat);
+   Material* GetMaterial(std::string mat) {
+      if (materialmap.find(mat) == materialmap.end()) {
+         return (Material*)0;
+      }
+      return materialmap[mat];
+   }
+///   const std::map<std::string , Material*>& MatMap() {return materialmap;}
 };
 
 class ObjectFile : protected TextFile {
@@ -95,6 +102,7 @@ class ObjectFile : protected TextFile {
    void Clear();
 
 
+   bool ProcessPolygon(std::string line , Mesh* cmesh , Material* cmat);
    bool ProcessObjectFile();
 
 public :

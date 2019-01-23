@@ -14,7 +14,13 @@
 
 #include <vector>
 
-extern const int TEXTURE_NONE;
+extern const int BAD_INDEX;
+
+extern const unsigned int BAD_VERTEX;
+extern const unsigned int BAD_TEXTURE;
+extern const unsigned int BAD_NORMAL;
+
+
 
 class Edge {
 public :
@@ -25,10 +31,14 @@ public :
 typedef Edge EDGE;
 
 
+
 class TriFace {
 public :
    TriFace(unsigned int i1 , unsigned int i2 , unsigned int i3);
-   TriFace(unsigned int i1 , unsigned int i2 , unsigned int i3 , unsigned int ti1 , unsigned int ti2 , unsigned int ti3);
+
+   TriFace(unsigned int i1 , unsigned int i2 , unsigned int i3 ,
+           unsigned int ti1 , unsigned int ti2 , unsigned int ti3,
+           unsigned int ni1 , unsigned int ni2 , unsigned int ni3);
    unsigned int v1;
    unsigned int v2;
    unsigned int v3;
@@ -40,11 +50,14 @@ public :
    unsigned int n3;
    
    bool Textured() const;
+   bool Normaled() const;
 };
 typedef TriFace TRIFACE;
 
 
 typedef Vec3 NORMAL;
+
+
 
 class Mesh {
    
@@ -72,17 +85,36 @@ public :
    unsigned int AddNormal(NORMAL n);
 
    unsigned int AddEdge(int vfrom , int vto);/// returns the absolute index of the new edge
-   unsigned int AddTriFace(int v1 , int v2 , int v3);/// returns the absolute index of the new triangle face
-   unsigned int AddQuadFace(int vtl , int vbl , int vbr , int vtr);/// returns the absoulte index of the new triangle faces start
-   unsigned int AddFlatQuadFace(int vtl , int vbl , int vbr , int vtr);/// returns the absolute index of the new triangle faces start
+
+
+
+   /// returns the absolute index of the new triangle face
+   unsigned int AddTriFace(int v1 , int v2 , int v3,
+                           int n1 = BAD_INDEX , int n2 = BAD_INDEX , int n3 = BAD_INDEX);
+
+   /// returns the absoulte index of the 4 new triangle faces start
+   unsigned int AddQuadFace(int vtl , int vbl , int vbr , int vtr,
+                            int ntl = BAD_INDEX , int nbl = BAD_INDEX , int nbr = BAD_INDEX , int ntr = BAD_INDEX);
+
+   /// returns the absolute index of the 2 new triangle faces start
+   unsigned int AddFlatQuadFace(int vtl , int vbl , int vbr , int vtr,
+                                int ntl = BAD_INDEX , int nbl = BAD_INDEX , int nbr = BAD_INDEX , int ntr = BAD_INDEX);
    
-   unsigned int AddTexturedTriFace(int v1 , int v2 , int v3 , int tv1 , int tv2 , int tv3);
+
+
+   unsigned int AddTexturedTriFace(int v1 , int v2 , int v3 , int tv1 , int tv2 , int tv3.
+                                   int n1 = BAD_INDEX , int n2 = BAD_INDEX , int n3 = BAD_INDEX);
+
    unsigned int AddTexturedQuadFace(int vtl , int vbl , int vbr , int vtr,
-                                    int vitl , int vibl , int vibr , int vitr);
+                                    int vitl , int vibl , int vibr , int vitr
+                                    int ntl = BAD_INDEX , int nbl = BAD_INDEX , int nbr = BAD_INDEX , int ntr = BAD_INDEX);
+
    unsigned int AddTexturedFlatQuadFace(int vtl , int vbl , int vbr , int vtr,
-                                        int vitl , int vibl , int vibr , int vitr);
+                                        int vitl , int vibl , int vibr , int vitr,
+                                        int ntl = BAD_INDEX , int nbl = BAD_INDEX , int nbr = BAD_INDEX , int ntr = BAD_INDEX);
    
-   
+
+
    inline const VERTEX&  GetVertex   (unsigned int index) {return vertices[index];}
    inline const TEXTEX&  GetTexVertex(unsigned int index) {return texverts[index];}
    inline const NORMAL&  GetNormal   (unsigned int index) {return normals[index];}
@@ -106,9 +138,10 @@ public :
 
 
 
-
-
-
-
 #endif // Mesh_HPP
+
+
+
+
+
 
