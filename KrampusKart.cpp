@@ -1,12 +1,32 @@
 
 
 
+
 #include "BasicAllegro.hpp"
+#include "allegro5/allegro_opengl.h"
+#include "allegro5/allegro_color.h"
+#include "GL/gl.h"
 
 #include <cstdio>
 
 
-#include "allegro5/allegro_color.h"
+
+int maingl(int argc , char** argv) {
+   
+   (void)argc;
+   (void)argv;
+   
+   if (!al_init()) {return -1;}
+   
+   al_set_new_display_flags(ALLEGRO_WINDOWED | ALLEGRO_OPENGL);
+   ALLEGRO_DISPLAY* d = al_create_display(640,480);
+   
+   printf("glGenBuffers address is : %p\n" , glGenBuffers);
+   
+   al_destroy_display(d);
+   
+   return 0;
+}
 
 #include "SpatialInfo.hpp"
 
@@ -16,12 +36,7 @@
 #include "Skybox.hpp"
 
 
-
-#include "GL/gl.h"
-
-
-
-int main(int argc , char** argv) {
+int mainX(int argc , char** argv) {
    
    
    (void)argc;
