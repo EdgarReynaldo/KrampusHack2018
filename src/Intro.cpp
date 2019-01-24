@@ -25,17 +25,17 @@ void Intro() {
 
    al_start_timer(t);
    
-   for (float f = 0.01 ; f <= 1.0 ; f += 0.01) {
+   for (float s = 0.01 ; s <= 1.0 ; s += 0.01) {
       if (!f2) {continue;}
       
       al_clear_to_color(al_map_rgb(0,0,0));
       
-      ALLEGRO_TRANSFORM t;
-      al_identity_transform(&t);
-      al_translate_transform(&t , -sw/2 , -sh/2);
-      al_scale_transform(&t , f , f);
-      al_translate_transform(&t , sw/2 , sh/2);
-      al_use_transform(&t);
+      ALLEGRO_TRANSFORM tr;
+      al_identity_transform(&tr);
+      al_translate_transform(&tr , -sw/2 , -sh/2);
+      al_scale_transform(&tr , s , s);
+      al_translate_transform(&tr , sw/2 , sh/2);
+      al_use_transform(&tr);
       ALLEGRO_COLOR c = al_color_hsv(j*3 , 1.0 , 1.0);
       al_draw_textf(f2 , c , sw/2 + 2 , sh/2 - fh - 10 , ALLEGRO_ALIGN_CENTER , "Hello Krampus xD");
       al_draw_textf(f2 , c , sw/2 + 2 , sh/2 + 10 , ALLEGRO_ALIGN_CENTER , "Holly Hack 2018!");

@@ -4,7 +4,7 @@
 
 #include "TrackGen.hpp"
 #include "Exception.hpp"
-
+#include "Math.hpp"
 
 
 
@@ -44,16 +44,16 @@ SpatialInfo Turn::Eval(const SpatialInfo& start , double pct) {
 double Turn::CalcLength() {
    const double a = abs(w);
    const double b = abs(h);
-   const double h = (a-b)*(a-b)/((a+b)*(a+b));
+   const double k = (a-b)*(a-b)/((a+b)*(a+b));
    
    const double left = M_PI*(a+b);
    double right = 1.0;
-   right += h/4.0;
-   right += h*h/64.0;
-   right += h*h*h/256.0;
-   right += h*h*h*h*25.0/16384.0;
-   right += h*h*h*h*h*49.0/65536.0;
-   right += h*h*h*h*h*h*441.0/1048576.0;
+   right += k/4.0;
+   right += k*k/64.0;
+   right += k*k*k/256.0;
+   right += k*k*k*k*25.0/16384.0;
+   right += k*k*k*k*k*49.0/65536.0;
+   right += k*k*k*k*k*k*441.0/1048576.0;
    return left*right/4.0;// quarter ellipse
 }
 

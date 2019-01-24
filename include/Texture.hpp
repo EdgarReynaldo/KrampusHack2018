@@ -26,7 +26,7 @@ public :
    TexID(ALLEGRO_BITMAP* tex);
 
 
-   inline bool operator!=(const TexID& tid) {return (this->tid != tid.tid) && (this->bmp != tid.bmp);}
+   inline bool operator!=(const TexID& texid) {return (this->tid != texid.tid) && (this->bmp != texid.bmp);}
 };
 
 

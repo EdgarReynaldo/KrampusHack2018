@@ -6,6 +6,8 @@
 
 #include "BasicAllegro.hpp"
 
+#include "Math.hpp"
+
 
 
 Camera::Camera() :
@@ -59,13 +61,13 @@ void Camera::Setup3D(bool orthographic) {
 
 
 void Camera::Setup2D() {
-   ALLEGRO_TRANSFORM t;
-   al_identity_transform(&t);
-   al_orthographic_transform(&t , 0 , 0 , -1.0 , al_get_display_width(d) , al_get_display_height(d) , 1.0);
-   al_use_projection_transform(&t);
+   ALLEGRO_TRANSFORM tr;
+   al_identity_transform(&tr);
+   al_orthographic_transform(&tr , 0 , 0 , -1.0 , al_get_display_width(d) , al_get_display_height(d) , 1.0);
+   al_use_projection_transform(&tr);
    
-   al_identity_transform(&t);
-   al_use_transform(&t);
+   al_identity_transform(&tr);
+   al_use_transform(&tr);
 }
 
 

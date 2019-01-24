@@ -219,15 +219,15 @@ bool ObjectFile::ProcessPolygon(std::string line , Mesh* cmesh , Material* cmat)
    
    std::vector<std::string> vertstrs;
    std::vector<ObjVertex> vertdata;
-   int i = 0;
+   int idx = 0;
    unsigned int ncharsread = 0;
    
    while (1) {
       std::string word;
       word.reserve(64);
-      if (1 == sscanf(line.c_str() + i , "%s%n" , &word[0] , &ncharsread)) {
+      if (1 == sscanf(line.c_str() + idx , "%s%n" , &word[0] , &ncharsread)) {
          vertstrs.push_back(word);
-         i += ncharsread;
+         idx += ncharsread;
       }
       else {
          break;
@@ -333,17 +333,17 @@ bool ObjectFile::ProcessObjectFile() {
       if (line[0] == '#') {continue;}/// Comments
       
       if (strncmp(line.c_str() , "mtllib " , 7) == 0) {
-         std::string fstr = line.c_str() + 7;
-         std::map<std::string , MaterialFile*>::iterator it = matfiles.find(fstr);
+         std::string mfstr = line.c_str() + 7;
+         std::map<std::string , MaterialFile*>::iterator it = matfiles.find(mfstr);
          if (it == matfiles.end()) {
             MaterialFile* mf = new MaterialFile();
-            if (!mf->Load(fstr)) {
+            if (!mf->Load(mfstr)) {
                error = true;
-               printf("Failed to load material file '%s'\n" , fstr.c_str());
+               printf("Failed to load material file '%s'\n" , mfstr.c_str());
                delete mf;
             }
             else {
-               matfiles[fstr] = mf;
+               matfiles[mfstr] = mf;
                cmatlib = mf;
             }
          }
@@ -400,15 +400,15 @@ bool ObjectFile::ProcessObjectFile() {
       else if (strncmp(line.c_str() , "l " , 2) == 0) {
          /// Poly line = l idx1 idx2 idx3 ...
          std::string polystr = line.c_str() + 2;
-         unsigned int i = 0;
+         unsigned int idx = 0;
          unsigned int idx1 = (unsigned int)-1;
          unsigned int idx2 = (unsigned int)-1;
          unsigned int ncharsread = 0;
-         while (2 == sscanf(line.c_str() + i , "%u%n%u" , &idx1 , &ncharsread , &idx2)) {
+         while (2 == sscanf(line.c_str() + idx , "%u%n%u" , &idx1 , &ncharsread , &idx2)) {
             if (idx1 > 0) {idx1--;}
             if (idx2 > 0) {idx2--;}
             cobjmesh->AddEdge(idx1 , idx2);
-            i += ncharsread;
+            idx += ncharsread;
          }
       }
       

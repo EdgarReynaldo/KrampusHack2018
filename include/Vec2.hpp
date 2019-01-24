@@ -24,21 +24,21 @@ public :
    Vec2() : x(0.0) , y(0.0) {}
    Vec2(double xpos , double ypos) : x(xpos) , y(ypos) {}
    
-   Vec2 operator+(const Vec2& v) const {
-      return Vec2(x + v.x , y + v.y);
+   Vec2 operator+(const Vec2& v1) const {
+      return Vec2(x + v1.x , y + v1.y);
    }
-   Vec2 operator-(const Vec2& v) const {
-      return Vec2(x - v.x , y - v.y);
+   Vec2 operator-(const Vec2& v1) const {
+      return Vec2(x - v1.x , y - v1.y);
    }
    inline Vec2 operator-() const {
       return Vec2(-x , -y);
    }
-   inline Vec2& operator +=(const Vec2& v) {
-      *this = *this + v;
+   inline Vec2& operator +=(const Vec2& v1) {
+      *this = *this + v1;
       return *this;
    }
-   inline Vec2& operator-=(const Vec2& v) {
-      *this = *this - v;
+   inline Vec2& operator-=(const Vec2& v1) {
+      *this = *this - v1;
       return *this;
    }
    inline Vec2& operator*=(double factor) {

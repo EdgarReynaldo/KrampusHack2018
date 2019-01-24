@@ -8,6 +8,7 @@
 #include "CrossSection.hpp"
 #include "CrossSectionTypes.hpp"
 #include "Drawing.hpp"
+#include "Math.hpp"
 
 
 bool ortho = false;
