@@ -2,7 +2,13 @@
 
 
 
+
 #include "BasicAllegro.hpp"
+#include "allegro5/allegro_opengl.h"
+#include "GL/gl.h"
+#include "GL/glu.h"
+#undef GL_VERSION_4_3
+#include "GL/glext.h"
 
 
 
@@ -18,13 +24,11 @@ int sh = 600;
 double FPS = 60.0;
 double SPT = 1.0/FPS;
 
-#include "GL/gl.h"
-#include "GL/glu.h"
+
 
 #include <cstdio>
 
 
-/**
 void __stdcall
 MessageCallback( GLenum source,
                  GLenum type,
@@ -38,7 +42,7 @@ MessageCallback( GLenum source,
            ( type == GL_DEBUG_TYPE_ERROR ? "** GL ERROR **" : "" ),
             type, severity, message );
 }
-*/
+
 
 
 int SetupAllegro(int screenw , int screenh) {
@@ -48,7 +52,7 @@ int SetupAllegro(int screenw , int screenh) {
    if (!al_init_primitives_addon() || !al_init_image_addon()) {return -3;}
    
    if (!al_install_keyboard() || !al_install_mouse() || !al_install_joystick()) {
-      return 1;
+      return -10;
    }
    
    FreeAllegro();
@@ -87,10 +91,13 @@ int SetupAllegro(int screenw , int screenh) {
    
 
    // During init, enable debug output
-///   glEnable              ( GL_DEBUG_OUTPUT );
-///   glDebugMessageCallback( MessageCallback, 0 );
+   glEnable              ( GL_DEBUG_OUTPUT );
+   glDebugMessageCallback( MessageCallback, 0 );
 
-
+   if (!CheckOpenGL()) {
+      return 100;
+   }
+   
    return 0;
 }
 
@@ -117,4 +124,10 @@ void FreeAllegro() {
       al_destroy_display(d);
       d = 0;
    }
+}
+
+
+
+bool CheckOpenGL() {
+   return glGenBuffers && glBindBuffer && glBufferData && glCreateShader && glCreateProgram && glShaderSource;
 }

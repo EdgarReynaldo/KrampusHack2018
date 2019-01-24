@@ -30,6 +30,7 @@ void Camera::Setup3D(bool orthographic) {
 ///   const double l = -w;
 ///   const double r = w;
    
+   /** l and r are reversed to fix the axes */
    const double l = w;
    const double r = -w;
    

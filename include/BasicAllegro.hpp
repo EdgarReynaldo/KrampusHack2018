@@ -31,7 +31,7 @@ extern double SPT;
 int SetupAllegro(int screenw , int screenh);
 void FreeAllegro();
 
-
+bool CheckOpenGL();
 
 
 
