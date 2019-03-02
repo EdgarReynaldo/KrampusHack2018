@@ -13,7 +13,6 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option projectCompilerOptionsRelation="2" />
-				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-DDEBUG" />
@@ -60,7 +59,6 @@
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Option projectCompilerOptionsRelation="2" />
-				<Option projectLinkerOptionsRelation="2" />
 				<Compiler>
 					<Add option="-O2" />
 				</Compiler>
@@ -105,13 +103,12 @@
 			<Add option="-DALLEGRO_UNSTABLE" />
 			<Add option="-DALLEGRO_STATICLINK" />
 			<Add directory="include" />
-			<Add directory="Allegro524/include" />
+			<Add directory="Allegro525/include" />
 		</Compiler>
 		<Linker>
-			<Add option="-lopengl32" />
-			<Add option="-lglu32" />
+			<Add option="-lKrampusD18" />
 			<Add directory="cbbuild/lib" />
-			<Add directory="Allegro524/lib" />
+			<Add directory="Allegro525/lib" />
 		</Linker>
 		<Unit filename="KrampusKart.cpp" />
 		<Unit filename="Models/hull3.mtl" />

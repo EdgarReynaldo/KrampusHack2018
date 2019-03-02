@@ -37,8 +37,10 @@
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-std=c++11" />
+			<Add option="-DALLEGRO_STATICLINK" />
+			<Add option="-DALLEGRO_UNSTABLE" />
 			<Add directory="include" />
-			<Add directory="Allegro524/include" />
+			<Add directory="Allegro525/include" />
 		</Compiler>
 		<Unit filename="include/BasicAllegro.hpp" />
 		<Unit filename="include/Camera.hpp" />
@@ -53,6 +55,7 @@
 		<Unit filename="include/Input.hpp" />
 		<Unit filename="include/Interpolate.hpp" />
 		<Unit filename="include/Intro.hpp" />
+		<Unit filename="include/Math.hpp" />
 		<Unit filename="include/Mesh.hpp" />
 		<Unit filename="include/Move.hpp" />
 		<Unit filename="include/ObjModel.hpp" />
