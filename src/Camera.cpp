@@ -4,7 +4,11 @@
 
 #include "Camera.hpp"
 
-#include "BasicAllegro.hpp"
+//#include "BasicAllegro.hpp"/// TODO : This header doesn't work right with Camera.cpp
+extern int sw,sh;
+#include "allegro5/allegro.h"
+extern ALLEGRO_DISPLAY* d;
+
 
 #include "Math.hpp"
 

@@ -331,9 +331,9 @@ void Track::Draw() {
    lowermesh.RenderFacesFront();
    lowermesh.RenderEdges(al_map_rgba(0,0,0,255));
 
-   glEnable(GL_TEXTURE_2D);
+//   glEnable(GL_TEXTURE_2D);
    uppermesh.RenderTexturedFacesFront();
-   glDisable(GL_TEXTURE_2D);
+//   glDisable(GL_TEXTURE_2D);
 ///   uppermesh.RenderEdges(al_map_rgba(255,255,255,255));
 }
 

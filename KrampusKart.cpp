@@ -35,13 +35,13 @@ int maingl(int argc , char** argv) {
 #include "Mesh.hpp"
 #include "Skybox.hpp"
 
+#include <iostream>
 
 int main(int argc , char** argv) {
    
    
    (void)argc;
    (void)argv;
-   
    
    int setup = SetupAllegro(900,600);
    if (setup != 0) {
@@ -66,7 +66,7 @@ int main(int argc , char** argv) {
    fclose(f1);
    fclose(f2);
       
-   al_start_timer(t);
+   al_start_timer(timer);
    
 //   Intro();
    
@@ -116,7 +116,7 @@ int main(int argc , char** argv) {
          glFrontFace(GL_CCW);
          glCullFace(GL_BACK);
          glEnable(GL_CULL_FACE);
-         glEnable(GL_COLOR);
+         glEnable(GL_BLEND);
 
          scene->Display();
          
@@ -127,20 +127,22 @@ int main(int argc , char** argv) {
          
          
          
-         glDisable(GL_COLOR);
+         glDisable(GL_BLEND);
          glDisable(GL_DEPTH_TEST);
          glDisable(GL_CULL_FACE);
-         glFrontFace(GL_NONE);
          glClear(GL_DEPTH_BUFFER_BIT);
          Camera::Setup2D();
          printf("%u" , glGetError());
-         al_draw_textf(f , al_map_rgb(255,255,255) , 10 , 10 , 0 , "%2.3lf" , al_get_time());
+         al_draw_textf(font , al_map_rgb(255,255,255) , 10 , 10 , 0 , "%2.3lf" , al_get_time());
          al_flip_display();
       }
       int ticks = 0;
       do {
          ALLEGRO_EVENT ev;
          al_wait_for_event(q , &ev);
+         if (ev.type == ALLEGRO_EVENT_KEY_DOWN && ev.keyboard.keycode == ALLEGRO_KEY_D) {
+            bpoint = true;
+         }
          if (ev.type == ALLEGRO_EVENT_TIMER) {
             ++ticks;
             /// Slow down gracefully
@@ -157,6 +159,8 @@ int main(int argc , char** argv) {
    }
    
    delete scene;
+   
+   DumpErrors();
    
    return 0;
 }

@@ -103,6 +103,7 @@ STATUS Editor::HandleEvent(ALLEGRO_EVENT ev) {
 void Editor::Display() {
    al_set_target_backbuffer(d);
 
+
    cam.Setup3D(false);
 
    glDisable(GL_DEPTH_TEST);

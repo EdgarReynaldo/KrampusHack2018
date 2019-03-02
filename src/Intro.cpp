@@ -23,7 +23,7 @@ void Intro() {
 
    int j = 0;
 
-   al_start_timer(t);
+   al_start_timer(timer);
    
    for (float s = 0.01 ; s <= 1.0 ; s += 0.01) {
       if (!f2) {continue;}
